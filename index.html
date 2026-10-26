@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27;; style-src &#x27;unsafe-inline&#x27;; img-src &#x27;self&#x27; blob: data:; media-src blob: mediastream:; manifest-src &#x27;self&#x27;; worker-src &#x27;self&#x27;; connect-src https://bk-gw-relay-test.bklkidsgarden.workers.dev; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#2563eb">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="老師測試">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>柏克來智慧校園・老師（測試環境）</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style id="appcss" data-href="/auth/static/campus.css?v=bf51994816">
+/* 智慧校園系統共用樣式：手機優先，桌機只是加寬。基本款沿用請假系統的 style.css，
+   各艙看起來是同一套系統。外殼頁只抓頁面的第一個樣式表，所以各艙自己的樣式也寫在這裡。 */
+:root{
+  --bg:#f4f6f9; --card:#fff; --line:#e3e8ef; --ink:#1f2937; --muted:#6b7280;
+  --brand:#2563eb; --brand-d:#1d4ed8; --risk:#dc2626; --notice:#d97706; --ok:#059669;
+  --nav-h:58px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:"PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6}
+body.has-tabbar{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom))}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;
+  border-bottom:1px solid var(--line);padding:0 16px;height:52px;position:sticky;top:0;z-index:20}
+.brand{font-weight:700;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.brand:hover{text-decoration:none}
+.brand .ver{display:inline-block;font-weight:500;font-size:11px;color:var(--muted);
+  vertical-align:2px;border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-left:2px}
+.who{font-size:13px;color:var(--muted);white-space:nowrap}
+.who a{margin-left:8px}
+
+.container{max-width:900px;margin:16px auto;padding:0 14px}
+
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:#fff;
+  border-top:1px solid var(--line);height:var(--nav-h);padding-bottom:env(safe-area-inset-bottom)}
+.tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;font-size:11px;color:var(--muted);text-decoration:none;position:relative}
+.tabbar a .ico{font-size:19px;line-height:1}
+.tabbar a.on{color:var(--brand);font-weight:600}
+.dot{display:inline-block;min-width:18px;height:18px;border-radius:999px;background:var(--risk);color:#fff;
+  font-size:11px;line-height:18px;text-align:center;padding:0 5px;font-weight:600;vertical-align:1px}
+
+h1{font-size:21px;margin:0 0 4px}
+h2{font-size:16px;margin:22px 0 10px}
+.sub{color:var(--muted);margin:0 0 16px;font-size:14px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card.tight{padding:12px 14px}
+
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;white-space:nowrap}
+.badge.on{background:#dcfce7;color:#166534}
+.badge.off{background:#f3f4f6;color:#6b7280}
+.badge.risk{background:#fee2e2;color:#991b1b}
+.badge.notice{background:#fef3c7;color:#92400e}
+.badge.brand{background:#dbeafe;color:#1e40af}
+
+.alert{border-radius:10px;padding:11px 14px;margin-bottom:12px;border-left:4px solid;font-size:14px}
+.alert.risk{background:#fef2f2;border-color:var(--risk)}
+.alert.notice{background:#fffbeb;border-color:var(--notice)}
+.alert.ok{background:#ecfdf5;border-color:var(--ok)}
+.alert ul{margin:6px 0 0;padding-left:20px}
+
+label{display:block;font-size:13px;color:var(--muted);margin:14px 0 5px;font-weight:500}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);
+  border-radius:10px;font-size:16px;font-family:inherit;background:#fff;color:var(--ink)}
+/* 16px 是為了避免 iOS Safari 聚焦時自動放大頁面 */
+input[type=checkbox],input[type=radio]{width:auto;padding:0;margin:0 6px 0 0;vertical-align:-2px}
+textarea{min-height:80px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid #bfdbfe;border-color:var(--brand)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{font-size:12px;color:var(--muted);margin-top:5px}
+
+.btn{display:inline-block;background:var(--brand);color:#fff;border:0;border-radius:10px;
+  padding:12px 18px;font-size:15px;font-weight:500;cursor:pointer;text-align:center;font-family:inherit}
+.btn:hover{background:var(--brand-d);text-decoration:none}
+.btn:disabled{background:#c7d2fe;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:#f8fafc}
+.btn.risk{background:var(--risk)} .btn.risk:hover{background:#b91c1c}
+.btn.ok{background:var(--ok)} .btn.ok:hover{background:#047857}
+.btn.sm{padding:7px 12px;font-size:13px;border-radius:8px}
+.btn.wide{width:100%}
+.actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.actions .btn{flex:1;min-width:120px}
+.inline{display:inline}
+
+.kv{width:100%;font-size:14px;border-collapse:collapse}
+.kv th{text-align:left;color:var(--muted);font-weight:500;padding:7px 12px 7px 0;
+  white-space:nowrap;vertical-align:top;width:1%;border:0}
+.kv td{padding:7px 0;border:0}
+
+table.grid{width:100%;border-collapse:collapse;font-size:13px}
+table.grid th,table.grid td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+table.grid th{color:var(--muted);font-weight:600;background:#fafbfc;white-space:nowrap}
+table.grid .num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:0 16px}
+
+.subtabs{display:flex;gap:4px;margin:0 0 14px;border-bottom:1px solid var(--line);overflow-x:auto}
+.subtabs a{padding:8px 13px;font-size:14px;color:var(--muted);white-space:nowrap;border-bottom:2px solid transparent}
+.subtabs a.on{color:var(--brand);font-weight:600;border-color:var(--brand)}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:18px 14px 26px}
+.empty{text-align:center;color:var(--muted);padding:28px 10px;font-size:14px}
+.pw{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;font-weight:700;
+  letter-spacing:2px;background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:1px 8px}
+.muted{color:var(--muted)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+.login-wrap{max-width:360px;margin:8vh auto;padding:0 18px}
+.login-wrap .logo{text-align:center;font-size:30px;margin-bottom:6px}
+.login-wrap h1{text-align:center;font-size:20px;margin-bottom:22px}
+.or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px;margin:16px 0}
+.or::before,.or::after{content:"";flex:1;border-top:1px solid var(--line)}
+
+.safebar{background:#fef3c7;border:2px solid #d97706;border-radius:8px;padding:10px 14px;
+  margin-bottom:14px;font-size:13.5px;color:#7c2d12;line-height:1.7}
+.stagingbar{background:repeating-linear-gradient(-45deg,#ede9fe,#ede9fe 12px,#ddd6fe 12px,#ddd6fe 24px);
+  border-bottom:2px solid #7c3aed;color:#4c1d95;padding:8px 14px;font-size:13.5px;text-align:center;line-height:1.6}
+
+/* ── 入口首頁 ─────────────────────────────────────────────── */
+/* 現在該做的事：一顆大按鈕，點了直接進那個模組（§3.12）。不強制跳轉，下面照常列出全部功能。 */
+.now{display:flex;align-items:center;gap:14px;background:var(--brand);color:#fff;border-radius:16px;
+  padding:16px 18px;margin-bottom:10px;text-decoration:none;box-shadow:0 2px 8px rgba(37,99,235,.25)}
+.now:hover{background:var(--brand-d);text-decoration:none}
+.now .t{font-variant-numeric:tabular-nums;font-size:14px;opacity:.85;white-space:nowrap}
+.now .n{font-size:20px;font-weight:700;flex:1}
+.now .go{font-size:22px}
+.now.info{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.next{font-size:14px;color:var(--muted);margin:0 0 14px;padding:0 4px}
+.next b{color:var(--ink);font-variant-numeric:tabular-nums}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 6px;color:var(--ink);
+  font-size:14px;text-align:center}
+.tile:hover{border-color:var(--brand);text-decoration:none}
+.tile .ico{font-size:26px;line-height:1}
+.tile .dot{position:absolute;top:8px;right:8px}
+.todo{list-style:none;margin:0;padding:0}
+.todo li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.todo li:first-child{border-top:0}
+
+/* ── 帳號頁的權限勾選 ──────────────────────────────────────── */
+.perm{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.perm:first-child{border-top:0}
+.perm .what{flex:1}
+.perm .what b{display:block;font-size:14px}
+.perm .what span{font-size:12px;color:var(--muted)}
+.perm select{width:auto;font-size:14px;padding:6px 8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;
+  padding:5px 12px;font-size:14px;background:#fff;cursor:pointer}
+.chip input{margin:0}
+
+@media (min-width:720px){
+  body.has-tabbar{padding-bottom:0}
+  .tabbar{position:static;height:auto;border-top:0;border-bottom:1px solid var(--line);
+    max-width:900px;margin:0 auto;background:transparent}
+  .tabbar a{flex:0 0 auto;flex-direction:row;gap:6px;font-size:14px;padding:12px 16px}
+  .tabbar a .ico{font-size:15px}
+  .tabbar a.on{border-bottom:2px solid var(--brand)}
+  .scroll{margin:0;padding:0}
+}
+
+</style>
+<style>
+/* 外殼頁自己的元件。系統頁面的樣式另外抓（#appcss），這裡不碰系統的版面。 */
+#busy { position: fixed; top: 8px; right: 8px; z-index: 50; background: #111827; color: #fff;
+  padding: 4px 10px; border-radius: 999px; font-size: 13px; }
+#sheet, .shell-sheet { position: fixed; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); z-index: 60;
+  background: #fff; border: 1px solid #d1d5db; border-radius: 12px; padding: 10px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .18); font-size: 15px; color: #111827; }
+#install { z-index: 55; }
+.sheet-title { margin: 0 0 8px; font-weight: 700; word-break: break-all; }
+.sheet-text { margin: 0 0 10px; font-size: 14px; line-height: 1.5; color: #374151; }
+.sheet-row { display: flex; flex-wrap: wrap; gap: 8px; }
+#sheet button, .shell-sheet button { font-size: 15px; padding: 8px 14px; border-radius: 8px; border: 1px solid #d1d5db; background: #fff; color: #111827; }
+#sheet button.primary, .shell-sheet button.primary { background: #2563eb; border-color: #2563eb; color: #fff; }
+#sheet button.ghost, .shell-sheet button.ghost { border-color: transparent; color: #6b7280; }
+#toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); z-index: 70; background: #111827;
+  color: #fff; padding: 8px 14px; border-radius: 999px; font-size: 14px; }
+.shell-note { padding: 24px 16px; color: #6b7280; text-align: center; }
+.shell-error { margin: 10px; padding: 10px 14px; border: 1px solid #fca5a5; background: #fef2f2; color: #991b1b;
+  border-radius: 10px; font-size: 14px; }
+.shell-error p { margin: 0 0 8px; }
+.shell-error button { font-size: 14px; padding: 6px 12px; border-radius: 8px; border: 1px solid #fca5a5; background: #fff; color: #991b1b; }
+#fatal { margin: 8px; padding: 8px 12px; border: 2px solid #dc2626; border-radius: 10px; background: #fef2f2;
+  color: #991b1b; font-size: 13px; white-space: pre-wrap; word-break: break-all; }
+/* 全螢幕（從主畫面打開）時標題列左邊的上一頁／下一頁（shell.js 的 Nav） */
+.shell-navwrap { display: flex; align-items: center; gap: 0; min-width: 0; margin-left: -10px; }
+.shell-navwrap .brand { min-width: 0; }
+.shell-nav { flex: 0 0 auto; width: 36px; height: 40px; padding: 0 0 4px; border: 0; background: transparent;
+  color: #2563eb; font-size: 30px; line-height: 1; cursor: pointer; }
+.shell-nav:active { opacity: .5; }
+[hidden] { display: none !important; }
+
+</style>
+<script>
+// 任何沒接住的錯誤都直接印在畫面上：手機上沒有開發者工具，看不到主控台。
+window.addEventListener('error', function (e) { showFatal((e.message || '程式錯誤') + (e.lineno ? '（第 ' + e.lineno + ' 行）' : '')); });
+window.addEventListener('unhandledrejection', function (e) { showFatal('未處理的錯誤：' + ((e.reason && e.reason.message) || e.reason)); });
+function showFatal(t) {
+  var d = document.getElementById('fatal');
+  if (!d) return;
+  d.hidden = false;
+  d.textContent += '⚠️ ' + t + '\n';
+}
+</script>
+</head>
+<body data-pubkey="BIDalvOq+EgrsdL8UPLgARUqtbyjCn6ZdfWbgvAIm8ZGMNUdRxhv/ZtEkQztYKiTq5CHRxOB/4fImg+Huej+5f4=" data-exec="https://bk-gw-relay-test.bklkidsgarden.workers.dev/" data-home="/auth/teacher" data-login="/auth/login?next=%2Fauth%2Fteacher" data-session="campus_session">
+<pre id="fatal" hidden></pre>
+<div id="busy" hidden>連線中…</div>
+<div id="sheet" hidden></div>
+<div id="app"><p class="shell-note">載入中…</p></div>
+<script>
+/* 外殼頁 ↔ 主機的加密通道（端對端）。協定與主機端 gateway/protocol.py 相同。
+ *
+ * 每次開頁產生一把一次性的 ECDH P-256 金鑰，跟主機的公鑰（內建在頁面上）算出共用金鑰，
+ * 經 HKDF-SHA256 變成 AES-256-GCM 金鑰。請求與回應都用它加密，
+ * 轉送服務（測試環境是 Cloudflare Worker，也可以是 Apps Script）只負責把密文轉送出去，看不到內容。
+ *
+ * 呼叫轉送服務一律 fetch + credentials: 'omit'：不帶 Google 的 Cookie，Google 把它當匿名訪客，
+ * 瀏覽器登了幾個 Google 帳號都無關。Content-Type 用 text/plain 才不會觸發 CORS 預檢（Apps Script 不回應 OPTIONS）。
+ */
+const Gw = (() => {
+  const te = new TextEncoder();
+  const td = new TextDecoder();
+  const PUBKEY = document.body.dataset.pubkey;
+  const EXEC_URL = document.body.dataset.exec;
+
+  const b64 = {
+    enc(bytes) {
+      let s = '';
+      for (let i = 0; i < bytes.length; i += 0x8000) {
+        s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+      }
+      return btoa(s);
+    },
+    dec(str) {
+      const s = atob(str);
+      const out = new Uint8Array(s.length);
+      for (let i = 0; i < s.length; i++) out[i] = s.charCodeAt(i);
+      return out;
+    },
+  };
+  const hex = (bytes) => Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+
+  /** 這台裝置的匿名代號：主機拿來限流與寫操作紀錄。存不了就每次開頁換一個。 */
+  const DEVICE = (() => {
+    const KEY = 'gw.device';
+    try {
+      let d = localStorage.getItem(KEY);
+      if (!d) { d = hex(crypto.getRandomValues(new Uint8Array(12))); localStorage.setItem(KEY, d); }
+      return d;
+    } catch (e) {
+      return hex(crypto.getRandomValues(new Uint8Array(12)));
+    }
+  })();
+
+  let sessionP = null;
+  function session() {
+    if (!sessionP) {
+      sessionP = (async () => {
+        const serverPub = await crypto.subtle.importKey(
+          'raw', b64.dec(PUBKEY), { name: 'ECDH', namedCurve: 'P-256' }, false, []);
+        const kp = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, false, ['deriveBits']);
+        const epk = new Uint8Array(await crypto.subtle.exportKey('raw', kp.publicKey));
+        const shared = await crypto.subtle.deriveBits({ name: 'ECDH', public: serverPub }, kp.privateKey, 256);
+        const ikm = await crypto.subtle.importKey('raw', shared, 'HKDF', false, ['deriveKey']);
+        const key = await crypto.subtle.deriveKey(
+          { name: 'HKDF', hash: 'SHA-256', salt: epk, info: te.encode('bk-gw-v1') },
+          ikm, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+        return { epk: b64.enc(epk), key };
+      })().catch((e) => { sessionP = null; throw e; });
+    }
+    return sessionP;
+  }
+
+  function frame(meta, body) {
+    const m = te.encode(JSON.stringify(meta));
+    const out = new Uint8Array(4 + m.length + body.length);
+    new DataView(out.buffer).setUint32(0, m.length);
+    out.set(m, 4);
+    out.set(body, 4 + m.length);
+    return out;
+  }
+
+  function unframe(bytes) {
+    const n = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getUint32(0);
+    return { meta: JSON.parse(td.decode(bytes.subarray(4, 4 + n))), body: bytes.subarray(4 + n) };
+  }
+
+  // Apps Script 平常一趟 1～2 秒，但 Google 那端偶爾會慢到 10～40 秒（實測過）。
+  // 超過這個時間就放棄等待並說明原因，不讓畫面一直停在「載入中…」。
+  const RUN_TIMEOUT_MS = 45000;
+
+  /** 呼叫 Apps Script 開放的函式（relay／ping／gatewayInfo）。 */
+  async function run(fn, ...args) {
+    let r;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), RUN_TIMEOUT_MS);
+    try {
+      r = await fetch(EXEC_URL, {
+        method: 'POST',
+        credentials: 'omit',
+        redirect: 'follow',
+        headers: { 'content-type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ type: 'call', fn, args }),
+        signal: ctrl.signal,
+      });
+    } catch (e) {
+      if (e.name === 'AbortError') throw friendly('slow', '轉送服務這次回應太慢（超過 45 秒）');
+      throw friendly('network', '網路連不上，請確認手機有網路後再試一次');
+    } finally {
+      clearTimeout(timer);
+    }
+    if (!r.ok) throw friendly('apps-script', '轉送服務暫時有問題（HTTP ' + r.status + '），請稍後再試');
+    let d;
+    try {
+      d = await r.json();
+    } catch (e) {
+      // Google 偶爾會回一個空的或不完整的回應（實測過），不是我們這邊的錯，但要說得出來。
+      throw friendly('apps-script', '轉送服務這次的回應不完整，請再試一次');
+    }
+    if (!d.ok) throw friendly('apps-script', '轉送服務拒絕了這次呼叫');
+    return d.result;
+  }
+
+  function friendly(kind, message) {
+    const e = new Error(message);
+    e.kind = kind;
+    return e;
+  }
+
+  /** 送一筆請求到主機。req = {method, path, headers}；body 為 Uint8Array（可省略）。 */
+  async function call(req, body) {
+    const s = await session();
+    const id = hex(crypto.getRandomValues(new Uint8Array(16)));
+    const meta = { id, ts: Date.now(), method: req.method || 'GET', path: req.path,
+                   headers: req.headers || {}, client: DEVICE };
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const ct = new Uint8Array(await crypto.subtle.encrypt(
+      { name: 'AES-GCM', iv, additionalData: te.encode('bk-gw-req-v1') },
+      s.key, frame(meta, body || new Uint8Array(0))));
+    const env = JSON.stringify({ v: 1, epk: s.epk, iv: b64.enc(iv), ct: b64.enc(ct) });
+
+    // 安全重送：Google 把結果交回來那一段偶爾會掉（空白、404、逾時），但請求可能已經到過主機了。
+    // 拿「同一份」加密請求再送：主機認得同一個請求編號，會直接交出上次的結果、不會再執行一次，
+    // 所以送出假單這類動作重送也不會重複。主機還在處理第一次時回 409，等一下再來拿。
+    let relayed = null;
+    let lastErr = null;
+    let slowTries = 0;
+    for (let attempt = 0; attempt < 4 && !relayed; attempt++) {
+      if (attempt) await new Promise((r) => setTimeout(r, attempt === 1 ? 1500 : 4000));
+      try {
+        const got = JSON.parse(await run('relay', env));
+        if (got.status === 409) { lastErr = friendly('slow', '主機還在處理'); continue; }
+        relayed = got;
+      } catch (e) {
+        lastErr = e;
+        if (e.kind === 'slow' && ++slowTries > 1) break;     // 逾時最多再等一輪，不讓人乾等好幾分鐘
+        if (e.kind === 'network' && navigator.onLine === false) break;   // 手機明確說沒網路：重送也沒用，直接告訴他
+        if (!['apps-script', 'network', 'slow'].includes(e.kind)) break;
+      }
+    }
+    if (!relayed) {
+      const e = lastErr || friendly('apps-script', '轉送服務沒有回應');
+      if (e.kind === 'slow' && meta.method !== 'GET') {
+        // 送出資料時一直等不到結果：主機那邊可能其實已經處理完了
+        throw friendly('slow', e.message + '。這筆資料可能已經送出了，請先到「我的假單」確認，不要直接再送一次');
+      }
+      throw friendly(e.kind || 'apps-script', e.message + (e.kind === 'slow' ? '，請再試一次' : ''));
+    }
+    if (relayed.status === 429) throw friendly('busy', '系統忙碌中，請過一分鐘再試');
+    if (relayed.status === 0) throw friendly('offline', '主機目前連不上（可能正在重新啟動），請稍後再試');
+    if (relayed.status === 413) throw friendly('too-large', '檔案太大，送不出去');
+    if (relayed.status !== 200) throw friendly('gateway', '主機拒絕了這次請求（' + relayed.status + '），請重新整理頁面再試');
+    const res = JSON.parse(relayed.body);
+    const plain = new Uint8Array(await crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv: b64.dec(res.iv), additionalData: te.encode('bk-gw-res-v1:' + id) },
+      s.key, b64.dec(res.ct)));
+    const { meta: rm, body: rb } = unframe(plain);
+    if (rm.id !== id) throw friendly('gateway', '回應對不上請求，請重新整理頁面');
+    return { status: rm.status, headers: rm.headers || {}, body: rb };
+  }
+
+  return { call, run };
+})();
+
+</script>
+<script>
+/* 外殼頁：把請假系統原本的頁面「搬進來」顯示，攔下連結、表單、圖片、下載與開新視窗，改走 Gw 加密通道。
+ * 系統那邊的頁面不需要知道自己是被這樣呈現的。
+ *
+ * 系統發的 Cookie 由 Jar 代管：外殼頁在 github.io 上，瀏覽器的 Cookie 送不到主機。
+ * 目前看的頁面記在網址的 # 後面（#p=/apply），重新整理、返回鍵、信裡的連結都靠它；
+ * # 後面的部分瀏覽器不會送給任何伺服器。
+ */
+
+/** 代管系統發的 Cookie。存得進 localStorage 就存（關掉瀏覽器還在），存不進就只放記憶體。
+ *  同一個 github.io 底下的外殼頁（請假測試版、校園版⋯）共用 localStorage，鍵名加上自己的路徑才不會互相蓋掉。
+ *  舊鍵名 gw.jar 只在新鍵名還沒有東西時讀一次，原本的登入狀態搬過來，不必重新登入。 */
+const Jar = (() => {
+  const KEY = 'gw.jar:' + location.pathname.replace(/[^/]*$/, '');
+  let mem = {};
+  try { mem = JSON.parse(localStorage.getItem(KEY) || localStorage.getItem('gw.jar') || '{}'); } catch (e) { /* 存不了就只放記憶體 */ }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(mem)); } catch (e) { /* 同上 */ } };
+  return {
+    has(name) {
+      const c = mem[name];
+      return !!c && (!c.exp || c.exp > Date.now());
+    },
+    header() {
+      const now = Date.now();
+      return Object.entries(mem).filter(([, c]) => !c.exp || c.exp > now)
+        .map(([k, c]) => k + '=' + c.val).join('; ');
+    },
+    update(list) {
+      for (const sc of list || []) {
+        const [nv, ...attrs] = sc.split(';').map((s) => s.trim());
+        const i = nv.indexOf('=');
+        if (i < 1) continue;
+        const name = nv.slice(0, i);
+        const val = nv.slice(i + 1).replace(/^"|"$/g, '');
+        let exp = null;
+        for (const a of attrs) {
+          const j = a.indexOf('=');
+          const k = (j < 0 ? a : a.slice(0, j)).toLowerCase();
+          const v = j < 0 ? '' : a.slice(j + 1);
+          if (k === 'max-age') exp = Date.now() + Number(v) * 1000;
+          else if (k === 'expires' && exp === null) exp = Date.parse(v);
+        }
+        if (!val || (exp !== null && exp <= Date.now())) delete mem[name];
+        else mem[name] = { val, exp };
+      }
+      save();
+    },
+  };
+})();
+
+/** 檔案下載。Phase 0 實測：iPhone「直接下載」可以，Android「開新視窗」可以，兩個都給。 */
+const Downloads = (() => {
+  const sheet = document.getElementById('sheet');
+
+  function close() { sheet.hidden = true; sheet.replaceChildren(); }
+
+  function button(label, fn, cls) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = label;
+    if (cls) b.className = cls;
+    b.addEventListener('click', fn);
+    return b;
+  }
+
+  function offer(bytes, type, name) {
+    const url = URL.createObjectURL(new Blob([bytes], { type: type || 'application/octet-stream' }));
+    setTimeout(() => URL.revokeObjectURL(url), 10 * 60 * 1000);
+    const title = document.createElement('p');
+    title.className = 'sheet-title';
+    title.textContent = '📄 ' + name + '（' + Math.max(1, Math.round(bytes.length / 1024)) + ' KB）';
+    const row = document.createElement('div');
+    row.className = 'sheet-row';
+    row.append(
+      button('下載', () => {
+        const a = document.createElement('a');
+        a.href = url; a.download = name;
+        document.body.append(a); a.click(); a.remove();
+      }, 'primary'),
+      button('開新視窗', () => window.open(url, '_blank')),
+      button('關閉', close, 'ghost'));
+    sheet.replaceChildren(title, row);
+    sheet.hidden = false;
+  }
+
+  // 好幾個檔案一起存（例如整本相簿）：手機支援「分享檔案」的（iPhone、Android）給「存到手機」，一次存進相簿；
+  // 不支援的（電腦）就在這台裝置上打包成 ZIP 再下載（打包在手機／電腦上做，不經過主機，沒有大小上限的問題）。
+  function offerFiles(files, zipName) {
+    const total = files.reduce((n, f) => n + f.size, 0);
+    const title = document.createElement('p');
+    title.className = 'sheet-title';
+    title.textContent = '📷 ' + files.length + ' 個檔案（' + (total / 1024 / 1024).toFixed(1) + ' MB）準備好了';
+    const row = document.createElement('div');
+    row.className = 'sheet-row';
+    const canShare = !!(navigator.canShare && navigator.share) && (() => {
+      try { return navigator.canShare({ files }); } catch (e) { return false; }
+    })();
+    if (canShare) {
+      row.append(button('存到手機', () => {
+        navigator.share({ files }).then(close).catch((e) => { if (e && e.name !== 'AbortError') toastLater('存不了：' + e.message); });
+      }, 'primary'));
+    }
+    row.append(button(canShare ? '打包成 ZIP' : '下載 ZIP', async () => {
+      const zip = await Zip.build(files);
+      offer(new Uint8Array(await zip.arrayBuffer()), 'application/zip', zipName);
+    }, canShare ? '' : 'primary'), button('關閉', close, 'ghost'));
+    sheet.replaceChildren(title, row);
+    sheet.hidden = false;
+  }
+  function toastLater(text) { setTimeout(() => { try { Shell.toast(text); } catch (e) { /* 無妨 */ } }, 0); }
+
+  return { offer, offerFiles, close };
+})();
+
+/** 最簡單的 ZIP（只包、不壓縮：照片本來就壓縮過了）。檔名用 UTF-8。 */
+const Zip = (() => {
+  const table = new Uint32Array(256).map((_, n) => {
+    let c = n;
+    for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1;
+    return c >>> 0;
+  });
+  function crc32(bytes) {
+    let c = 0xFFFFFFFF;
+    for (let i = 0; i < bytes.length; i++) c = table[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+  async function build(files) {
+    const te = new TextEncoder();
+    const parts = [], central = [];
+    let offset = 0;
+    const d = new Date();
+    const time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1);
+    const date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+    for (const f of files) {
+      const data = new Uint8Array(await f.arrayBuffer());
+      const name = te.encode(f.name);
+      const crc = crc32(data);
+      const local = new DataView(new ArrayBuffer(30));
+      [[0, 0x04034b50, 4], [4, 20, 2], [6, 0x0800, 2], [8, 0, 2], [10, time, 2], [12, date, 2], [14, crc, 4],
+       [18, data.length, 4], [22, data.length, 4], [26, name.length, 2], [28, 0, 2]]
+        .forEach(([o, v, n]) => (n === 4 ? local.setUint32(o, v, true) : local.setUint16(o, v, true)));
+      const cen = new DataView(new ArrayBuffer(46));
+      [[0, 0x02014b50, 4], [4, 20, 2], [6, 20, 2], [8, 0x0800, 2], [10, 0, 2], [12, time, 2], [14, date, 2], [16, crc, 4],
+       [20, data.length, 4], [24, data.length, 4], [28, name.length, 2], [30, 0, 2], [32, 0, 2], [34, 0, 2], [36, 0, 2],
+       [38, 0, 4], [42, offset, 4]]
+        .forEach(([o, v, n]) => (n === 4 ? cen.setUint32(o, v, true) : cen.setUint16(o, v, true)));
+      parts.push(local, name, data);
+      central.push(cen, name);
+      offset += 30 + name.length + data.length;
+    }
+    const size = central.reduce((n, c) => n + c.byteLength, 0);
+    const end = new DataView(new ArrayBuffer(22));
+    [[0, 0x06054b50, 4], [4, 0, 2], [6, 0, 2], [8, files.length, 2], [10, files.length, 2], [12, size, 4], [16, offset, 4], [20, 0, 2]]
+      .forEach(([o, v, n]) => (n === 4 ? end.setUint32(o, v, true) : end.setUint16(o, v, true)));
+    return new Blob([...parts, ...central, end], { type: 'application/zip' });
+  }
+  return { build };
+})();
+
+/** 「加入主畫面」的提示。從主畫面打開是全螢幕、登入記得比較久，也是之後收推播的前提（PWA施作規劃書 P1）。
+ *  Android Chrome 有現成的安裝視窗可以叫（beforeinstallprompt）；iPhone 沒有，只能教他按分享鈕。
+ *  已經是從主畫面打開的、電腦、或按過「不用了」（30 天內）就不顯示。 */
+const Install = (() => {
+  const KEY = 'gw.install.later';
+  const QUIET_MS = 30 * 24 * 3600 * 1000;
+  const name = (document.querySelector('meta[name="apple-mobile-web-app-title"]') || {}).content || '這個系統';
+  let deferred = null;
+  let box = null;
+
+  const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const ios = () => /iPhone|iPad|iPod/.test(navigator.userAgent)
+    || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+  function quiet() {
+    try { return Date.now() - Number(localStorage.getItem(KEY) || 0) < QUIET_MS; } catch (e) { return false; }
+  }
+
+  function close(later) {
+    if (later) { try { localStorage.setItem(KEY, String(Date.now())); } catch (e) { /* 記不住就下次再問 */ } }
+    if (box) { box.remove(); box = null; }
+  }
+
+  function show(text, actions) {
+    close(false);
+    box = document.createElement('div');
+    box.id = 'install';
+    box.className = 'shell-sheet';
+    const title = document.createElement('p');
+    title.className = 'sheet-title';
+    title.textContent = '📲 把「' + name + '」加到主畫面';
+    const body = document.createElement('p');
+    body.className = 'sheet-text';
+    body.textContent = text;
+    const row = document.createElement('div');
+    row.className = 'sheet-row';
+    for (const [label, fn, cls] of actions) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      if (cls) b.className = cls;
+      b.addEventListener('click', fn);
+      row.append(b);
+    }
+    box.append(title, body, row);
+    document.body.append(box);
+  }
+
+  function start() {
+    if (standalone() || quiet() || !matchMedia('(pointer: coarse)').matches) return;   // 電腦不提示
+    if (ios()) {
+      // iPhone 的主畫面 App 和 Safari 分開記登入狀態，所以趁還沒登入就先提醒
+      setTimeout(() => show('點瀏覽器的「分享」按鈕（方框加向上箭頭），往下找「加入主畫面」。之後從主畫面打開，像 App 一樣全螢幕。'
+        + '第一次從主畫面打開要再登入一次。', [['知道了', () => close(true), 'primary']]), 1500);
+      return;
+    }
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferred = e;
+      show('裝好之後從主畫面打開，像 App 一樣全螢幕。', [
+        ['安裝', async () => {
+          close(false);
+          deferred.prompt();
+          const choice = await deferred.userChoice.catch(() => null);
+          deferred = null;
+          if (!choice || choice.outcome !== 'accepted') close(true);
+        }, 'primary'],
+        ['不用了', () => close(true), 'ghost']]);
+    });
+    window.addEventListener('appinstalled', () => close(false));
+  }
+
+  return { start };
+})();
+
+/** 上一頁／下一頁。從主畫面打開（全螢幕）時沒有瀏覽器的按鈕，iPhone 也沒有系統的返回鍵，
+ *  外殼頁在標題列左邊自己放一組；在瀏覽器裡用瀏覽器自己的，不重複放。
+ *  每一頁在歷史紀錄裡記著自己是第幾層（history.state.d），才知道還能不能往前、往後。 */
+const Nav = (() => {
+  let depth = (history.state && history.state.d) || 0;
+  let top = depth;                  // 往回走過之後，還可以「下一頁」回到的最深那一層
+
+  const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+  function setUrl(url, push) {
+    if (push) { depth += 1; top = depth; }
+    (push ? history.pushState : history.replaceState).call(history, { d: depth }, '', url);
+  }
+
+  function popped(state) { depth = (state && state.d) || 0; }
+
+  function button(label, title, fn) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'shell-nav';
+    b.textContent = label;
+    b.title = title;
+    b.setAttribute('aria-label', title);
+    b.addEventListener('click', fn);
+    return b;
+  }
+
+  /** 頁面換好之後，把按鈕放進系統頁面的標題列（.topbar 的品牌名稱左邊）。沒有標題列的頁面（登入頁）不放。 */
+  function decorate(app) {
+    if (!standalone()) return;
+    const bar = app.querySelector('.topbar');
+    const brand = bar && bar.querySelector('.brand');
+    if (!brand) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'shell-navwrap';
+    const back = button('‹', '上一頁', () => history.back());
+    const fwd = button('›', '下一頁', () => history.forward());
+    back.hidden = depth <= 0;
+    fwd.hidden = top <= depth;
+    brand.replaceWith(wrap);
+    wrap.append(back, fwd, brand);
+  }
+
+  return { setUrl, popped, decorate };
+})();
+
+/** 頁面的短暫快取：剛看過、或背景先抓好的頁面，90 秒內再開就直接顯示，不必再等 Google 轉送一趟（每趟 2～3 秒）。
+ *  任何送出（POST）都會整個清掉，資料改過之後一定重新抓；含 Face ID 選項（data-options）的頁面每次都要新的，不放進來。 */
+const PageCache = (() => {
+  const TTL = 90 * 1000;
+  const map = new Map();       // path → {at, gen, p}
+  const never = new Set();     // 抓過發現不能快取的頁面（例如打卡頁），背景就不再先抓，免得白跑一趟
+  let gen = 0;
+  const td = new TextDecoder();
+  function cacheable(r) {
+    const ctype = r.headers['content-type'] || '';
+    return r.status === 200 && ctype.startsWith('text/html') && !r.headers['content-disposition']
+      && !td.decode(r.body).includes('data-options=');
+  }
+  return {
+    get(path) {
+      const e = map.get(path);
+      if (!e || e.gen !== gen || Date.now() - e.at > TTL) return null;
+      return e.p;
+    },
+    put(path, p) {
+      const e = { at: Date.now(), gen, p };
+      map.set(path, e);
+      p.then((r) => {
+        if (cacheable(r)) return;
+        never.add(path.split('?')[0]);
+        if (map.get(path) === e) map.delete(path);
+      },
+             () => { if (map.get(path) === e) map.delete(path); });
+    },
+    has(path) { return !!this.get(path); },
+    worthPrefetching(path) { return !never.has(path.split('?')[0]) && !this.has(path); },
+    clear() { gen += 1; map.clear(); },
+  };
+})();
+
+const Shell = (() => {
+  const app = document.getElementById('app');
+  const busy = document.getElementById('busy');
+  const appcss = document.getElementById('appcss');
+  const ORIGIN = 'https://app.invalid';
+  const td = new TextDecoder();
+  // 開頁先到哪一頁、沒有登入票時直接要哪一頁：請假測試版是 / 與 /login；校園版是入口首頁與帳號中心的登入頁（build.py --campus）
+  const HOME = document.body.dataset.home || '/';
+  const LOGIN = document.body.dataset.login || '/login';
+  const SESSION = document.body.dataset.session || 'leave_session';
+  let current = HOME;
+  // 系統的樣式表：外殼頁內建一份（build.py），其他抓過的記在這台手機（網址帶內容雜湊，改版就是新網址）。
+  // 校園版每一艙的樣式表不同（入口首頁、請假系統…），記住抓過的，來回切換才不必每次多跑一趟 Google。
+  const CSS_KEY = 'gw.appcss.v2';
+  const CSS_KEEP = 4;
+  const EMBED_HREF = appcss.dataset.href || '';
+  let cssHref = EMBED_HREF;
+  let cssSeen = {};               // 網址 → 樣式表內容
+  try { cssSeen = JSON.parse(localStorage.getItem(CSS_KEY) || '{}') || {}; } catch (e) { cssSeen = {}; }
+  cssSeen[EMBED_HREF] = appcss.textContent;
+  function rememberCss(href, css) {
+    delete cssSeen[href];
+    cssSeen[href] = css;
+    const hrefs = Object.keys(cssSeen).filter((h) => h !== EMBED_HREF);
+    for (const h of hrefs.slice(0, Math.max(0, hrefs.length - CSS_KEEP))) delete cssSeen[h];
+    const saved = Object.assign({}, cssSeen);
+    delete saved[EMBED_HREF];
+    try { localStorage.setItem(CSS_KEY, JSON.stringify(saved)); } catch (e) { /* 存不了就只記在這一頁 */ }
+  }
+  let pageBlobs = [];
+  let navSeq = 0;
+
+  /** 相對於目前頁面解析網址；不是系統內的網址回 null。 */
+  function resolve(href) {
+    if (!href || href.startsWith('#') || /^(javascript|mailto|tel):/i.test(href)) return null;
+    const u = new URL(href, ORIGIN + current);
+    return u.origin === ORIGIN ? u.pathname + u.search : null;
+  }
+
+  function locationPath(loc) {
+    if (loc.startsWith('/')) return loc;
+    try { const u = new URL(loc); return u.pathname + u.search; } catch (e) { return '/'; }
+  }
+
+  function filename(disp) {
+    const star = /filename\*\s*=\s*UTF-8''([^;]+)/i.exec(disp);
+    if (star) { try { return decodeURIComponent(star[1]); } catch (e) { /* 用下面的 */ } }
+    const plain = /filename\s*=\s*"?([^";]+)"?/i.exec(disp);
+    return plain ? plain[1] : 'download';
+  }
+
+  function readHash() {
+    const m = /(?:^|&)p=([^&]+)/.exec(location.hash.replace(/^#/, ''));
+    let p = HOME;
+    if (m) { try { p = decodeURIComponent(m[1]); } catch (e) { p = HOME; } }
+    return p.startsWith('/') && !p.startsWith('//') ? p : HOME;
+  }
+
+  function setHash(path, push) {
+    const url = '#p=' + encodeURIComponent(path);
+    if (location.hash === url) return;
+    Nav.setUrl(url, push);
+  }
+
+  async function request(method, path, body, contentType) {
+    const headers = { accept: 'text/html' };
+    const c = Jar.header();
+    if (c) headers.cookie = c;
+    if (contentType) headers['content-type'] = contentType;
+    const r = await Gw.call({ method, path, headers }, body);
+    Jar.update(r.headers['set-cookie']);
+    return r;
+  }
+
+  async function fetchBlobUrl(path) {
+    const r = await request('GET', path);
+    if (r.status !== 200) throw new Error('HTTP ' + r.status);
+    return URL.createObjectURL(new Blob([r.body], { type: r.headers['content-type'] || 'application/octet-stream' }));
+  }
+
+  /** GET 先看快取（含背景正在抓的那一份，不重複送）；POST 一律清快取。 */
+  async function fetchPage(method, path, body, contentType) {
+    if (method !== 'GET') {
+      PageCache.clear();
+      try { return await request(method, path, body, contentType); } finally { PageCache.clear(); }
+    }
+    const hit = PageCache.get(path);
+    if (hit) {
+      try { return await hit; } catch (e) { /* 背景那份失敗了，下面重抓 */ }
+    }
+    const p = request('GET', path);
+    PageCache.put(path, p);
+    return p;
+  }
+
+  // ── 背景先抓下方分頁（和分頁裡的切換鈕）：開完一頁、使用者還在看的時候做。Google 正慢（超過 5 秒）就停，不加重負擔、不多耗額度。
+  let prefetchTimer = null;
+  let navigating = false;
+  function schedulePrefetch() {
+    clearTimeout(prefetchTimer);
+    prefetchTimer = setTimeout(async () => {
+      const paths = [];
+      for (const a of app.querySelectorAll('.tabbar a[href], .modnav a[href]')) {
+        const p = resolve(a.getAttribute('href'));
+        if (p && p !== current && !paths.includes(p) && PageCache.worthPrefetching(p)) paths.push(p);
+      }
+      for (const p of paths.slice(0, 6)) {
+        if (navigating) return;
+        const t0 = Date.now();
+        const pr = request('GET', p);
+        PageCache.put(p, pr);
+        try { await pr; } catch (e) { return; }
+        if (Date.now() - t0 > 5000) return;
+        await new Promise((r) => setTimeout(r, 250));
+      }
+    }, 800);
+  }
+
+  async function go(method, path, body, contentType, opts = {}) {
+    const seq = ++navSeq;
+    busy.hidden = false;
+    navigating = true;
+    clearTimeout(prefetchTimer);
+    try {
+      let r = await fetchPage(method, path, body, contentType);
+      // 系統自己的轉址閘道已經直接跟過去了（省一趟 Google 來回），這裡改用最後到達的路徑
+      if (r.headers['x-gw-path']) path = r.headers['x-gw-path'];
+      for (let hops = 0; r.status >= 300 && r.status < 400 && r.headers.location; hops++) {
+        if (hops >= 5) throw new Error('轉址次數過多');
+        path = locationPath(r.headers.location);
+        r = await request('GET', path);
+        if (r.headers['x-gw-path']) path = r.headers['x-gw-path'];
+      }
+      if (seq !== navSeq) return;                    // 使用者已經點了別的，這個結果不要了
+      const ctype = r.headers['content-type'] || '';
+      const disp = r.headers['content-disposition'] || '';
+      if (/^attachment/i.test(disp)) return Downloads.offer(r.body, ctype, filename(disp));
+      if (ctype.startsWith('text/html')) {
+        await render(td.decode(r.body), path);
+        setHash(path, !opts.replace && path !== readHash());
+        Nav.decorate(app);
+        navigating = false;
+        schedulePrefetch();
+        return;
+      }
+      if (r.status >= 400) throw new Error(td.decode(r.body).slice(0, 200) || 'HTTP ' + r.status);
+      Downloads.offer(r.body, ctype, path.split('?')[0].split('/').pop() || 'download');
+    } catch (e) {
+      if (seq === navSeq) showError(e, method === 'GET' ? () => go('GET', path, null, null, opts) : null);
+    } finally {
+      if (seq === navSeq) { busy.hidden = true; navigating = false; }
+    }
+  }
+
+  async function render(html, path) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+
+    // 樣式表：網址（含內容雜湊）變了才換；內建的或抓過的直接用，沒看過的才去抓。
+    const link = doc.querySelector('link[rel="stylesheet"][href]');
+    const href = link && resolve(link.getAttribute('href'));
+    if (href && href !== cssHref) {
+      if (cssSeen[href] !== undefined) {
+        appcss.textContent = cssSeen[href]; cssHref = href;
+      } else {
+        try {
+          const r = await request('GET', href);
+          if (r.status === 200) {
+            appcss.textContent = td.decode(r.body); cssHref = href;
+            rememberCss(href, appcss.textContent);
+          }
+        } catch (e) { /* 沒樣式也能用 */ }
+      }
+    }
+
+    // 圖片先在還沒放進畫面的文件上改掉 src，免得瀏覽器拿相對路徑去打 github.io。
+    for (const img of doc.querySelectorAll('img[src]')) {
+      const p = resolve(img.getAttribute('src'));
+      if (!p) continue;
+      img.removeAttribute('src');
+      img.dataset.src = p;
+    }
+
+    pageBlobs.forEach((u) => URL.revokeObjectURL(u));
+    pageBlobs = [];
+    Downloads.close();
+    app.replaceChildren(...Array.from(doc.body.childNodes, (n) => document.importNode(n, true)));
+    // 搬進來的 <script> 不會自己執行，要重建一份。外面包一層 { }：
+    // 頁面最外層的 const／let（例如請假頁的 const mode）第二次進同一頁才不會「已宣告」報錯；
+    // function 宣告照舊變成全域，行內 onsubmit="return twoStep(…)" 叫得到。
+    for (const old of app.querySelectorAll('script')) {
+      // 只重跑真的 JavaScript；type="application/json" 這類資料區塊原樣留著，不能當程式執行。
+      const type = (old.getAttribute('type') || '').trim().toLowerCase();
+      if (type && !['text/javascript', 'application/javascript', 'module'].includes(type)) continue;
+      const s = document.createElement('script');
+      s.textContent = '{\n' + old.textContent + '\n}';
+      old.replaceWith(s);
+    }
+    // 頁面上「回入口首頁」的連結（左上角的標誌等）指的是主管及行政的首頁；老師、家長的 App 改回自己的首頁
+    if (HOME !== '/auth/home') app.querySelectorAll('a[href="/auth/home"]').forEach((a) => a.setAttribute('href', HOME));
+    current = path;
+    if (doc.title) document.title = doc.title;
+    window.scrollTo(0, 0);
+
+    loadImages(Array.from(app.querySelectorAll('img[data-src]')));
+  }
+
+  // 頁面上的圖片：一次最多抓 IMG_PARALLEL 張（每支手機、整個系統都有流量上限，一口氣全要容易被擋），
+  // 被擋（系統忙碌）或網路一時不通就等一下再抓，最多 IMG_RETRY 次；換頁了就不抓了。
+  const IMG_PARALLEL = 4;
+  const IMG_RETRY = [1000, 3000, 6000];
+  function retryable(e) {
+    return !!e && (['busy', 'network', 'slow'].includes(e.kind) || /429|忙碌/.test(String(e.message || e)));
+  }
+  function loadImages(imgs) {
+    const queue = imgs.slice();
+    async function worker() {
+      while (queue.length) {
+        const img = queue.shift();
+        for (let attempt = 0; ; attempt++) {
+          if (!img.isConnected) break;
+          try {
+            const url = await fetchBlobUrl(img.dataset.src);
+            pageBlobs.push(url);
+            img.src = url;
+            break;
+          } catch (e) {
+            if (attempt >= IMG_RETRY.length || !retryable(e)) { img.alt = '（圖片載入失敗）'; break; }
+            await new Promise((r) => setTimeout(r, IMG_RETRY[attempt]));
+          }
+        }
+      }
+    }
+    for (let i = 0; i < Math.min(IMG_PARALLEL, queue.length); i++) worker();
+  }
+
+  /** target=_blank：一定要在點擊當下就開視窗，不然會被當成彈出廣告擋掉，之後再把內容填進去。 */
+  function openInNewWindow(path) {
+    const w = window.open('', '_blank');
+    if (!w) { toast('新視窗被瀏覽器擋下來了'); return; }
+    try { w.document.title = '載入中…'; w.document.body.textContent = '載入中…'; } catch (e) { /* 無妨 */ }
+    fetchBlobUrl(path).then((url) => {
+      w.location.href = url;
+      setTimeout(() => URL.revokeObjectURL(url), 60 * 1000);
+    }).catch((e) => { try { w.close(); } catch (_) { /* 無妨 */ } toast('打不開：' + e.message); });
+  }
+
+  /** 證明文件在手機上先縮小再傳：5MB 原圖經 Google 要 10～20 秒（Phase 0 實測），縮成長邊 1600px 只要一兩秒。 */
+  async function shrinkImages(fd) {
+    // 同一個欄位可能有好幾張（例如巡園的補充照片），所以整份重排，不能用 fd.set（會只剩一張）
+    const entries = Array.from(fd.entries());
+    let changed = false;
+    for (let i = 0; i < entries.length; i++) {
+      const v = entries[i][1];
+      if (!(v instanceof File) || v.size <= 1024 * 1024 || !/^image\/(jpeg|png|webp|heic|heif)$/i.test(v.type)) continue;
+      try {
+        const small = await shrink(v, 1600);
+        if (small && small.size < v.size) {
+          entries[i] = [entries[i][0], new File([small], v.name.replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' })];
+          changed = true;
+        }
+      } catch (e) { /* 縮不了就照原檔送 */ }
+    }
+    if (!changed) return;
+    for (const name of new Set(entries.map((e) => e[0]))) fd.delete(name);
+    for (const [name, v] of entries) fd.append(name, v);
+  }
+
+  async function shrink(file, max, quality = 0.85) {
+    let src;
+    try { src = await createImageBitmap(file, { imageOrientation: 'from-image' }); } catch (e) {
+      src = await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+      });
+    }
+    const k = Math.min(1, max / Math.max(src.width, src.height));
+    const c = document.createElement('canvas');
+    c.width = Math.round(src.width * k);
+    c.height = Math.round(src.height * k);
+    c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+    return new Promise((resolve) => c.toBlob(resolve, 'image/jpeg', quality));
+  }
+
+  // 要封存原圖的表單（<form data-originals>，例如花絮相簿）：照片不縮小，一張一張送（一次送一批原圖會超過轉送的上限），
+  // 右上角顯示「上傳中 3/20」。單張超過 ORIGINAL_MAX 的（例如 4800 萬畫素）才縮到長邊 4096，畫質仍然夠封存。
+  const ORIGINAL_MAX = 10 * 1024 * 1024;
+  async function sendOriginals(fd, action) {
+    const entries = Array.from(fd.entries());
+    const files = entries.filter(([, v]) => v instanceof File && v.size > 0);
+    const rest = entries.filter(([, v]) => !(v instanceof File));
+    if (!files.length) return go('POST', action, new TextEncoder().encode(new URLSearchParams(rest).toString()),
+                                 'application/x-www-form-urlencoded');
+    const seq = ++navSeq;
+    const label = busy.textContent;
+    busy.hidden = false;
+    let last = null;
+    try {
+      for (let i = 0; i < files.length; i++) {
+        busy.textContent = `上傳中 ${i + 1}/${files.length}`;
+        let [name, file] = files[i];
+        if (file.size > ORIGINAL_MAX && /^image\//i.test(file.type)) {
+          try {
+            const big = await shrink(file, 4096, 0.92);
+            if (big && big.size < file.size) file = new File([big], file.name.replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' });
+          } catch (e) { /* 縮不了就照原檔送 */ }
+        }
+        const one = new FormData();
+        for (const [k, v] of rest) one.append(k, v);
+        one.append(name, file);
+        const r = new Response(one);
+        last = await request('POST', action, new Uint8Array(await r.arrayBuffer()), r.headers.get('content-type'));
+        if (last.status >= 400) throw new Error(`第 ${i + 1} 張沒有上傳成功（前面 ${i} 張已經存好）：HTTP ${last.status}`);
+      }
+    } catch (e) {
+      busy.textContent = label;
+      if (seq === navSeq) { busy.hidden = true; showError(e, null); }
+      return;
+    } finally {
+      busy.textContent = label;
+      PageCache.clear();
+    }
+    // 最後一張的回應通常是轉回相簿頁（閘道可能已經直接跟過去了，看 x-gw-path）：再照一般流程開那一頁
+    const loc = last.headers['x-gw-path'] || (last.headers.location ? locationPath(last.headers.location) : '');
+    return go('GET', loc || action.split('?')[0], null, null, { replace: true });
+  }
+
+  async function submitForm(form, submitter) {
+    // 按鈕上的 formaction／formmethod／formenctype 優先（例如人事後台的「重設密碼」按鈕）。
+    const attr = (name, fallback) => {
+      const own = submitter && submitter.getAttribute('form' + name);
+      return own || form.getAttribute(name) || fallback;
+    };
+    const method = attr('method', 'GET').toUpperCase();
+    const action = resolve(attr('action', current)) || current;
+    const enctype = attr('enctype', 'application/x-www-form-urlencoded').toLowerCase();
+    let fd;
+    try { fd = submitter ? new FormData(form, submitter) : new FormData(form); } catch (e) { fd = new FormData(form); }
+    if (submitter && submitter.name && !fd.has(submitter.name)) fd.append(submitter.name, submitter.value);
+
+    if (method === 'GET') {
+      const qs = new URLSearchParams(fd).toString();
+      return go('GET', action.split('?')[0] + (qs ? '?' + qs : ''));
+    }
+    if (enctype === 'multipart/form-data' && form.hasAttribute('data-originals')) return sendOriginals(fd, action);
+    let body;
+    let ct;
+    if (enctype === 'multipart/form-data') {
+      busy.hidden = false;
+      await shrinkImages(fd);
+      const r = new Response(fd);
+      ct = r.headers.get('content-type');
+      body = new Uint8Array(await r.arrayBuffer());
+    } else {
+      ct = 'application/x-www-form-urlencoded';
+      body = new TextEncoder().encode(new URLSearchParams(fd).toString());
+    }
+    return go('POST', action, body, ct);
+  }
+
+  function showError(e, retry) {
+    const box = document.createElement('div');
+    box.className = 'shell-error';
+    const p = document.createElement('p');
+    p.textContent = '⚠️ ' + (e && e.message ? e.message : String(e));
+    box.append(p);
+    if (e && e.kind === 'network') {
+      // 斷網時外殼頁還打得開（sw.js），但系統連不上：照智慧校園規劃書 §3.5 改用紙本
+      const hint = document.createElement('p');
+      hint.textContent = '連不上的這段時間，點名、接送請先記在紙本，恢復後補登。';
+      box.append(hint);
+    }
+    if (retry) {
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = '再試一次';
+      b.addEventListener('click', () => { box.remove(); retry(); });
+      box.append(b);
+    }
+    app.querySelectorAll('.shell-error').forEach((n) => n.remove());
+    app.prepend(box);
+    window.scrollTo(0, 0);
+  }
+
+  let toastTimer = null;
+  function toast(text) {
+    let t = document.getElementById('toast');
+    if (!t) { t = document.createElement('div'); t.id = 'toast'; document.body.append(t); }
+    t.textContent = text;
+    t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.hidden = true; }, 4000);
+  }
+
+  app.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a || e.defaultPrevented) return;
+    const p = resolve(a.getAttribute('href'));
+    if (!p) {
+      if (!a.getAttribute('href').startsWith('#')) { a.target = '_blank'; a.rel = 'noopener'; }
+      return;
+    }
+    e.preventDefault();
+    if (a.target === '_blank') openInNewWindow(p);
+    else go('GET', p);
+  });
+
+  app.addEventListener('submit', (e) => {
+    // 行內 onsubmit 回傳 false（例如兩段式確認的第一下）就尊重它，不送。
+    if (e.defaultPrevented) return;
+    e.preventDefault();
+    submitForm(e.target, e.submitter);
+  });
+
+  // onchange="this.form.submit()" 這種寫法不會觸發 submit 事件，瀏覽器會直接送到 github.io。
+  // 外殼頁裡的表單一律改走自己的送出流程。
+  const nativeSubmit = HTMLFormElement.prototype.submit;
+  HTMLFormElement.prototype.submit = function () {
+    if (app.contains(this)) { submitForm(this, null); return undefined; }
+    return nativeSubmit.call(this);
+  };
+
+  window.addEventListener('popstate', (e) => { Nav.popped(e.state); go('GET', readHash(), null, null, { replace: true }); });
+
+  function start() {
+    // 從 LINE 點開時改用手機的預設瀏覽器（Safari／Chrome）：LINE 內建瀏覽器很可能不支援 Face ID／指紋，
+    // 而且每個 App 的內建瀏覽器登入狀態各自獨立，換個地方開就要重新登入。
+    // openExternalBrowser=1 是 LINE 認得的參數，帶著它的網址會交給外部瀏覽器開啟。
+    if (/ Line\//i.test(navigator.userAgent) && !/[?&]openExternalBrowser=1/.test(location.search)) {
+      location.replace(location.pathname + '?openExternalBrowser=1' + location.hash);
+      return;
+    }
+    // 沒有登入票又是從首頁開：直接要登入頁，不用先到首頁再被轉過去
+    let first = readHash();
+    if (first === HOME && !Jar.has(SESSION)) first = LOGIN;
+    go('GET', first, null, null, { replace: true });
+    // 斷網時也打得開外殼頁；註冊不成（舊瀏覽器、私密瀏覽）就照舊每次從網路抓，不影響使用
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+    Install.start();
+  }
+
+  /** 給頁面用：抓一個檔案（經過加密通道），被擋或一時連不上就等一下再抓。回傳 Blob。 */
+  async function fetchBlob(path) {
+    for (let attempt = 0; ; attempt++) {
+      try {
+        const r = await request('GET', path);
+        if (r.status !== 200) throw new Error('HTTP ' + r.status);
+        return new Blob([r.body], { type: r.headers['content-type'] || 'application/octet-stream' });
+      } catch (e) {
+        if (attempt >= IMG_RETRY.length || !retryable(e)) throw e;
+        await new Promise((res) => setTimeout(res, IMG_RETRY[attempt]));
+      }
+    }
+  }
+
+  /** 給頁面用：整批下載。items＝[{path, name}]，onProgress(已抓, 全部)。抓完跳出「存到手機／下載 ZIP」。 */
+  async function downloadAll(items, zipName, onProgress) {
+    const files = new Array(items.length);
+    let done = 0;
+    const queue = items.map((it, i) => [it, i]);
+    async function worker() {
+      while (queue.length) {
+        const [it, i] = queue.shift();
+        const b = await fetchBlob(it.path);
+        files[i] = new File([b], it.name, { type: b.type || 'image/jpeg' });
+        done++;
+        if (onProgress) onProgress(done, items.length);
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(IMG_PARALLEL, items.length) }, worker));
+    Downloads.offerFiles(files, zipName);
+  }
+
+  return { start, toast, fetchBlob, downloadAll };
+})();
+
+Shell.start();
+
+</script>
+</body>
+</html>
