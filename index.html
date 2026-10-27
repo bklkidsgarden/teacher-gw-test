@@ -15,7 +15,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<style id="appcss" data-href="/auth/static/campus.css?v=bf51994816">
+<style id="appcss" data-href="/auth/static/campus.css?v=9385b4326b">
 /* 智慧校園系統共用樣式：手機優先，桌機只是加寬。基本款沿用請假系統的 style.css，
    各艙看起來是同一套系統。外殼頁只抓頁面的第一個樣式表，所以各艙自己的樣式也寫在這裡。 */
 :root{
@@ -162,6 +162,83 @@ table.grid .num{text-align:right;font-variant-numeric:tabular-nums}
   padding:5px 12px;font-size:14px;background:#fff;cursor:pointer}
 .chip input{margin:0}
 
+/* ── 園務：行政與評鑑紀錄 ─────────────────────────────────── */
+.chip.on{border-color:var(--brand);color:var(--brand);background:#eff6ff;font-weight:600}
+.chips label.chip{margin:0;color:var(--ink);font-weight:400}
+button.chip{font-family:inherit;color:var(--ink)}
+.check{display:flex;align-items:flex-start;gap:6px;margin:10px 0 4px;font-size:15px;color:var(--ink);font-weight:400}
+.check input{margin-top:5px}
+.req{color:var(--risk)}
+.code{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.tally{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+.lvlist{list-style:none;margin:6px 0 0;padding:0}
+.lvline{display:flex;gap:6px;font-size:14px;padding:3px 0;line-height:1.5}
+.lvline .ico{flex:0 0 1.4em;text-align:center}
+.lvline.lv-bad{color:#991b1b} .lvline.lv-bad a{color:#991b1b}
+.lvline.lv-info{color:var(--muted)} .lvline.lv-info a{color:var(--muted)}
+.evalind{padding:12px 0;border-top:1px solid var(--line)}
+.evalind:first-child{border-top:0;padding-top:2px}
+.evalind .head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:2px}
+.evalind .nm{font-weight:600;color:var(--ink)}
+.evlist{margin:4px 0 8px;padding-left:22px;font-size:14px}
+.reclist{list-style:none;margin:6px 0 0;padding:0}
+.reclist li{padding:7px 0;border-top:1px solid var(--line);font-size:14px}
+.reclist li:first-child{border-top:0}
+.formtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.formtile{display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:10px 12px;color:var(--ink)}
+.formtile:hover{border-color:var(--brand);text-decoration:none}
+.formtile .ico{font-size:20px;line-height:1.2}
+.formtile .nm{font-size:14px;font-weight:600}
+.formtile.na{opacity:.5}
+.numgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.rowsform td{padding:4px}
+.rowsform input,.rowsform select{padding:7px 8px;font-size:15px;min-width:70px}
+.rowsform input[type=time]{width:6.6em;min-width:0}
+.checkitem{padding:10px 0;border-top:1px solid var(--line)}
+.checkitem .lbl{font-size:14px;font-weight:500;margin-bottom:6px}
+.checkitem .chip{padding:4px 10px;font-size:13px}
+.checkitem .note{margin-top:6px;padding:8px 10px;font-size:15px}
+.attgrid{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.attgrid img{width:120px;height:90px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.attgrid .pdf{display:inline-block;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px}
+/* 規章內文（app/policy.py 排版）：系統裡看、列印都像一份文件 */
+.docbody{font-size:15px;line-height:1.7;color:var(--ink)}
+.docbody h2{font-size:19px;margin:4px 0 10px;text-align:center}
+.docbody h3{font-size:16px;margin:16px 0 6px}
+.docbody h4{font-size:15px;margin:12px 0 4px}
+.docbody p{margin:6px 0}
+.docbody ul{margin:4px 0 8px;padding-left:22px}
+.docbody .grid{margin:6px 0 10px}
+.docbody .grid td,.docbody .grid th{vertical-align:top}
+textarea.doctext{font-size:14px;line-height:1.6}
+
+/* ── 新生報名（家長公開入口 /join、園方 /enroll）─────────────── */
+.joinhead{background:#e8f5ec;border:1px solid #bfe3cb;border-radius:12px;padding:10px 14px;margin-bottom:14px;font-weight:600}
+.joinhead a{color:#166534}
+.jform h2.sec,h2.sec{margin:0 0 6px;font-size:16px}
+.card h2.sec + label{margin-top:6px}
+.tierbox{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line)}
+.tierbox:first-of-type{border-top:0}
+.tierno{flex:0 0 2em;height:2em;border-radius:999px;background:#eff6ff;color:var(--brand);font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.steps{margin:0;padding-left:20px}
+.steps li{margin:4px 0}
+.codecard{background:#fffbeb;border-color:#fcd34d}
+.codes{display:flex;gap:10px;margin-top:10px}
+.codes div{flex:1;background:#fff;border:1px solid #fcd34d;border-radius:10px;padding:10px;text-align:center}
+.codes span{display:block;font-size:12px;color:var(--muted)}
+.codes b{font-size:19px;letter-spacing:1px;white-space:nowrap}
+.big{font-size:20px;font-weight:700;margin-bottom:4px}
+.big.ok{color:var(--ok)}
+.searchrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.searchrow input,.searchrow select{flex:1;min-width:130px;width:auto}
+.searchrow .btn{flex:0 0 auto}
+.att{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.att form{margin:0}
+.drawbig{background:#fff;border:2px solid var(--brand);border-radius:16px;padding:22px 16px;text-align:center;margin:10px 0}
+.drawbig .pick{font-size:30px;font-weight:700;margin-top:6px;line-height:1.4}
+
 @media (min-width:720px){
   body.has-tabbar{padding-bottom:0}
   .tabbar{position:static;height:auto;border-top:0;border-bottom:1px solid var(--line);
@@ -171,6 +248,51 @@ table.grid .num{text-align:right;font-variant-numeric:tabular-nums}
   .tabbar a.on{border-bottom:2px solid var(--brand)}
   .scroll{margin:0;padding:0}
 }
+
+/* ── 園務：巡園（2026-10-27 從測試版請假系統搬過來，/patrol） ─────────── */
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.seg.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--line);
+  border-radius:10px;background:#fff;font-size:15px;font-weight:500;cursor:pointer;margin:0}
+.seg input:checked+label{border-color:#166534;background:#dcfce7;color:#166534}
+.seg input.bad:checked+label{border-color:#991b1b;background:#fee2e2;color:#991b1b}
+.seg input.fair:checked+label{border-color:#b45309;background:#fef3c7;color:#92400e}
+.seg input.pick:checked+label{border-color:#1d4ed8;background:#dbeafe;color:#1e3a8a}
+.seg input:focus-visible+label{outline:2px solid #1d4ed8;outline-offset:2px}
+.pitem{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff;display:flex;flex-direction:column;gap:10px}
+.pitem.bad{border-color:#fca5a5}
+.pitem.fair{border-color:#fcd34d}
+.pissue{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:10px}
+.parea{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;min-height:56px;
+  box-sizing:border-box;border:1px solid var(--line);border-radius:14px;background:#fff;color:inherit;text-decoration:none}
+.pbig{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#2563eb;color:#fff;
+  border-radius:18px;padding:18px 20px;text-decoration:none;border:0;width:100%;font:inherit;cursor:pointer}
+.ptags{display:flex;flex-wrap:wrap;gap:6px}
+.ptags input{position:absolute;opacity:0;pointer-events:none}
+.ptags label{display:inline-flex;align-items:center;min-height:40px;padding:0 12px;border:1px solid var(--line);
+  border-radius:999px;background:#fff;font-size:14px;cursor:pointer;margin:0}
+.ptags input:checked+label{border-color:#1d4ed8;background:#dbeafe;color:#1e3a8a}
+.pphoto{width:100%;max-height:260px;object-fit:cover;border-radius:12px;background:#e5e7eb}
+.pblock{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 16px}
+.cphotos{position:relative;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%}
+.pgrid:empty{display:none}
+.pgrid figure{margin:0;display:flex;flex-direction:column;gap:4px}
+.pgrid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#e5e7eb;cursor:zoom-in}
+.pgrid figure.big{grid-column:1/-1}
+.pgrid figure.big img{aspect-ratio:auto;max-height:none;object-fit:contain;cursor:zoom-out}
+.pdrop{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin:0}
+.pdrop input{width:18px;height:18px}
+.pgrid figure:has(.pdrop input:checked) img{opacity:.35}
+.pfile{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.ptimeline{list-style:none;margin:0;padding:0}
+.ptimeline li{position:relative;padding:0 0 14px 22px;border-left:2px solid var(--line);margin-left:6px}
+.ptimeline li:last-child{border-left-color:transparent}
+.ptimeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:999px;background:#9ca3af}
+.ptimeline li.found::before{background:#991b1b}.ptimeline li.reported::before{background:#1d4ed8}
+.ptimeline li.closed::before{background:#166534}.ptimeline li.returned::before{background:#b45309}
+.stickybar{position:sticky;bottom:0;z-index:10;background:var(--bg);padding:10px 0}
 
 </style>
 <style>
@@ -217,7 +339,7 @@ function showFatal(t) {
 }
 </script>
 </head>
-<body data-pubkey="BIDalvOq+EgrsdL8UPLgARUqtbyjCn6ZdfWbgvAIm8ZGMNUdRxhv/ZtEkQztYKiTq5CHRxOB/4fImg+Huej+5f4=" data-exec="https://bk-gw-relay-test.bklkidsgarden.workers.dev/" data-home="/auth/teacher" data-login="/auth/login?next=%2Fauth%2Fteacher" data-session="campus_session">
+<body data-pubkey="BIDalvOq+EgrsdL8UPLgARUqtbyjCn6ZdfWbgvAIm8ZGMNUdRxhv/ZtEkQztYKiTq5CHRxOB/4fImg+Huej+5f4=" data-exec="https://bk-gw-relay-test.bklkidsgarden.workers.dev/" data-home="/auth/teacher" data-login="/auth/login?next=%2Fauth%2Fteacher" data-session="campus_session" data-entry="teacher">
 <pre id="fatal" hidden></pre>
 <div id="busy" hidden>連線中…</div>
 <div id="sheet" hidden></div>
@@ -722,6 +844,8 @@ const Shell = (() => {
   const HOME = document.body.dataset.home || '/';
   const LOGIN = document.body.dataset.login || '/login';
   const SESSION = document.body.dataset.session || 'leave_session';
+  // 這是哪個 App（build.py）：每一筆請求都帶給閘道，老師的 App 只給老師的權限
+  const ENTRY = document.body.dataset.entry || '';
   let current = HOME;
   // 系統的樣式表：外殼頁內建一份（build.py），其他抓過的記在這台手機（網址帶內容雜湊，改版就是新網址）。
   // 校園版每一艙的樣式表不同（入口首頁、請假系統…），記住抓過的，來回切換才不必每次多跑一趟 Google。
@@ -781,6 +905,7 @@ const Shell = (() => {
     const c = Jar.header();
     if (c) headers.cookie = c;
     if (contentType) headers['content-type'] = contentType;
+    if (ENTRY) headers['x-campus-entry'] = ENTRY;
     const r = await Gw.call({ method, path, headers }, body);
     Jar.update(r.headers['set-cookie']);
     return r;
