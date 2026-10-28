@@ -329,7 +329,11 @@ textarea.doctext{font-size:14px;line-height:1.6}
 </style>
 <script>
 // 任何沒接住的錯誤都直接印在畫面上：手機上沒有開發者工具，看不到主控台。
-window.addEventListener('error', function (e) { showFatal((e.message || '程式錯誤') + (e.lineno ? '（第 ' + e.lineno + ' 行）' : '')); });
+// 只有「Script error.」、沒有檔名行號的，是瀏覽器自己塞進來的程式（iPhone 的 Chrome、LINE 內建瀏覽器，
+// 按「加入主畫面」時常出現）出錯，不是外殼頁的；印出來只會嚇到人，略過。
+window.addEventListener('error', function (e) {
+  if (!e.filename && !e.lineno && /^Script error\.?$/i.test(e.message || '')) return;
+  showFatal((e.message || '程式錯誤') + (e.lineno ? '（第 ' + e.lineno + ' 行）' : '')); });
 window.addEventListener('unhandledrejection', function (e) { showFatal('未處理的錯誤：' + ((e.reason && e.reason.message) || e.reason)); });
 function showFatal(t) {
   var d = document.getElementById('fatal');
