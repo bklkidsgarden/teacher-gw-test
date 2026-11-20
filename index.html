@@ -15,7 +15,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<style id="appcss" data-href="/auth/static/campus.css?v=468580dba3">
+<style id="appcss" data-href="/auth/static/campus.css?v=d57dc7bd93">
 /* 智慧校園系統共用樣式：手機優先（老師用手機），桌機只是加寬（行政用電腦）。各艙看起來是同一套系統。
    外殼頁只抓頁面的第一個樣式表，所以各艙自己的樣式也寫在這裡。
 
@@ -37,25 +37,35 @@
   --admin:#a8650d; --admin-d:#875009; --admin-t:#faeeda;
   --other:#5f5e5a; --other-d:#4a4946; --other-t:#f0efea;
   /* 這一頁的主色（各系統的頁面換成那一類的顏色） */
-  --brand:var(--navy); --brand-d:var(--navy-d); --brand-t:var(--navy-t);
+  --brand:var(--navy); --brand-d:var(--navy-d);--brand-fill:var(--navy-fill);--brand-fill-d:var(--navy-fill-d); --brand-t:var(--navy-t);
   --nav-on:var(--navy);
   /* 狀態 */
   --risk:#c2334a; --risk-t:#fdecee; --info:#2f74b8; --notice:#9a5600; --notice-t:#fff4e0; --ok:#1d7a4a; --ok-t:#e4f4ea;
+  /* 淺色底上的字（標籤、膠囊選項） */
+  --ok-ink:#155c37; --notice-ink:#704000; --risk-ink:#8f1d31;
   /* 金盞黃：家長版的強調色，同仁版只用在安全模式提示 */
   --sun:#f3b63f; --sun-t:#fff5da; --sun-ink:#5c3d00;
+  /* 實色底（上面放白字）：淺色時跟主色同一個顏色，深色時主色變亮當字用、實色底維持深的（規範 §10） */
+  --navy-fill:#22324a; --navy-fill-d:#18263a; --hr-fill:#0f6e56; --hr-fill-d:#0b5743; --teach-fill:#2f74b8; --teach-fill-d:#255f99;
+  --admin-fill:#a8650d; --admin-fill-d:#875009; --risk-fill:#c2334a; --risk-fill-d:#a3243a; --ok-fill:#1d7a4a; --ok-fill-d:#15603a;
+  --info-fill:#2f74b8;
+  /* 補齊的中性色與各狀態的邊線、淺底 */
+  --ink-2:#3b4552; --faint:#8a929c; --disabled:#bcc3cc; --glass:rgba(255,255,255,.78); --bar:rgba(255,255,255,.96);
+  --ok-line:#bfe0cc; --risk-line:#f3c3cc; --notice-line:#f0d7a8; --sun-line:#f1dc9c; --sun-fg:#5c3d00;
+  --info-t:#eaf3fc; --info-ink:#1e4a7a; --info-line:#bcd6f0; --vio:#6d28d9; --vio-t:#f1edfd; --vio-t2:#e8e1fb; --vio-ink:#4c2a9a;
   --r-lg:16px; --r-md:12px; --r-sm:8px;
   --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   --round:ui-rounded,"SF Pro Rounded",-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   --num:var(--sans);
   --nav-h:66px;
 }
-.page.g-hr{--brand:var(--hr);--brand-d:var(--hr-d);--brand-t:var(--hr-t)}
-.page.g-teach{--brand:var(--teach);--brand-d:var(--teach-d);--brand-t:var(--teach-t)}
-.page.g-admin{--brand:var(--admin);--brand-d:var(--admin-d);--brand-t:var(--admin-t)}
-.page.g-other{--brand:var(--navy);--brand-d:var(--navy-d);--brand-t:var(--navy-t)}   /* 灰色當主要按鈕像是不能按，其他類的頁面用深藍灰 */
+.page.g-hr{--brand:var(--hr);--brand-d:var(--hr-d);--brand-fill:var(--hr-fill);--brand-fill-d:var(--hr-fill-d);--brand-t:var(--hr-t)}
+.page.g-teach{--brand:var(--teach);--brand-d:var(--teach-d);--brand-fill:var(--teach-fill);--brand-fill-d:var(--teach-fill-d);--brand-t:var(--teach-t)}
+.page.g-admin{--brand:var(--admin);--brand-d:var(--admin-d);--brand-fill:var(--admin-fill);--brand-fill-d:var(--admin-fill-d);--brand-t:var(--admin-t)}
+.page.g-other{--brand:var(--navy);--brand-d:var(--navy-d);--brand-fill:var(--navy-fill);--brand-fill-d:var(--navy-fill-d);--brand-t:var(--navy-t)}   /* 灰色當主要按鈕像是不能按，其他類的頁面用深藍灰 */
 /* 家長聯絡簿 */
 .page.theme-parent{--bg:#f4f7f2;--line:#e1e8e2;--line-2:#c9d4cc;--ink:#18221d;--muted:#5b6862;--soft:#f6f9f6;--track:#e6ece7;
-  --brand:#1f6b52;--brand-d:#165440;--brand-t:#e2f0e8;--nav-on:#1f6b52;--r-lg:20px;--r-md:14px;--num:var(--round);
+  --brand:#1f6b52;--brand-d:#165440;--brand-fill:#1f6b52;--brand-fill-d:#165440;--brand-t:#e2f0e8;--nav-on:#1f6b52;--r-lg:20px;--r-md:14px;--num:var(--round);
   --notice:#a86f00;--notice-t:#fff5da}   /* 家長版的「注意」用金盞黃，不用同仁版的橘 */
 
 *{box-sizing:border-box}
@@ -67,14 +77,14 @@ a{color:var(--brand);text-decoration:none;text-underline-offset:3px}
 a:hover{text-decoration:underline}
 img{max-width:100%}
 /* 每一頁外面那一層（base.html）：這一類的顏色、家長配色都掛在這裡 */
-.page{min-height:100vh;background:var(--bg)}
+.page:where(:not(.app-leave)){min-height:100vh;background:var(--bg)}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
 
 /* 線條圖示（icons.py）：顏色跟著文字、大小跟著字級 */
 .ic{width:1.15em;height:1.15em;flex:none;vertical-align:-.2em}
 /* 標題前的圖示用這個系統的顏色；狀態圖示自帶顏色（icons.py 的 TONE）；按鈕、標籤裡的跟著文字 */
 h1 > .ic,h2 > .ic,h3 > .ic{color:var(--brand)}
-.ic.t-ok{color:var(--ok)} .ic.t-bad{color:var(--risk)} .ic.t-warn{color:#c27a00}
+.ic.t-ok{color:var(--ok)} .ic.t-bad{color:var(--risk)} .ic.t-warn{color:var(--notice)}
 .btn .ic,.badge .ic,.alert .ic{color:inherit}
 .badge .ic{width:1em;height:1em}
 /* 圖示底色：四類各一個顏色 */
@@ -87,7 +97,7 @@ h1 > .ic,h2 > .ic,h3 > .ic{color:var(--brand)}
 .ico.g-other{background:var(--other-t);color:var(--other)}
 
 /* ── 頂列 ─────────────────────────────────────────────── */
-.topbar{display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid var(--line);
+.topbar{display:flex;align-items:center;gap:12px;background:var(--card);border-bottom:1px solid var(--line);
   padding:0 16px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));
   height:58px;position:sticky;top:0;z-index:20}
 /* 各系統的頁面：頂列下一條那一類顏色的細線，知道自己在哪個系統 */
@@ -96,7 +106,7 @@ h1 > .ic,h2 > .ic,h3 > .ic{color:var(--brand)}
   text-overflow:ellipsis;color:var(--ink);min-width:0}
 .brand:hover{text-decoration:none}
 .brand .mark{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;
-  background:var(--navy);color:#fff;flex:none}
+  background:var(--navy-fill);color:#fff;flex:none}
 .brand .mark .ic{width:20px;height:20px}
 .brand .ver{display:inline-block;font-weight:500;font-size:12.5px;color:var(--muted);
   vertical-align:2px;border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-left:2px}
@@ -105,7 +115,7 @@ h1 > .ic,h2 > .ic,h3 > .ic{color:var(--brand)}
 .me:hover{text-decoration:none}
 .me-name{display:none}
 .avatar{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;
-  background:var(--navy);color:#fff;font-size:15.5px;font-weight:600;flex:none}
+  background:var(--navy-fill);color:#fff;font-size:15.5px;font-weight:600;flex:none}
 .avatar.lg{width:54px;height:54px;font-size:21px}
 /* 舊版頂列（請假系統等還沒改的頁面） */
 .who{font-size:14.5px;color:var(--muted);white-space:nowrap;margin-left:auto}
@@ -114,16 +124,16 @@ h1 > .ic,h2 > .ic,h3 > .ic{color:var(--brand)}
 .container{max-width:920px;margin:16px auto;padding:0 16px}
 
 /* ── 底部分頁（手機）；桌機放到頂列裡（.topnav） ─────────────── */
-.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:rgba(255,255,255,.96);
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:var(--bar);
   border-top:1px solid var(--line);height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom)}
 .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-  font-size:13px;color:#7d8590;text-decoration:none;position:relative}
+  font-size:14px;color:var(--faint);text-decoration:none;position:relative}
 .tabbar a .ic{width:28px;height:28px}
 .tabbar a .ico{font-size:21px;line-height:1;background:none;width:auto;height:auto}
 .tabbar a.on{color:var(--nav-on);font-weight:600}
 .tabbar a:active{background:var(--soft)}
 .tabbar a .dot{position:absolute;top:5px;left:calc(50% + 6px)}
-.dot{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border-radius:999px;background:var(--risk);color:#fff;
+.dot{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border-radius:999px;background:var(--risk-fill);color:#fff;
   font-family:var(--num);font-size:13px;line-height:1;padding:0 6px;font-weight:600;font-variant-numeric:tabular-nums;flex:none}
 
 /* ── 字 ─────────────────────────────────────────────── */
@@ -131,6 +141,9 @@ h1{font-size:24px;line-height:1.35;font-weight:700;margin:0 0 6px}
 h2{font-size:18.5px;line-height:1.45;font-weight:600;margin:24px 0 10px}
 h3{font-size:17px;font-weight:600}
 .sub{color:var(--muted);margin:0 0 16px;font-size:16px}
+/* 返回上一層：「‹ 上一層的名稱」。深色字（類別色的字直接放在灰底上對比不夠，視覺辨識規範 §10） */
+.back{margin:0 0 8px}
+.back a{color:var(--ink);font-weight:500}
 /* 首頁的分段標題：小、灰，只是分類（不叫 .sec：新生報名的 h2.sec 是另一種） */
 h2.grp{font-size:15px;font-weight:600;color:var(--muted);margin:22px 2px 8px;letter-spacing:.04em}
 
@@ -142,25 +155,25 @@ h2.grp{font-size:15px;font-weight:600;color:var(--muted);margin:22px 2px 8px;let
 /* ── 標籤 ─────────────────────────────────────────────── */
 .badge{display:inline-flex;align-items:center;gap:3px;padding:1px 9px;border-radius:999px;font-size:14px;font-weight:500;
   white-space:nowrap;line-height:1.75;background:var(--soft);color:var(--muted)}
-.badge.on{background:var(--ok-t);color:#155c37}
-.badge.off{background:#eef0f2;color:var(--muted)}
-.badge.risk{background:var(--risk-t);color:#8f1d31}
-.badge.notice{background:var(--notice-t);color:#704000}
+.badge.on{background:var(--ok-t);color:var(--ok-ink)}
+.badge.off{background:var(--track);color:var(--muted)}
+.badge.risk{background:var(--risk-t);color:var(--risk-ink)}
+.badge.notice{background:var(--notice-t);color:var(--notice-ink)}
 .badge.brand{background:var(--brand-t);color:var(--brand-d)}
 
 /* ── 提示訊息 ─────────────────────────────────────────── */
 .alert{display:block;border-radius:var(--r-md);padding:11px 14px;margin-bottom:12px;font-size:16px;border:1px solid}
-.alert.risk{background:var(--risk-t);border-color:#f3c3cc}
-.alert.notice{background:var(--notice-t);border-color:#f0d7a8}
-.alert.ok{background:var(--ok-t);border-color:#bfe0cc}
+.alert.risk{background:var(--risk-t);border-color:var(--risk-line)}
+.alert.notice{background:var(--notice-t);border-color:var(--notice-line)}
+.alert.ok{background:var(--ok-t);border-color:var(--ok-line)}
 .alert ul{margin:6px 0 0;padding-left:20px}
 
 /* ── 表單 ─────────────────────────────────────────────── */
-label{display:block;font-size:15px;color:#3b4552;margin:16px 0 6px;font-weight:600}
+label{display:block;font-size:15px;color:var(--ink-2);margin:16px 0 6px;font-weight:600}
 input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line-2);border-radius:10px;font-size:17px;
-  font-family:inherit;background:#fff;color:var(--ink);min-height:46px;transition:border-color .15s,box-shadow .15s}
+  font-family:inherit;background:var(--card);color:var(--ink);min-height:46px;transition:border-color .15s,box-shadow .15s}
 /* 16px 是為了避免 iOS Safari 聚焦時自動放大頁面 */
-input::placeholder,textarea::placeholder{color:#9aa2ac}
+input::placeholder,textarea::placeholder{color:var(--faint)}
 input[type=checkbox],input[type=radio]{width:18px;height:18px;min-height:0;padding:0;margin:0 7px 0 0;vertical-align:-3px;accent-color:var(--brand)}
 input[type=file]{padding:9px 10px;background:var(--soft)}
 input[type=range]{accent-color:var(--brand);border:0;padding:0;min-height:0}
@@ -170,22 +183,27 @@ select[multiple]{background-image:none;padding-right:12px}
 textarea{min-height:96px;resize:vertical;line-height:1.65}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-t)}
 input:disabled,select:disabled,textarea:disabled{background:var(--soft);color:var(--muted)}
+/* 手機（尤其 iPhone）的日期、月份、時間欄有自己的最小寬度，不跟著欄寬縮：字放大後會撐出欄位、疊到旁邊的按鈕 */
+input[type=date],input[type=month],input[type=time],input[type=datetime-local]{min-width:0;max-width:100%;-webkit-appearance:none;appearance:none}
+input[type=date]::-webkit-date-and-time-value,input[type=month]::-webkit-date-and-time-value,
+input[type=datetime-local]::-webkit-date-and-time-value{text-align:left}
+.two input[type=date],.two input[type=month],.two input[type=time]{display:block;width:100%}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .two>*{min-width:0}
 .hint{font-size:14px;color:var(--muted);margin-top:5px;line-height:1.55}
 
 /* ── 按鈕 ─────────────────────────────────────────────── */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--brand);color:#fff;
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--brand-fill);color:#fff;
   border:1px solid transparent;border-radius:var(--r-md);padding:10px 18px;min-height:46px;font-size:17px;font-weight:600;
   cursor:pointer;text-align:center;font-family:inherit;line-height:1.3;transition:background-color .15s,transform .08s;
   -webkit-user-select:none;user-select:none}
-.btn:hover{background:var(--brand-d);text-decoration:none;color:#fff}
+.btn:hover{background:var(--brand-fill-d);text-decoration:none;color:#fff}
 .btn:active{transform:scale(.98)}
-.btn:disabled,.btn[disabled]{background:#bcc3cc;cursor:not-allowed;transform:none}
-.btn.ghost{background:#fff;color:var(--ink);border-color:var(--line-2)}
+.btn:disabled,.btn[disabled]{background:var(--disabled);cursor:not-allowed;transform:none}
+.btn.ghost{background:var(--card);color:var(--ink);border-color:var(--line-2)}
 .btn.ghost:hover{background:var(--soft);color:var(--ink)}
-.btn.risk{background:var(--risk);color:#fff} .btn.risk:hover{background:#a3243a}
-.btn.ok{background:var(--ok);color:#fff} .btn.ok:hover{background:#15603a}
+.btn.risk{background:var(--risk-fill);color:#fff} .btn.risk:hover{background:var(--risk-fill-d)}
+.btn.ok{background:var(--ok-fill);color:#fff} .btn.ok:hover{background:var(--ok-fill-d)}
 .btn.sm{padding:6px 12px;min-height:36px;font-size:15px;border-radius:10px}
 .btn.wide{width:100%}
 .actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
@@ -196,11 +214,11 @@ input:disabled,select:disabled,textarea:disabled{background:var(--soft);color:va
 .kv{width:100%;font-size:16px;border-collapse:collapse}
 .kv th{text-align:left;color:var(--muted);font-weight:500;padding:8px 14px 8px 0;white-space:nowrap;vertical-align:top;width:1%;border:0}
 .kv td{padding:8px 0;border:0}
-.kv tr+tr th,.kv tr+tr td{border-top:1px solid #eef0f3}
+.kv tr+tr th,.kv tr+tr td{border-top:1px solid var(--line)}
 table.grid{width:100%;border-collapse:collapse;font-size:15px}
 table.grid th,table.grid td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 table.grid th{color:var(--muted);font-weight:600;background:var(--soft);white-space:nowrap;font-size:14px}
-table.grid tbody tr:hover td{background:#fafbfc}
+table.grid tbody tr:hover td{background:var(--soft)}
 table.grid .num{text-align:right;font-variant-numeric:tabular-nums}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:0 16px}
 
@@ -214,12 +232,12 @@ table.grid .num{text-align:right;font-variant-numeric:tabular-nums}
 .subtabs a{flex:1 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:38px;padding:0 14px;
   font-size:16px;color:var(--muted);white-space:nowrap;border-radius:9px}
 .subtabs a:hover{text-decoration:none;color:var(--ink)}
-.subtabs a.on{background:#fff;color:var(--brand-d);font-weight:600;box-shadow:0 1px 2px rgba(20,30,45,.12)}
+.subtabs a.on{background:var(--card);color:var(--brand-d);font-weight:600;box-shadow:0 1px 2px rgba(20,30,45,.12)}
 
-.foot{text-align:center;color:#8a929c;font-size:13.5px;padding:20px 16px 26px}
+.foot{text-align:center;color:var(--faint);font-size:13.5px;padding:20px 16px 26px}
 .empty{text-align:center;color:var(--muted);padding:30px 12px;font-size:16px}
 .pw{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:16.5px;font-weight:700;
-  letter-spacing:2px;background:var(--sun-t);border:1px solid #f1d58f;border-radius:6px;padding:1px 8px}
+  letter-spacing:2px;background:var(--sun-t);border:1px solid var(--sun-line);border-radius:6px;padding:1px 8px}
 .muted{color:var(--muted)}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 details>summary{cursor:pointer}
@@ -233,11 +251,11 @@ details>summary{cursor:pointer}
 .or::before,.or::after{content:"";flex:1;border-top:1px solid var(--line)}
 
 /* 安全模式、測試環境：一條細的，不佔版面但一定看得到 */
-.safebar{display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap;background:var(--sun-t);border:1px solid #efd28a;
-  border-radius:10px;padding:7px 12px;margin-bottom:14px;font-size:14.5px;color:var(--sun-ink);line-height:1.6}
+.safebar{display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap;background:var(--sun-t);border:1px solid var(--sun-line);
+  border-radius:10px;padding:7px 12px;margin-bottom:14px;font-size:14.5px;color:var(--sun-fg);line-height:1.6}
 .safebar > b:first-child{display:inline-flex;align-items:center;gap:4px}
-.stagingbar{background:repeating-linear-gradient(-45deg,#f1edfd,#f1edfd 10px,#e8e1fb 10px,#e8e1fb 20px);
-  color:#4c2a9a;padding:3px 14px;font-size:13.5px;text-align:center;line-height:1.6}
+.stagingbar{background:repeating-linear-gradient(-45deg,var(--vio-t),var(--vio-t) 10px,var(--vio-t2) 10px,var(--vio-t2) 20px);
+  color:var(--vio-ink);padding:3px 14px;font-size:13.5px;text-align:center;line-height:1.6}
 
 /* 我的帳號：頭像、名字、登出 */
 .profile{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
@@ -251,14 +269,15 @@ details>summary{cursor:pointer}
 .hello .date{font-size:14.5px;color:var(--muted)}
 .hello h1{margin:0}
 /* 現在該做的事：一顆深色大按鈕，點了直接進那個模組（§3.12）。不強制跳轉 */
-.now{display:flex;align-items:center;gap:12px;background:var(--navy);color:#fff;border-radius:var(--r-lg);
+.now:where(:not(.app-leave *)){display:flex;align-items:center;gap:12px;background:var(--navy-fill);color:#fff;border-radius:var(--r-lg);
   padding:14px 14px 14px 16px;margin-bottom:10px;text-decoration:none;transition:transform .08s}
-.now:hover{background:var(--navy-d);text-decoration:none;color:#fff}
-.now:active{transform:scale(.985)}
+.now:hover:where(:not(.app-leave *)){background:var(--navy-fill-d);text-decoration:none;color:#fff}
+.now:active:where(:not(.app-leave *)){transform:scale(.985)}
 .now-body{flex:1;min-width:0;display:flex;flex-direction:column}
-.now .t{font-size:14px;color:#b9c4d4;font-variant-numeric:tabular-nums}
-.now .n{font-size:18.5px;font-weight:600}
-.now .go{flex:none;background:#fff;color:var(--navy);border-radius:10px;padding:7px 14px;font-size:15.5px;font-weight:600}
+.now .t:where(:not(.app-leave *)){font-size:14px;color:#b9c4d4;font-variant-numeric:tabular-nums}
+.now .n:where(:not(.app-leave *)){font-size:18.5px;font-weight:600}
+.now .ico{background:rgba(255,255,255,.14);color:#fff}
+.now .go{flex:none;background:#fff;color:var(--navy-fill);border-radius:10px;padding:7px 14px;font-size:15.5px;font-weight:600}
 .now.info{background:var(--card);color:var(--ink);border:1px solid var(--line)}
 .now.info .t{color:var(--muted)}
 .next{display:flex;align-items:center;gap:6px;font-size:15.5px;color:var(--muted);margin:4px 2px 4px}
@@ -266,34 +285,34 @@ details>summary{cursor:pointer}
 /* 一件一行的清單（待辦等）：白底一塊，裡面用細線分隔，不一件一張卡 */
 .rows{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
 .row{display:flex;align-items:center;gap:14px;min-height:62px;padding:9px 12px 9px 14px;color:var(--ink);font-size:16.5px}
-.row + .row{border-top:1px solid #eef0f3}
+.row + .row{border-top:1px solid var(--line)}
 a.row:hover{text-decoration:none;background:var(--soft);color:var(--ink)}
 a.row:active{background:var(--track)}
 .row-main{flex:1;min-width:0}
-.row .chev{color:#a3abb5;width:20px;height:20px}
+.row .chev{color:var(--faint);width:20px;height:20px}
 .row.quiet{color:var(--muted)}
 /* 功能：圖示＋名稱，不加外框；手機一排四個 */
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 2px 8px;border-radius:14px;
   color:var(--ink);font-size:15px;text-align:center;line-height:1.3;transition:background-color .15s,transform .08s}
-.tile:hover{text-decoration:none;color:var(--ink);background:#fff}
+.tile:hover{text-decoration:none;color:var(--ink);background:var(--card)}
 .tile:active{transform:scale(.96);background:var(--track)}
 .tile .ico{width:60px;height:60px;border-radius:18px}
 .tile .ico .ic{width:30px;height:30px}
 .tile .dot{position:absolute;top:4px;left:calc(50% + 18px)}
-.todo{list-style:none;margin:0;padding:0}
-.todo li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:15.5px}
-.todo li:first-child{border-top:0}
+.todo:where(:not(.app-leave *)){list-style:none;margin:0;padding:0}
+.todo li:where(:not(.app-leave *)){display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:15.5px}
+.todo li:first-child:where(:not(.app-leave *)){border-top:0}
 
 /* ── 家長聯絡簿（theme-parent）：溫暖親切 ───────────────────── */
 .theme-parent .brand{color:var(--brand)}
 .theme-parent .brand .mark{background:var(--brand-t);color:var(--brand)}
 .theme-parent .avatar{background:var(--sun);color:var(--sun-ink)}
 .theme-parent h1{font-family:var(--round)}
-.theme-parent .now{background:var(--brand)}
-.theme-parent .now .go{color:var(--brand)}
-.kid{display:block;background:var(--brand);color:#fff;border-radius:22px;padding:14px 16px;margin-bottom:10px}
-a.kid:hover{text-decoration:none;color:#fff;background:var(--brand-d)}
+.theme-parent .now{background:var(--brand-fill)}
+.theme-parent .now .go{color:var(--brand-fill)}
+.kid{display:block;background:var(--brand-fill);color:#fff;border-radius:22px;padding:14px 16px;margin-bottom:10px}
+a.kid:hover{text-decoration:none;color:#fff;background:var(--brand-fill-d)}
 .kid-head{display:flex;align-items:center;gap:12px}
 .kid-head .avatar{width:52px;height:52px;font-size:19.5px;font-family:var(--round)}
 .kid-name{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35}
@@ -305,17 +324,31 @@ a.kid:hover{text-decoration:none;color:#fff;background:var(--brand-d)}
 .kid-tags span.warm{background:var(--sun);color:var(--sun-ink);font-weight:600}
 .kid-note{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.18);font-size:15.5px;color:#e6f2ec}
 .kid-note .when{display:block;font-size:13.5px;color:#b8d6c7}
-.waiting{background:var(--sun-t);border:1px solid #f1dc9c;border-radius:18px;padding:6px 14px;margin-bottom:12px}
-.waiting-h{font-size:14.5px;font-weight:600;color:var(--sun-ink);padding:6px 0 2px}
+/* 聯絡簿家長：一頁一個孩子，左右滑換兄弟姊妹（上面的名字也可以點） */
+.kid-switch{display:flex;align-items:center;gap:6px;margin:0 0 10px;overflow-x:auto;scrollbar-width:none}
+.kid-switch::-webkit-scrollbar{display:none}
+.kid-switch a{flex:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:999px;padding:6px 15px;font-size:16px;font-family:var(--round);line-height:1.3;cursor:pointer}
+.kid-switch a:hover{text-decoration:none}
+.kid-switch a.on{background:var(--brand-fill);border-color:var(--brand);color:#fff;font-weight:600}
+.kid-switch .dot{min-width:20px;height:20px;font-size:12.5px}
+.kid-switch .hint{margin:0 0 0 auto;flex:none;font-size:13.5px}
+.kid-pager{display:flex;align-items:flex-start;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;scrollbar-width:none;transition:height .2s ease}
+.kid-pager::-webkit-scrollbar{display:none}
+.kid-slide{flex:0 0 100%;min-width:0;scroll-snap-align:start;scroll-snap-stop:always}
+.kid-swiping{transition:transform .16s ease,opacity .16s ease}
+.waiting{background:var(--sun-t);border:1px solid var(--sun-line);border-radius:18px;padding:6px 14px;margin-bottom:12px}
+.waiting-h{font-size:14.5px;font-weight:600;color:var(--sun-fg);padding:6px 0 2px}
 .waiting a{display:flex;align-items:center;gap:10px;min-height:50px;color:var(--ink);font-size:16px}
-.waiting a + a{border-top:1px solid #f1e3b8}
+.waiting a + a{border-top:1px solid var(--sun-line)}
 .waiting a:hover{text-decoration:none}
-.waiting a > .ic:first-child{color:#a35a00;width:23px;height:23px}
-.waiting .chev{margin-left:auto;color:#c49a4a}
+.waiting a > .ic:first-child{color:var(--notice);width:23px;height:23px}
+.waiting .chev{margin-left:auto;color:var(--notice)}
 .waiting.done{background:var(--card);border-color:var(--line);color:var(--muted);padding:12px 14px;font-size:15.5px}
 .quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin:4px 0 14px}
 .quick a{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 2px;border-radius:16px;color:var(--ink);font-size:15px;position:relative}
-.quick a:hover{text-decoration:none;background:#fff}
+.quick a:hover{text-decoration:none;background:var(--card)}
 .quick a:active{transform:scale(.96)}
 .quick .ico{width:60px;height:60px;border-radius:50%;background:var(--brand-t);color:var(--brand)}
 .quick .ico .ic{width:29px;height:29px}
@@ -325,11 +358,11 @@ a.kid:hover{text-decoration:none;color:#fff;background:var(--brand-d)}
 /* 家長的內頁：跟首頁同一個溫度——綠色圓體標題、圓一點的卡片、金盞黃的提醒 */
 .theme-parent h1,.theme-parent h2{color:var(--brand-d)}
 .theme-parent h2{font-family:var(--round)}
-.theme-parent .card{border-color:#e3eae5}
-.theme-parent .card.remind{background:var(--sun-t);border-color:#f1dc9c}
-.theme-parent .card.remind .ic{color:#a35a00}
-.theme-parent .alert.notice{background:var(--sun-t);border-color:#f1dc9c}
-.theme-parent .btn.ghost{color:var(--brand-d);border-color:#cfe0d6}
+.theme-parent .card{border-color:var(--line)}
+.theme-parent .card.remind{background:var(--sun-t);border-color:var(--sun-line)}
+.theme-parent .card.remind .ic{color:var(--notice)}
+.theme-parent .alert.notice{background:var(--sun-t);border-color:var(--sun-line)}
+.theme-parent .btn.ghost{color:var(--brand-d);border-color:var(--line-2)}
 .theme-parent .btn.ghost:hover{background:var(--brand-t)}
 
 /* ── 帳號頁的權限勾選 ──────────────────────────────────────── */
@@ -339,17 +372,17 @@ a.kid:hover{text-decoration:none;color:#fff;background:var(--brand-d)}
 .perm .what b{display:block;font-size:15.5px}
 .perm .what span{font-size:13.5px;color:var(--muted)}
 .perm select{width:auto;font-size:17px;padding:6px 8px}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line-2);border-radius:999px;min-height:36px;
-  padding:4px 13px;font-size:15.5px;background:#fff;cursor:pointer;transition:background-color .15s,border-color .15s}
-.chip:hover{border-color:#aebbb2;text-decoration:none}
-.chip input{margin:0}
+.chips:where(:not(.app-leave *)){display:flex;flex-wrap:wrap;gap:6px}
+.chip:where(:not(.app-leave *)){display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line-2);border-radius:999px;min-height:36px;
+  padding:4px 13px;font-size:15.5px;background:var(--card);cursor:pointer;transition:background-color .15s,border-color .15s}
+.chip:hover:where(:not(.app-leave *)){border-color:var(--line-2);text-decoration:none}
+.chip input:where(:not(.app-leave *)){margin:0}
 
 /* ── 園務：行政與評鑑紀錄 ─────────────────────────────────── */
 .chip.on{border-color:var(--brand);color:var(--brand-d);background:var(--brand-t);font-weight:600}
-.chip:has(input:checked){border-color:var(--brand);color:var(--brand-d);background:var(--brand-t)}
-.chips label.chip{margin:0;color:var(--ink);font-weight:400}
-button.chip{font-family:inherit;color:var(--ink)}
+.chip:has(input:checked):where(:not(.app-leave *)){border-color:var(--brand);color:var(--brand-d);background:var(--brand-t)}
+.chips label.chip:where(:not(.app-leave *)){margin:0;color:var(--ink);font-weight:400}
+button.chip:where(:not(.app-leave *)){font-family:inherit;color:var(--ink)}
 .check{display:flex;align-items:flex-start;gap:6px;margin:10px 0 4px;font-size:16.5px;color:var(--ink);font-weight:400}
 .check input{margin-top:5px}
 .req{color:var(--risk)}
@@ -358,7 +391,7 @@ button.chip{font-family:inherit;color:var(--ink)}
 .lvlist{list-style:none;margin:6px 0 0;padding:0}
 .lvline{display:flex;gap:6px;font-size:15.5px;padding:3px 0;line-height:1.5}
 .lvline .ico{flex:0 0 1.4em;text-align:center}
-.lvline.lv-bad{color:#991b1b} .lvline.lv-bad a{color:#991b1b}
+.lvline.lv-bad{color:var(--risk-ink)} .lvline.lv-bad a{color:var(--risk-ink)}
 .lvline.lv-info{color:var(--muted)} .lvline.lv-info a{color:var(--muted)}
 .evalind{padding:12px 0;border-top:1px solid var(--line)}
 .evalind:first-child{border-top:0;padding-top:2px}
@@ -369,7 +402,7 @@ button.chip{font-family:inherit;color:var(--ink)}
 .reclist li{padding:7px 0;border-top:1px solid var(--line);font-size:15.5px}
 .reclist li:first-child{border-top:0}
 .formtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.formtile{display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid var(--line);border-radius:12px;
+.formtile{display:flex;flex-direction:column;gap:2px;background:var(--card);border:1px solid var(--line);border-radius:12px;
   padding:10px 12px;color:var(--ink)}
 .formtile:hover{border-color:var(--brand);text-decoration:none}
 .formtile .ico{font-size:22px;line-height:1.2}
@@ -398,8 +431,8 @@ button.chip{font-family:inherit;color:var(--ink)}
 textarea.doctext{font-size:15.5px;line-height:1.6}
 
 /* ── 新生報名（家長公開入口 /join、園方 /enroll）─────────────── */
-.joinhead{background:#e8f5ec;border:1px solid #bfe3cb;border-radius:12px;padding:10px 14px;margin-bottom:14px;font-weight:600}
-.joinhead a{color:#166534}
+.joinhead{background:var(--ok-t);border:1px solid var(--ok-line);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-weight:600}
+.joinhead a{color:var(--ok-ink)}
 .jform h2.sec,h2.sec{margin:0 0 6px;font-size:17px}
 /* 手機瀏覽器的日期、時間欄有自己的最小寬度：不限制會撐破兩欄版面，也跟下拉選單不一樣寬 */
 .jform .two>*{min-width:0}
@@ -414,21 +447,33 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
   display:flex;align-items:center;justify-content:center}
 .steps{margin:0;padding-left:20px}
 .steps li{margin:4px 0}
-.codecard{background:#fffbeb;border-color:#fcd34d}
+.codecard{background:var(--notice-t);border-color:var(--notice-line)}
 .codes{display:flex;gap:10px;margin-top:10px}
-.codes div{flex:1;background:#fff;border:1px solid #fcd34d;border-radius:10px;padding:10px;text-align:center}
+.codes div{flex:1;background:var(--card);border:1px solid var(--notice-line);border-radius:10px;padding:10px;text-align:center}
 .codes span{display:block;font-size:13.5px;color:var(--muted)}
 .codes b{font-size:21px;letter-spacing:1px;white-space:nowrap}
-.big{font-size:22px;font-weight:700;margin-bottom:4px}
-.big.ok{color:var(--ok)}
+.big:where(:not(.app-leave *)){font-size:22px;font-weight:700;margin-bottom:4px}
+.big.ok:where(:not(.app-leave *)){color:var(--ok)}
 .searchrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .searchrow input,.searchrow select{flex:1;min-width:130px;width:auto}
 .searchrow .btn{flex:0 0 auto}
 .att{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
 .att form{margin:0}
-.drawbig{background:#fff;border:2px solid var(--brand);border-radius:16px;padding:22px 16px;text-align:center;margin:10px 0}
+.drawbig{background:var(--card);border:2px solid var(--brand);border-radius:16px;padding:22px 16px;text-align:center;margin:10px 0}
 .drawbig .pick{font-size:30px;font-weight:700;margin-top:6px;line-height:1.4}
 
+/* ── 字放大之後，手機上放不下的改成左右滑（2026-11-10 園方：字跟圖示放大，排擠版面就用左右滑動） ──
+   表格：每一欄至少約 4.5 個字寬，超出螢幕就左右滑；兩端的陰影提示「還有」（跟分頁列同一個做法） */
+@media (max-width:719px){
+  table.grid{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+    background:linear-gradient(to right,var(--card) 30%,transparent) left/24px 100% no-repeat local,
+      linear-gradient(to left,var(--card) 30%,transparent) right/24px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%,rgba(20,30,45,.18),transparent) left/10px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%,rgba(20,30,45,.18),transparent) right/10px 100% no-repeat scroll}
+  table.grid > tbody{display:table;width:100%}
+  table.grid td{min-width:4.5em}
+  table.grid td.num,table.grid th{min-width:0}
+}
 /* ── 桌機（行政的電腦）：分頁放進頂列、功能一排多放幾個 ───────── */
 @media (min-width:720px){
   .page.has-tabbar{padding-bottom:0}
@@ -438,12 +483,12 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
   .topnav a{display:inline-flex;align-items:center;gap:6px;padding:0 14px;color:var(--muted);font-size:16px;
     border-bottom:2px solid transparent;margin-bottom:-2px}
   .topnav a:hover{color:var(--ink);text-decoration:none}
-  .topnav a.on{color:var(--nav-on);font-weight:600;border-bottom-color:var(--nav-on)}
+  .topnav a.on:where(:not(.app-leave *)){color:var(--nav-on);font-weight:600;border-bottom-color:var(--nav-on)}
   .me-name{display:inline}
   /* 請假系統等還有自己的分頁列：桌機放在頂列下面 */
-  .tabbar:not(.appnav){position:static;height:auto;border-top:0;border-bottom:1px solid var(--line);max-width:920px;margin:0 auto;background:transparent}
-  .tabbar:not(.appnav) a{flex:0 0 auto;flex-direction:row;gap:6px;font-size:15.5px;padding:12px 16px}
-  .tabbar:not(.appnav) a.on{border-bottom:2px solid var(--brand)}
+  .tabbar:not(.appnav):where(:not(.app-leave *)){position:static;height:auto;border-top:0;border-bottom:1px solid var(--line);max-width:920px;margin:0 auto;background:transparent}
+  .tabbar:not(.appnav) a:where(:not(.app-leave *)){flex:0 0 auto;flex-direction:row;gap:6px;font-size:15.5px;padding:12px 16px}
+  .tabbar:not(.appnav) a.on:where(:not(.app-leave *)){border-bottom:2px solid var(--brand)}
   .tiles{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
   .scroll{margin:0;padding:0}
   .container{margin-top:22px}
@@ -452,7 +497,7 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
 /* 不想看動畫的人（系統設定「減少動態效果」） */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
-  .btn:active,.tile:active,.now:active,.quick a:active{transform:none}
+  .btn:active,.tile:active,.now:active:where(:not(.app-leave *)),.quick a:active{transform:none}
 }
 /* 列印：拿掉頂列、分頁、提示條 */
 @media print{
@@ -461,38 +506,55 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
   .card{border-color:#ccc}
 }
 
+/* ── 教保：教案資料庫（2026-11-17，/lesson） ─────────── */
+.lsweek{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 14px}
+.lsweek .btn{flex:none}
+.lsweek b{font-size:18px;text-align:center;flex:1}
+.lstext{white-space:pre-wrap;overflow-wrap:anywhere;font-size:16.5px;line-height:1.7}
+.lssec{margin:14px 0 0}
+.lssec:first-child{margin-top:0}
+.lssec > b{display:block;font-size:14.5px;color:var(--muted);font-weight:600;margin-bottom:2px}
+.lsphotos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+.lsphotos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--track);display:block}
+.lsphotos label{margin:0;display:block;font-weight:400;font-size:14px;color:var(--risk-ink);text-align:center}
+.lshead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lshead h2{margin:0}
+.lsplanform textarea{min-height:120px;overflow:hidden}
+.lschips{margin-top:6px}
+.lschips .chip{font-size:14.5px;min-height:32px;background:var(--card);cursor:pointer;text-align:left}
+
 /* ── 園務：巡園（2026-10-27 從測試版請假系統搬過來，/patrol） ─────────── */
 .seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .seg.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 .seg input{position:absolute;opacity:0;pointer-events:none}
 .seg label{display:flex;align-items:center;justify-content:center;min-height:46px;border:1.5px solid var(--line-2);
-  border-radius:var(--r-md);background:#fff;font-size:16.5px;font-weight:500;cursor:pointer;margin:0}
-.seg input:checked+label{border-color:#166534;background:#dcfce7;color:#166534}
-.seg input.bad:checked+label{border-color:#991b1b;background:#fee2e2;color:#991b1b}
-.seg input.fair:checked+label{border-color:#b45309;background:#fef3c7;color:#92400e}
+  border-radius:var(--r-md);background:var(--card);font-size:16.5px;font-weight:500;cursor:pointer;margin:0}
+.seg input:checked+label{border-color:var(--ok-ink);background:var(--ok-t);color:var(--ok-ink)}
+.seg input.bad:checked+label{border-color:var(--risk-ink);background:var(--risk-t);color:var(--risk-ink)}
+.seg input.fair:checked+label{border-color:var(--notice);background:var(--notice-t);color:var(--notice-ink)}
 .seg input.pick:checked+label{border-color:var(--brand);background:var(--brand-t);color:var(--brand-d)}
-.seg input:focus-visible+label{box-shadow:0 0 0 3px var(--brand-t)}
-.pitem{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff;display:flex;flex-direction:column;gap:10px}
-.pitem.bad{border-color:#fca5a5}
-.pitem.fair{border-color:#fcd34d}
+.seg input:focus-visible+label:where(:not(.app-leave *)){box-shadow:0 0 0 3px var(--brand-t)}
+.pitem{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--card);display:flex;flex-direction:column;gap:10px}
+.pitem.bad{border-color:var(--risk-line)}
+.pitem.fair{border-color:var(--notice-line)}
 .pissue{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:10px}
 .parea{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;min-height:56px;
-  box-sizing:border-box;border:1px solid var(--line);border-radius:14px;background:#fff;color:inherit;text-decoration:none}
-.pbig{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--brand-t);color:var(--brand-d);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand) 25%,transparent);
+  box-sizing:border-box;border:1px solid var(--line);border-radius:14px;background:var(--card);color:inherit;text-decoration:none}
+.pbig:where(:not(.app-leave *)){display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--brand-t);color:var(--brand-d);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand) 25%,transparent);
   border-radius:20px;padding:18px 20px;text-decoration:none;border:0;width:100%;font:inherit;cursor:pointer}
 .ptags{display:flex;flex-wrap:wrap;gap:6px}
 .ptags input{position:absolute;opacity:0;pointer-events:none}
 .ptags label{display:inline-flex;align-items:center;min-height:40px;padding:0 13px;border:1.5px solid var(--line-2);
-  border-radius:999px;background:#fff;font-size:15.5px;cursor:pointer;margin:0}
+  border-radius:999px;background:var(--card);font-size:15.5px;cursor:pointer;margin:0}
 .ptags input:checked+label{border-color:var(--brand);background:var(--brand-t);color:var(--brand-d)}
 .ptags input:focus-visible+label{box-shadow:0 0 0 3px var(--brand-t)}
-.pphoto{width:100%;max-height:260px;object-fit:cover;border-radius:12px;background:#e5e7eb}
-.pblock{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 16px}
+.pphoto{width:100%;max-height:260px;object-fit:cover;border-radius:12px;background:var(--track)}
+.pblock{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 16px}
 .cphotos{position:relative;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
 .pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%}
 .pgrid:empty{display:none}
 .pgrid figure{margin:0;display:flex;flex-direction:column;gap:4px}
-.pgrid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#e5e7eb;cursor:zoom-in}
+.pgrid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--track);cursor:zoom-in}
 .pgrid figure.big{grid-column:1/-1}
 .pgrid figure.big img{aspect-ratio:auto;max-height:none;object-fit:contain;cursor:zoom-out}
 .pdrop{display:flex;align-items:center;gap:6px;font-size:14.5px;color:var(--muted);margin:0}
@@ -502,9 +564,9 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
 .ptimeline{list-style:none;margin:0;padding:0}
 .ptimeline li{position:relative;padding:0 0 14px 22px;border-left:2px solid var(--line);margin-left:6px}
 .ptimeline li:last-child{border-left-color:transparent}
-.ptimeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:999px;background:#9ca3af}
-.ptimeline li.found::before{background:#991b1b}.ptimeline li.reported::before{background:var(--info)}
-.ptimeline li.closed::before{background:#166534}.ptimeline li.returned::before{background:#b45309}
+.ptimeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:999px;background:var(--faint)}
+.ptimeline li.found::before{background:var(--risk-ink)}.ptimeline li.reported::before{background:var(--info-fill)}
+.ptimeline li.closed::before{background:var(--ok-ink)}.ptimeline li.returned::before{background:var(--notice)}
 .stickybar{position:sticky;bottom:0;z-index:10;background:var(--bg);padding:10px 0}
 
 /* 公文 */
@@ -515,13 +577,13 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
 .docrow-btns{flex:none;width:86px;display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 .docrow .btn{white-space:nowrap;padding-left:4px;padding-right:4px}
 .docline{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.docdue{font-size:14.5px;color:#92400e;margin-top:4px}
+.docdue{font-size:14.5px;color:var(--notice-ink);margin-top:4px}
 .docdue-row{padding:8px 0;border-top:1px solid var(--line)}
 .docdue-row:first-of-type{border-top:0}
 .docdues{border-left:4px solid var(--notice)}
 .docfield{padding:2px 0 8px}
-.docfield.flag{background:#fffbeb;border-left:3px solid var(--notice);margin:8px -10px;padding:2px 10px 8px;border-radius:6px}
-.docfield .why{font-size:14.5px;color:#92400e;margin-top:6px}
+.docfield.flag{background:var(--notice-t);border-left:3px solid var(--notice);margin:8px -10px;padding:2px 10px 8px;border-radius:6px}
+.docfield .why{font-size:14.5px;color:var(--notice-ink);margin-top:6px}
 .docfield:has(input[name="dl_del"]:checked){opacity:.55}
 .docfield:has(input[name="dl_del"]:checked) input:not([type=checkbox]){text-decoration:line-through}
 .docpages{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
@@ -530,7 +592,7 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
 .docorig summary{font-size:15.5px;color:var(--muted);margin-bottom:8px;cursor:pointer}
 .docpick-h{display:flex;align-items:center;gap:8px;font-size:15.5px;margin:14px 0 6px}
 .docpop{position:fixed;inset:0;z-index:60;background:rgba(14,34,26,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:16px}
-.docpop-box{background:#fff;border-radius:22px;width:100%;max-width:440px;max-height:86vh;overflow-y:auto;padding:20px 18px;box-shadow:0 24px 60px -12px rgba(14,34,26,.4)}
+.docpop-box{background:var(--card);border-radius:22px;width:100%;max-width:440px;max-height:86vh;overflow-y:auto;padding:20px 18px;box-shadow:0 24px 60px -12px rgba(14,34,26,.4)}
 .docpop-box h2{margin:0 0 4px;font-size:18.5px}
 .docpop-item{border-top:1px solid var(--line);padding:12px 0}
 .docpop-item b{display:block;font-size:17px}
@@ -541,13 +603,13 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
 .shhead h1{flex:1;margin:0}
 .shcard{display:flex;gap:12px;color:var(--ink)}
 .shcard:hover{text-decoration:none;border-color:var(--brand)}
-.shthumb{flex:none;width:76px;height:76px;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:#f3f4f6}
+.shthumb{flex:none;width:76px;height:76px;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--track)}
 .shbody{flex:1;min-width:0}
 .shsnip{font-size:15.5px;color:var(--muted);margin-top:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .shtitle{margin:8px 0 2px}
 .shtext{white-space:pre-wrap;word-break:break-word;font-size:16.5px;line-height:1.65;margin-top:10px}
 .shimgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:12px}
-.shimgs img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:#f3f4f6}
+.shimgs img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--track)}
 .shbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
 .shbar form{margin:0}
 .shitem{display:grid;grid-template-columns:1fr 84px 64px;gap:6px;align-items:center;margin-bottom:8px}
@@ -562,9 +624,830 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
 .shmarks{display:flex;align-items:center;gap:6px}
 .shmarks form{margin:0}
 .shamt{font-variant-numeric:tabular-nums;font-weight:600;min-width:64px;text-align:right}
+.shpay{background:var(--brand-t);border-radius:var(--r-md,12px);padding:12px 14px;margin-bottom:14px}
+.shpay table.grid td{border-bottom-color:transparent;padding:4px 0}
+.shpay .hint{margin:6px 0 0}
+.shpayhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.shpayhead span{font-weight:600}
+.shpayhead b{font-size:24px;font-variant-numeric:tabular-nums;color:var(--brand)}
+.shsub{font-size:16px;margin:4px 0 0}
+.shtotal{text-align:right;margin:10px 0 0;font-size:16px}
+.shtotal b{font-size:20px;font-variant-numeric:tabular-nums}
 .shcomment{padding:8px 0 10px;border-bottom:1px solid var(--line)}
 .shcomment .shtext{margin-top:4px;font-size:15.5px}
 .linkbtn{background:none;border:0;padding:0;color:var(--muted);font-size:13.5px;cursor:pointer;text-decoration:underline}
+
+/* ══════════════════════════════════════════════════════════════════════
+   請假系統（含打卡、行事曆、點名、教學日誌、在園狀態、代班）—— 2026-11-11 從請假系統自己的 style.css 併進來
+   每條都加了 :where(.app-leave)：只在請假系統的頁面（.page.app-leave、桌邊小視窗 .sd.app-leave）裡生效，
+   其他系統完全不受影響；:where() 不加權重，所以請假頁面裡誰蓋誰跟原本一樣。
+   最外層（:root／html／body）用 :has(.app-leave)：在外殼頁裡 body 是外殼頁自己的。
+   這一段是原檔照搬（前半是請假自己的舊樣式，後半是介面改版時抄過去的一份），之後請假頁面改用
+   共用的寫法時再逐段拿掉；新的樣式請寫在上面共用的部分。
+   ══════════════════════════════════════════════════════════════════════ */
+/* 請假系統樣式：手機優先。老師用手機請假、主管用手機簽核，桌機只是加寬。 */
+:root:has(.app-leave){
+  --bg:#f4f6f9; --card:#fff; --line:#e3e8ef; --ink:#1f2937; --muted:#5b6472;
+  --brand:#2563eb; --brand-d:#1d4ed8; --risk:#dc2626; --notice:#b45309; --ok:#047857;
+  --nav-h:66px;
+}
+:where(.app-leave) *{box-sizing:border-box}
+html:has(.app-leave){-webkit-text-size-adjust:100%}
+body:has(.app-leave){margin:0;font-family:"PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;
+  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom))}
+:where(.app-leave) a{color:var(--brand);text-decoration:none}
+:where(.app-leave) a:hover{text-decoration:underline}
+
+:where(.app-leave) .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);
+  border-bottom:1px solid var(--line);padding:0 16px;height:52px;position:sticky;top:0;z-index:20}
+:where(.app-leave) .brand{font-weight:700;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+:where(.app-leave) .brand:hover{text-decoration:none}
+:where(.app-leave) .brand .ver{display:inline-block;font-weight:500;font-size:12.5px;color:var(--muted);
+  vertical-align:2px;border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-left:2px}
+:where(.app-leave) .who{font-size:14.5px;color:var(--muted);white-space:nowrap}
+:where(.app-leave) .who a{margin-left:8px}
+
+:where(.app-leave) .container{max-width:900px;margin:16px auto;padding:0 14px}
+
+/* 底部導覽：手機主要的切換方式 */
+:where(.app-leave) .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:var(--card);
+  border-top:1px solid var(--line);height:var(--nav-h);
+  padding-bottom:env(safe-area-inset-bottom)}
+:where(.app-leave) .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;font-size:12.5px;color:var(--muted);text-decoration:none;position:relative}
+:where(.app-leave) .tabbar a .ico{font-size:21px;line-height:1}
+:where(.app-leave) .tabbar a.on{color:var(--brand);font-weight:600}
+:where(.app-leave) .tabbar .dot{position:absolute;top:6px;left:50%;margin-left:6px;min-width:17px;height:17px;
+  border-radius:999px;background:var(--risk-fill);color:#fff;font-size:12.5px;line-height:17px;
+  text-align:center;padding:0 4px;font-weight:600}
+
+:where(.app-leave) h1{font-size:23px;margin:0 0 4px}
+:where(.app-leave) h2{font-size:17px;margin:22px 0 10px}
+:where(.app-leave) .sub{color:var(--muted);margin:0 0 16px;font-size:15.5px}
+
+:where(.app-leave) .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;
+  margin-bottom:14px}
+:where(.app-leave) .card.tight{padding:12px 14px}
+
+/* 餘額卡 */
+:where(.app-leave) .bal{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px}
+:where(.app-leave) .bal .b{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;
+  text-align:center}
+:where(.app-leave) .bal .b .n{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+:where(.app-leave) .bal .b .l{color:var(--muted);font-size:13.5px;margin-top:2px}
+:where(.app-leave) .bal .b .s{color:var(--muted);font-size:12.5px}
+:where(.app-leave) .bal .b.low .n{color:var(--risk)}
+
+/* 假單列 */
+:where(.app-leave) .reqs{display:flex;flex-direction:column;gap:8px}
+:where(.app-leave) .req{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:12px 14px;color:var(--ink)}
+:where(.app-leave) .req:hover{text-decoration:none;border-color:var(--brand)}
+:where(.app-leave) .req .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+:where(.app-leave) .req .t{font-weight:600}
+:where(.app-leave) .req .d{color:var(--muted);font-size:14.5px;margin-top:2px}
+:where(.app-leave) .req .who2{font-size:14.5px;color:var(--muted)}
+
+:where(.app-leave) .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13.5px;
+  white-space:nowrap}
+:where(.app-leave) .badge.on{background:var(--ok-t);color:var(--ok-ink)}
+:where(.app-leave) .badge.off{background:var(--track);color:var(--muted)}
+:where(.app-leave) .badge.risk{background:var(--risk-t);color:var(--risk-ink)}
+:where(.app-leave) .badge.notice{background:var(--notice-t);color:var(--notice-ink)}
+
+:where(.app-leave) .alert{border-radius:10px;padding:11px 14px;margin-bottom:12px;border-left:4px solid;font-size:15.5px}
+:where(.app-leave) .alert.risk{background:var(--risk-t);border-color:var(--risk)}
+:where(.app-leave) .alert.notice{background:var(--notice-t);border-color:var(--notice)}
+:where(.app-leave) .alert.ok{background:var(--ok-t);border-color:var(--ok)}
+:where(.app-leave) .alert ul{margin:6px 0 0;padding-left:20px}
+
+:where(.app-leave) label{display:block;font-size:14.5px;color:var(--muted);margin:14px 0 5px;font-weight:500}
+:where(.app-leave) input,:where(.app-leave) select,:where(.app-leave) textarea{width:100%;padding:11px 12px;border:1px solid var(--line);
+  border-radius:10px;font-size:17px;font-family:inherit;background:var(--card);color:var(--ink)}
+/* 16px 是為了避免 iOS Safari 聚焦時自動放大頁面 */
+:where(.app-leave) textarea{min-height:80px;resize:vertical}
+:where(.app-leave) input:focus,:where(.app-leave) select:focus,:where(.app-leave) textarea:focus{outline:2px solid var(--info-line);border-color:var(--brand)}
+:where(.app-leave) .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+:where(.app-leave) .hint{font-size:13.5px;color:var(--muted);margin-top:5px}
+
+:where(.app-leave) .btn{display:inline-block;background:var(--brand-fill);color:#fff;border:0;border-radius:10px;
+  padding:12px 18px;font-size:16.5px;font-weight:500;cursor:pointer;text-align:center;
+  font-family:inherit}
+:where(.app-leave) .btn:hover{background:var(--brand-fill-d);text-decoration:none}
+:where(.app-leave) .btn:disabled{background:var(--disabled);cursor:not-allowed}
+:where(.app-leave) .btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+:where(.app-leave) .btn.ghost:hover{background:var(--soft)}
+:where(.app-leave) .btn.risk{background:var(--risk-fill)} :where(.app-leave) .btn.risk:hover{background:var(--risk)}
+:where(.app-leave) .btn.ok{background:var(--ok-fill)} :where(.app-leave) .btn.ok:hover{background:var(--ok-fill-d)}
+:where(.app-leave) .btn.sm{padding:7px 12px;font-size:14.5px;border-radius:8px}
+:where(.app-leave) .btn.wide{width:100%}
+:where(.app-leave) .actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+:where(.app-leave) .actions .btn{flex:1;min-width:120px}
+
+/* 明細用的欄位表 */
+:where(.app-leave) .kv{width:100%;font-size:15.5px;border-collapse:collapse}
+:where(.app-leave) .kv th{text-align:left;color:var(--muted);font-weight:500;padding:7px 12px 7px 0;
+  white-space:nowrap;vertical-align:top;width:1%;border:0}
+:where(.app-leave) .kv td{padding:7px 0;border:0}
+
+:where(.app-leave) .trail{list-style:none;margin:0;padding:0;font-size:15.5px}
+:where(.app-leave) .trail li{padding:9px 0;border-bottom:1px solid var(--line)}
+:where(.app-leave) .trail li:last-child{border:0}
+:where(.app-leave) .trail .t{color:var(--muted);font-size:13.5px}
+
+:where(.app-leave) table.grid{width:100%;border-collapse:collapse;font-size:14.5px}
+:where(.app-leave) table.grid th,:where(.app-leave) table.grid td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+:where(.app-leave) table.grid th{color:var(--muted);font-weight:600;background:var(--soft);white-space:nowrap}
+:where(.app-leave) table.grid .num{text-align:right;font-variant-numeric:tabular-nums}
+:where(.app-leave) .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:0 16px}
+
+/* 行事曆 */
+/* 週一~五給足空間，六日只留窄欄位：幼兒園週末不上班，那兩格沒有內容 */
+:where(.app-leave) .calbar{margin:0 0 12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+:where(.app-leave) .calbar .ttl{font-size:26px;font-weight:600;color:var(--ink);text-align:center;
+  line-height:1.25;font-variant-numeric:tabular-nums}
+:where(.app-leave) .calbar .ttl b{font-size:38px;font-weight:800;letter-spacing:.5px}
+:where(.app-leave) .calbar .ttl .now{display:inline-block;margin-left:8px;font-size:15.5px;font-weight:600;
+  color:var(--brand);background:var(--info-t);border-radius:999px;padding:2px 10px;
+  vertical-align:6px}
+:where(.app-leave) .calbar .nav{display:flex;align-items:center;justify-content:space-between;
+  gap:8px;margin-top:8px}
+:where(.app-leave) .calbar .nav .btn{font-size:15.5px;padding:7px 11px;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+@media (max-width:380px){
+  :where(.app-leave) .calbar .ttl{font-size:22px}
+  :where(.app-leave) .calbar .ttl b{font-size:32px}
+  :where(.app-leave) .calbar .nav .btn{font-size:14.5px;padding:7px 9px}
+}
+:where(.app-leave) .cal{display:grid;grid-template-columns:repeat(5,1fr) .5fr .5fr;gap:3px}
+:where(.app-leave) .cal .hd{text-align:center;font-size:13.5px;color:var(--muted);padding:4px 0}
+:where(.app-leave) .cal .cell{background:var(--card);border:1px solid var(--line);border-radius:8px;min-height:78px;
+  padding:4px;font-size:12.5px;overflow:hidden}
+:where(.app-leave) .cal .cell.off{background:var(--soft);color:var(--muted)}
+:where(.app-leave) .cal .cell .dn{font-weight:600;font-size:13.5px}
+:where(.app-leave) .cal .cell .p{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:var(--brand);margin-top:2px;line-height:1.35}
+:where(.app-leave) .cal .cell .p .tm{display:block;font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+:where(.app-leave) .cal .cell .p.more{color:var(--muted);font-size:12px}
+:where(.app-leave) .cal .cell .hol{display:block;font-size:12px;color:var(--notice);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 特殊任務禁休：那幾天不准請假，但仍是正常上班日，所以不套 .off 的灰底 */
+:where(.app-leave) .cal .cell .bo{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-size:12px;line-height:1.4;margin-top:2px;padding:1px 4px;border-radius:4px;
+  background:var(--risk-t);color:var(--risk-ink);font-weight:600}
+:where(.app-leave) .cal .cell .bo.warn{background:var(--notice-t);color:var(--notice-ink)}
+:where(.app-leave) .cal .cell.quiet{background:var(--soft)}
+:where(.app-leave) .cal .cell.quiet .dn{color:var(--muted);font-weight:400}
+:where(.app-leave) .cal .hd.wk{color:var(--faint)}
+:where(.app-leave) .cal .cell.blank{background:transparent;border:0}
+
+:where(.app-leave) .subtabs{display:flex;gap:4px;margin:0 0 14px;border-bottom:1px solid var(--line);
+  overflow-x:auto}
+:where(.app-leave) .subtabs a{padding:8px 13px;font-size:15.5px;color:var(--muted);white-space:nowrap;
+  border-bottom:2px solid transparent}
+:where(.app-leave) .subtabs a.on{color:var(--brand);font-weight:600;border-color:var(--brand)}
+
+/* 同一個分頁裡的幾個功能（例如「請假」裡的我的假單／我要請假／簽核），用切換鈕換 */
+:where(.app-leave) .modnav{display:flex;gap:4px;margin:0 0 14px;padding:4px;background:var(--track);border-radius:12px}
+:where(.app-leave) .modnav a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 6px;
+  border-radius:9px;font-size:16.5px;color:var(--muted);text-decoration:none;white-space:nowrap}
+:where(.app-leave) .modnav a.on{background:var(--card);color:var(--brand);font-weight:600;box-shadow:0 1px 3px rgba(15,23,42,.12)}
+:where(.app-leave) .modnav .dot{min-width:18px;height:18px;border-radius:999px;background:var(--risk-fill);color:#fff;
+  font-size:12.5px;line-height:18px;text-align:center;padding:0 5px;font-weight:600}
+
+:where(.app-leave) .foot{text-align:center;color:var(--muted);font-size:13.5px;padding:18px 14px 26px}
+:where(.app-leave) .empty{text-align:center;color:var(--muted);padding:28px 10px;font-size:15.5px}
+:where(.app-leave) .pw{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:16.5px;font-weight:700;
+  letter-spacing:2px;background:var(--notice-t);border:1px solid var(--notice-line);border-radius:6px;padding:1px 8px}
+
+/* 登入頁 */
+:where(.app-leave) .login-wrap{max-width:360px;margin:8vh auto;padding:0 18px}
+:where(.app-leave) .login-wrap .logo{text-align:center;font-size:30px;margin-bottom:6px}
+:where(.app-leave) .login-wrap h1{text-align:center;font-size:22px;margin-bottom:22px}
+
+@media (min-width:720px){
+  body:has(.app-leave){padding-bottom:0}
+.page:where(.app-leave),:where(.app-leave) .page{min-height:100vh;background:var(--bg)}
+  :where(.app-leave) .tabbar{position:static;height:auto;border-top:0;border-bottom:1px solid var(--line);
+    max-width:900px;margin:0 auto;background:transparent}
+  :where(.app-leave) .tabbar a{flex:0 0 auto;flex-direction:row;gap:6px;font-size:15.5px;padding:12px 16px}
+  :where(.app-leave) .tabbar a .ico{font-size:16.5px}
+  :where(.app-leave) .tabbar a.on{border-bottom:2px solid var(--brand)}
+  :where(.app-leave) .tabbar .dot{position:static;margin:0}
+  :where(.app-leave) .two{grid-template-columns:1fr 1fr}
+  :where(.app-leave) .cal .cell{min-height:104px;font-size:13.5px}
+  :where(.app-leave) .scroll{margin:0;padding:0}
+}
+
+/* ── 提醒文字裡的日期與數量：主管一眼要看到的重點 ─────────── */
+:where(.app-leave) .hl{
+  font-weight:700;
+  background:var(--notice-t);
+  color:var(--notice-ink);
+  padding:1px 5px;
+  border-radius:4px;
+  white-space:nowrap;
+}
+:where(.app-leave) .alert.risk .hl{background:var(--risk-t);color:var(--risk-ink)}
+
+/* ── 簽核參考：同期間其他人的請假 ──────────────────────── */
+:where(.app-leave) .nearby{list-style:none;margin:0;padding:0}
+:where(.app-leave) .nearby li{
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  padding:9px 0;border-top:1px solid var(--line);font-size:15.5px;
+}
+:where(.app-leave) .nearby li:first-child{border-top:0}
+:where(.app-leave) .nearby .d{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}
+:where(.app-leave) .nearby .nm{font-weight:600}
+:where(.app-leave) .nearby li.same{background:var(--notice-t);margin:0 -14px;padding-left:14px;padding-right:14px}
+:where(.app-leave) .nearby li.same .d{color:var(--notice-ink)}
+:where(.app-leave) .nearby-empty{color:var(--muted);font-size:15.5px;padding:6px 0}
+
+/* ── 安全模式橫幅 ─────────────────────────────────────────── */
+/* 刻意做得顯眼：安靜的安全模式會讓人以為信寄出去了 */
+:where(.app-leave) .safebar{
+  background: var(--notice-t);
+  border: 2px solid var(--notice);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 15px;
+  color: var(--notice-ink);
+  line-height: 1.7;
+}
+:where(.app-leave) .safebar b{ color: var(--notice-ink); }
+
+/* ── 測試環境橫幅（新架構測試版）─────────────────────────── */
+/* 每一頁最上面都有，而且跟正式版的配色明顯不同：在這裡請的假不會生效，不能讓人誤會 */
+:where(.app-leave) .stagingbar{
+  background: repeating-linear-gradient(-45deg, var(--vio-t), var(--vio-t) 12px, var(--vio-t2) 12px, var(--vio-t2) 24px);
+  border-bottom: 2px solid var(--vio);
+  color: var(--vio-ink);
+  padding: 8px 14px;
+  font-size: 15px;
+  text-align: center;
+  line-height: 1.6;
+}
+:where(.app-leave) .stagingbar b{ color: var(--vio); }
+
+/* 請假辦法：請假頁的摺疊說明，預設收合，不擋住填表 */
+:where(.app-leave) .rules{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:0 14px;margin:0 0 16px}
+:where(.app-leave) .rules>summary{list-style:none;cursor:pointer;padding:13px 0;font-weight:600;
+  font-size:16.5px;color:var(--brand);display:flex;align-items:center;gap:6px}
+:where(.app-leave) .rules>summary::-webkit-details-marker{display:none}
+:where(.app-leave) .rules>summary::before{content:"📖"}
+:where(.app-leave) .rules>summary::after{content:"▾";margin-left:auto;color:var(--muted);font-size:14.5px}
+:where(.app-leave) .rules[open]>summary{border-bottom:1px solid var(--line)}
+:where(.app-leave) .rules[open]>summary::after{content:"▴"}
+:where(.app-leave) .rules h3{font-size:15.5px;margin:16px 0 6px;color:var(--ink)}
+:where(.app-leave) .rules ul{margin:0 0 6px;padding-left:20px}
+:where(.app-leave) .rules li{font-size:15px;color:var(--ink);margin:4px 0;line-height:1.65}
+:where(.app-leave) .rules table.grid{font-size:14.5px;margin:4px 0 8px}
+:where(.app-leave) .rules table.grid th,:where(.app-leave) .rules table.grid td{padding:6px 8px}
+:where(.app-leave) .rules .scroll{margin:0 -14px;padding:0 14px}
+:where(.app-leave) .rules>*:last-child{padding-bottom:14px}
+
+/* hidden 屬性一律藏起來（.actions 等有 display 設定的元素也一樣） */
+:where(.app-leave) [hidden]{display:none!important}
+
+/* ── 巡園 ── */
+:where(.app-leave) .seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+:where(.app-leave) .seg.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+:where(.app-leave) .seg input{position:absolute;opacity:0;pointer-events:none}
+:where(.app-leave) .seg label{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--line);
+  border-radius:10px;background:var(--card);font-size:16.5px;font-weight:500;cursor:pointer;margin:0}
+:where(.app-leave) .seg input:checked+label{border-color:var(--ok-ink);background:var(--ok-t);color:var(--ok-ink)}
+:where(.app-leave) .seg input.bad:checked+label{border-color:var(--risk-ink);background:var(--risk-t);color:var(--risk-ink)}
+:where(.app-leave) .seg input.fair:checked+label{border-color:var(--notice);background:var(--notice-t);color:var(--notice-ink)}
+:where(.app-leave) .seg input.pick:checked+label{border-color:var(--info);background:var(--info-t);color:var(--info-ink)}
+:where(.app-leave) .seg input:focus-visible+label{outline:2px solid var(--info);outline-offset:2px}
+:where(.app-leave) .pitem{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--card);display:flex;flex-direction:column;gap:10px}
+:where(.app-leave) .pitem.bad{border-color:var(--risk-line)}
+:where(.app-leave) .pitem.fair{border-color:var(--notice-line)}
+:where(.app-leave) .pissue{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:10px}
+:where(.app-leave) .parea{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;min-height:56px;
+  box-sizing:border-box;border:1px solid var(--line);border-radius:14px;background:var(--card);color:inherit;text-decoration:none}
+:where(.app-leave) .pbig{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--info-fill);color:#fff;
+  border-radius:18px;padding:18px 20px;text-decoration:none;border:0;width:100%;font:inherit;cursor:pointer}
+:where(.app-leave) .ptags{display:flex;flex-wrap:wrap;gap:6px}
+:where(.app-leave) .ptags input{position:absolute;opacity:0;pointer-events:none}
+:where(.app-leave) .ptags label{display:inline-flex;align-items:center;min-height:40px;padding:0 12px;border:1px solid var(--line);
+  border-radius:999px;background:var(--card);font-size:15.5px;cursor:pointer;margin:0}
+:where(.app-leave) .ptags input:checked+label{border-color:var(--info);background:var(--info-t);color:var(--info-ink)}
+:where(.app-leave) .pphoto{width:100%;max-height:260px;object-fit:cover;border-radius:12px;background:var(--track)}
+:where(.app-leave) .pblock{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 16px}
+:where(.app-leave) .cphotos{position:relative;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+:where(.app-leave) .pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%}
+:where(.app-leave) .pgrid:empty{display:none}
+:where(.app-leave) .pgrid figure{margin:0;display:flex;flex-direction:column;gap:4px}
+:where(.app-leave) .pgrid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--track);cursor:zoom-in}
+:where(.app-leave) .pgrid figure.big{grid-column:1/-1}
+:where(.app-leave) .pgrid figure.big img{aspect-ratio:auto;max-height:none;object-fit:contain;cursor:zoom-out}
+:where(.app-leave) .pdrop{display:flex;align-items:center;gap:6px;font-size:14.5px;color:var(--muted);margin:0}
+:where(.app-leave) .pdrop input{width:18px;height:18px}
+:where(.app-leave) .pgrid figure:has(.pdrop input:checked) img{opacity:.35}
+:where(.app-leave) .pfile{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+:where(.app-leave) .ptimeline{list-style:none;margin:0;padding:0}
+:where(.app-leave) .ptimeline li{position:relative;padding:0 0 14px 22px;border-left:2px solid var(--line);margin-left:6px}
+:where(.app-leave) .ptimeline li:last-child{border-left-color:transparent}
+:where(.app-leave) .ptimeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:999px;background:var(--faint)}
+:where(.app-leave) .ptimeline li.found::before{background:var(--risk-ink)}:where(.app-leave) .ptimeline li.reported::before{background:var(--info)}
+:where(.app-leave) .ptimeline li.closed::before{background:var(--ok-ink)}:where(.app-leave) .ptimeline li.returned::before{background:var(--notice)}
+
+
+/* 教學日誌：觀察量表（點選式） */
+:where(.app-leave) .obsstep{font-size:14.5px;font-weight:700;color:var(--ink);margin:14px 0 6px}
+:where(.app-leave) .obsbox .obsstep:first-child{margin-top:0}
+:where(.app-leave) .obsstep .hint{font-weight:400}
+:where(.app-leave) .chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:6px}
+:where(.app-leave) .chips.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+:where(.app-leave) .chips.one{grid-template-columns:1fr;margin-top:6px}
+:where(.app-leave) .chip{position:relative;min-height:40px;padding:6px 2px;border:1px solid var(--line);border-radius:10px;background:var(--card);
+  color:var(--ink);font:inherit;font-size:15.5px;line-height:1.25;cursor:pointer}
+:where(.app-leave) .chips.one .chip{text-align:left;padding:8px 12px}
+:where(.app-leave) .chip.on{border-color:var(--info);background:var(--info-t);color:var(--info-ink);font-weight:700}
+:where(.app-leave) .chip.lv1.on{border-color:var(--risk-ink);background:var(--risk-t);color:var(--risk-ink)}
+:where(.app-leave) .chip.lv2.on{border-color:var(--notice);background:var(--notice-t);color:var(--notice-ink)}
+:where(.app-leave) .chip.lv3.on{border-color:var(--ok-ink);background:var(--ok-t);color:var(--ok-ink)}
+:where(.app-leave) .chip .n{position:absolute;top:1px;right:5px;font-style:normal;font-size:12.5px;font-weight:700;color:var(--ok-ink)}
+:where(.app-leave) .obslist{margin-top:10px}
+:where(.app-leave) .obsrow{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}
+:where(.app-leave) .obsrow.dropped>div{opacity:.4;text-decoration:line-through}
+:where(.app-leave) .obsdrop{display:flex;align-items:center;gap:4px;flex:0 0 auto;margin:0;white-space:nowrap;font-size:15.5px;color:var(--muted)}
+:where(.app-leave) .obsdrop input{width:auto;min-height:0;margin:0}
+:where(.app-leave) .lvtag{display:inline-block;font-size:13.5px;padding:1px 8px;border-radius:999px}
+:where(.app-leave) .lvtag.lv1{background:var(--risk-t);color:var(--risk-ink)}
+:where(.app-leave) .lvtag.lv2{background:var(--notice-t);color:var(--notice-ink)}
+:where(.app-leave) .lvtag.lv3{background:var(--ok-t);color:var(--ok-ink)}
+
+/* 黏在底部的儲存列：手機上要停在分頁列上面，不然會被蓋住 */
+:where(.app-leave) .stickybar{position:sticky;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));z-index:10;background:var(--bg);padding:10px 0}
+@media (min-width:720px){ :where(.app-leave) .stickybar{bottom:0} }
+
+/* 點名 */
+:where(.app-leave) .chips.five{grid-template-columns:repeat(4,minmax(0,1fr))}
+:where(.app-leave) .chip[data-st="遲到"],:where(.app-leave) .chip[data-st="遲到"].on{border-color:var(--notice);background:var(--notice-t);color:var(--notice-ink)}
+:where(.app-leave) .chip[data-st="病假"],:where(.app-leave) .chip[data-st="病假"].on{border-color:var(--risk-ink);background:var(--risk-t);color:var(--risk-ink)}
+:where(.app-leave) .chip[data-st="事假"],:where(.app-leave) .chip[data-st="事假"].on{border-color:var(--vio);background:var(--vio-t);color:var(--vio-ink)}
+:where(.app-leave) .chip[data-st="未到"],:where(.app-leave) .chip[data-st="未到"].on{border-color:var(--muted);background:var(--track);color:var(--ink-2)}
+:where(.app-leave) #brush .chip{opacity:.55}
+:where(.app-leave) #brush .chip.on{opacity:1;font-weight:700;box-shadow:0 0 0 2px var(--bg),0 0 0 4px currentColor}
+:where(.app-leave) .rollkids .chip[data-st="到"] .n{display:none}
+:where(.app-leave) .rollkids .chip .n{position:static;display:block;font-size:12.5px;color:inherit}
+:where(.app-leave) .rolltally{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;font-size:17px;border-bottom:1px solid var(--line)}
+:where(.app-leave) .rolltally b{font-size:24px}
+:where(.app-leave) .rolltally span{margin-left:10px;font-size:15.5px;color:var(--muted)}
+:where(.app-leave) .rnote{align-items:center}
+:where(.app-leave) .rnote .rst{font-size:13.5px;color:var(--muted)}
+:where(.app-leave) .rollhead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+:where(.app-leave) .rollnum b{font-size:22px}
+:where(.app-leave) .bignum{font-size:52px;font-weight:800;line-height:1.1;margin:4px 0}
+:where(.app-leave) .stepper{display:flex;gap:8px;align-items:center}
+:where(.app-leave) .stepper input{text-align:center;font-size:24px;font-weight:700;flex:1;min-width:0}
+:where(.app-leave) .stepper .btn{min-width:56px;font-size:24px}
+:where(.app-leave) .pickchip{display:flex;align-items:center;justify-content:center;margin:0}
+:where(.app-leave) .pickchip input{display:none}
+:where(.app-leave) .pickchip:has(input:checked){border-color:var(--risk-ink);background:var(--risk-t);color:var(--risk-ink);font-weight:700}
+
+/* 幼生影像：照片標記、授權登記（photoface.py） */
+:where(.app-leave) .ftag{position:relative;user-select:none;-webkit-user-select:none;border-radius:12px;overflow:hidden;background:#111;line-height:0}
+:where(.app-leave) .ftag img{width:100%;display:block;pointer-events:none}
+:where(.app-leave) .ftag.drawing{touch-action:none;cursor:crosshair;outline:3px solid var(--brand)}
+:where(.app-leave) .fbox{position:absolute;border:2px solid #f59e0b;border-radius:6px;box-shadow:0 0 0 1px rgba(0,0,0,.35);cursor:pointer;line-height:1.2}
+:where(.app-leave) .fbox.who{border-color:#22c55e}
+:where(.app-leave) .fbox.unk{border-style:dashed;border-color:#ef4444}
+:where(.app-leave) .fbox.sel{border-color:#3b82f6;border-width:3px;box-shadow:0 0 0 3px rgba(59,130,246,.45)}
+:where(.app-leave) .fbox.burned{background:rgba(0,0,0,.25)}
+:where(.app-leave) .fbox span{position:absolute;left:-2px;top:100%;margin-top:2px;white-space:nowrap;font-size:13.5px;font-weight:700;
+  background:rgba(17,24,39,.8);color:#fff;border-radius:6px;padding:1px 6px}
+:where(.app-leave) .ftools{display:flex;gap:6px;margin-top:8px}
+:where(.app-leave) .ftools .btn{flex:1;padding:8px 4px;font-size:15.5px}
+:where(.app-leave) .ftools .btn.on{background:var(--info-t);border-color:var(--info);color:var(--info-ink)}
+:where(.app-leave) .chip .n.none{color:var(--notice)}
+:where(.app-leave) .pickchip.okpick:has(input:checked){border-color:var(--ok-ink);background:var(--ok-t);color:var(--ok-ink)}
+:where(.app-leave) .pickchip:has(input:disabled){opacity:.45}
+:where(.app-leave) .tierlist{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:720px){:where(.app-leave) .tierlist{grid-template-columns:repeat(3,minmax(0,1fr))}}
+:where(.app-leave) .tier img{width:100%;border-radius:8px;margin:8px 0 6px;display:block}
+:where(.app-leave) .tier.off{opacity:.6}
+:where(.app-leave) .phototags{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+:where(.app-leave) .phototags a{position:relative;display:block;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
+:where(.app-leave) .phototags img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+:where(.app-leave) .phototags .st{position:absolute;left:4px;bottom:4px;font-size:12.5px;font-weight:700;border-radius:999px;padding:0 6px}
+:where(.app-leave) .phototags .st.todo{background:var(--notice-t);color:var(--notice-ink)}
+:where(.app-leave) .phototags .st.done{background:var(--ok-t);color:var(--ok-ink)}
+
+/* 同仁在園狀態：放在辦公室電腦上看，桌機加寬；顏色之外都有文字，色弱也分得出來 */
+body:has(.app-leave):has(.board) .container{max-width:1500px}
+:where(.app-leave) .bhead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;margin-bottom:12px}
+:where(.app-leave) .bhead h1{margin:0;font-size:30px}
+:where(.app-leave) .bhead .hint{font-size:17px}
+:where(.app-leave) .board>.hint{font-size:16.5px}
+:where(.app-leave) .bstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px}
+:where(.app-leave) .bstats>div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:18.5px;color:var(--muted)}
+:where(.app-leave) .bstats b{display:block;font-size:36px;line-height:1.2;color:var(--ink);font-variant-numeric:tabular-nums}
+:where(.app-leave) .bstats b.s-in{color:var(--info)}:where(.app-leave) .bstats b.s-out{color:var(--risk)}:where(.app-leave) .bstats b.s-leave{color:var(--vio)}:where(.app-leave) .bstats b.s-away{color:var(--notice)}
+:where(.app-leave) .bstats .s-late{color:var(--risk)}
+:where(.app-leave) .bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;align-items:start;margin-bottom:14px}
+:where(.app-leave) .bclass{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+:where(.app-leave) .bclass h2{margin:0 0 4px;font-size:21px}
+:where(.app-leave) .bp{display:flex;justify-content:space-between;gap:10px;font-size:21px;padding:6px 10px;border-radius:8px;margin-top:5px;border:1px solid transparent}
+:where(.app-leave) .bp .n{font-weight:600;white-space:nowrap}
+:where(.app-leave) .bp .t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+:where(.app-leave) .bfold{grid-column:1/-1}
+:where(.app-leave) .bfold summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;cursor:pointer;list-style:none}
+:where(.app-leave) .bfold summary::-webkit-details-marker{display:none}
+:where(.app-leave) .bfold summary::before{content:"▸";color:var(--muted);font-size:18.5px}
+:where(.app-leave) .bfold[open] summary::before{content:"▾"}
+:where(.app-leave) .bfold summary h2{margin:0}
+:where(.app-leave) .bfold .bsum{font-size:17px;color:var(--muted);font-variant-numeric:tabular-nums}
+:where(.app-leave) .bfold-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 12px;margin-top:4px}
+:where(.app-leave) .bp.b-in{background:var(--info-t);color:var(--info-ink)}
+:where(.app-leave) .bp.b-out{background:var(--risk-t);color:var(--risk-ink)}
+:where(.app-leave) .bp.b-none{background:var(--track);color:var(--ink-2)}
+:where(.app-leave) .bp.b-none.late{border-color:var(--risk);color:var(--risk-ink)}
+:where(.app-leave) .bp.b-leave{background:var(--vio-t);color:var(--vio-ink)}
+:where(.app-leave) .bp.b-away{background:var(--notice-t);color:var(--notice-ink)}
+
+/* 在園狀態桌邊小視窗（/board/side）：螢幕寬度 1/6 左右（約 260–360px），一直排，依時段 */
+.sd:where(.app-leave),:where(.app-leave) .sd{font-size:17px}
+body:has(.app-leave):has(.sd){margin:0;background:var(--bg)}
+:where(.app-leave) .sd-head{position:sticky;top:0;z-index:5;display:flex;align-items:baseline;gap:6px;padding:6px 8px;
+  background:var(--card);border-bottom:1px solid var(--line);font-size:16.5px;white-space:nowrap}
+:where(.app-leave) .sd-head b{font-size:19.5px}
+:where(.app-leave) .sd-head .sd-time{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+:where(.app-leave) .sd-test{font-size:13.5px;background:var(--notice-t);color:var(--notice-ink);border-radius:999px;padding:0 6px}
+:where(.app-leave) .sd-back{order:-1;font-size:16px;white-space:nowrap}
+:where(.app-leave) .sd-stale{margin:6px 8px;padding:6px 8px;border-radius:8px;background:var(--risk-t);color:var(--risk-ink);font-size:16.5px}
+.sd:where(.app-leave) #board-panel,:where(.app-leave) .sd #board-panel{padding:0 6px 6px}
+:where(.app-leave) .sd-off{margin:6px 2px;font-size:16.5px;color:var(--notice-ink)}
+:where(.app-leave) .sd-stats{display:flex;flex-wrap:wrap;gap:2px 10px;padding:6px 2px;font-size:16.5px;color:var(--muted)}
+:where(.app-leave) .sd-stats b{font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
+:where(.app-leave) .sd-stats .s-in b{color:var(--info)}:where(.app-leave) .sd-stats .s-out b{color:var(--risk)}:where(.app-leave) .sd-stats .s-leave b{color:var(--vio)}:where(.app-leave) .sd-stats .s-away b{color:var(--notice)}
+:where(.app-leave) .sd-stats .s-late{color:var(--risk);font-style:normal}
+:where(.app-leave) .sd-slot{margin-top:8px}
+:where(.app-leave) .sd-slot h2{margin:0 0 2px;padding:0 2px;font-size:17px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+:where(.app-leave) .sd-slot.now{background:var(--card);border:2px solid var(--info);border-radius:10px;padding:4px 4px 5px}
+:where(.app-leave) .sd-slot.now h2{color:var(--info);font-size:18.5px}
+:where(.app-leave) .bp.sd-p{font-size:21px;line-height:1.4;padding:3px 6px;margin-top:2px;gap:6px;border-radius:6px}
+:where(.app-leave) .sd-p .at{flex:none;color:inherit;opacity:.7;font-size:16.5px;font-variant-numeric:tabular-nums;align-self:center}
+:where(.app-leave) .sd-p .n{flex:none}
+:where(.app-leave) .sd-p .r{flex:none;font-size:15.5px;opacity:.75;align-self:center;margin-left:-2px}
+:where(.app-leave) .sd-p .t{flex:1;font-size:17px;align-self:center}
+:where(.app-leave) .sd-empty{margin:2px;font-size:15.5px;color:var(--muted)}
+:where(.app-leave) .sd-note{margin:4px 8px 10px;font-size:14.5px;color:var(--muted)}
+:where(.app-leave) .bhead .sd-open{font:inherit;font-size:16.5px;padding:4px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer}
+:where(.app-leave) .sd-slot.late h2{color:var(--risk)}
+
+
+/* ══ 2026-11-10 介面改版 ═══════════════════════════════════════════════
+   跟智慧校園其他系統同一套（共用/campus_common/static/campus.css 的前半段照抄過來）：素色底、四類顏色，
+   請假是「人事」類（綠）、點名／教學／代班是「教保」類（藍）。疊在上面的舊樣式後面（同樣的選擇器後寫的贏），
+   舊樣式不動，要退回只要刪掉這一段。顏色、圓角都是下面的變數。 */
+:root:has(.app-leave){
+  color-scheme:light;
+  --bg:#f4f5f7; --card:#fff; --line:#e3e6ea; --line-2:#cdd3da; --ink:#1d2530; --muted:#5f6874; --soft:#f7f8fa; --track:#eceff2;
+  /* 主色：深藍灰（整個系統的頁面：首頁、待辦、帳號） */
+  --navy:#22324a; --navy-d:#18263a; --navy-t:#e9eef5;
+  /* 四類 */
+  --hr:#0f6e56; --hr-d:#0b5743; --hr-t:#e1f5ee;
+  --teach:#2f74b8; --teach-d:#255f99; --teach-t:#eaf3fc;
+  --admin:#a8650d; --admin-d:#875009; --admin-t:#faeeda;
+  --other:#5f5e5a; --other-d:#4a4946; --other-t:#f0efea;
+  /* 這一頁的主色（各系統的頁面換成那一類的顏色） */
+  --brand:var(--navy); --brand-d:var(--navy-d);--brand-fill:var(--navy-fill);--brand-fill-d:var(--navy-fill-d); --brand-t:var(--navy-t);
+  --nav-on:var(--navy);
+  /* 狀態 */
+  --risk:#c2334a; --risk-t:#fdecee; --notice:#9a5600; --notice-t:#fff4e0; --ok:#1d7a4a; --ok-t:#e4f4ea;
+  /* 淺色底上的字（標籤、膠囊選項） */
+  --ok-ink:#155c37; --notice-ink:#704000; --risk-ink:#8f1d31;
+  /* 金盞黃：家長版的強調色，同仁版只用在安全模式提示 */
+  --sun:#f3b63f; --sun-t:#fff5da; --sun-ink:#5c3d00;
+  --r-lg:16px; --r-md:12px; --r-sm:8px;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  --round:ui-rounded,"SF Pro Rounded",-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  --num:var(--sans);
+  --nav-h:66px;
+}
+.page.g-hr:where(.app-leave),:where(.app-leave) .page.g-hr{--brand:var(--hr);--brand-d:var(--hr-d);--brand-fill:var(--hr-fill);--brand-fill-d:var(--hr-fill-d);--brand-t:var(--hr-t)}
+.page.g-teach:where(.app-leave),:where(.app-leave) .page.g-teach{--brand:var(--teach);--brand-d:var(--teach-d);--brand-fill:var(--teach-fill);--brand-fill-d:var(--teach-fill-d);--brand-t:var(--teach-t)}
+.page.g-admin:where(.app-leave),:where(.app-leave) .page.g-admin{--brand:var(--admin);--brand-d:var(--admin-d);--brand-fill:var(--admin-fill);--brand-fill-d:var(--admin-fill-d);--brand-t:var(--admin-t)}
+.page.g-other:where(.app-leave),:where(.app-leave) .page.g-other{--brand:var(--navy);--brand-d:var(--navy-d);--brand-fill:var(--navy-fill);--brand-fill-d:var(--navy-fill-d);--brand-t:var(--navy-t)}   /* 灰色當主要按鈕像是不能按，其他類的頁面用深藍灰 */
+/* 家長聯絡簿 */
+.page.theme-parent:where(.app-leave),:where(.app-leave) .page.theme-parent{--bg:#f4f7f2;--line:#e1e8e2;--line-2:#c9d4cc;--ink:#18221d;--muted:#5b6862;--soft:#f6f9f6;--track:#e6ece7;
+  --brand:#1f6b52;--brand-d:#165440;--brand-fill:#1f6b52;--brand-fill-d:#165440;--brand-t:#e2f0e8;--nav-on:#1f6b52;--r-lg:20px;--r-md:14px;--num:var(--round)}
+
+:where(.app-leave) *{box-sizing:border-box}
+html:has(.app-leave){-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body:has(.app-leave){margin:0;font-family:var(--sans);font-size:17px;background:var(--bg);color:var(--ink);line-height:1.6;letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased}
+.page.has-tabbar:where(.app-leave),:where(.app-leave) .page.has-tabbar{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom))}
+:where(.app-leave) a{color:var(--brand);text-decoration:none;text-underline-offset:3px}
+:where(.app-leave) a:hover{text-decoration:underline}
+:where(.app-leave) img{max-width:100%}
+:where(.app-leave) :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
+
+/* 線條圖示（icons.py）：顏色跟著文字、大小跟著字級 */
+:where(.app-leave) .ic{width:1.15em;height:1.15em;flex:none;vertical-align:-.2em}
+/* 標題前的圖示用這個系統的顏色；狀態圖示自帶顏色（icons.py 的 TONE）；按鈕、標籤裡的跟著文字 */
+:where(.app-leave) h1 > .ic,:where(.app-leave) h2 > .ic,:where(.app-leave) h3 > .ic{color:var(--brand)}
+:where(.app-leave) .ic.t-ok{color:var(--ok)} :where(.app-leave) .ic.t-bad{color:var(--risk)} :where(.app-leave) .ic.t-warn{color:var(--notice)}
+:where(.app-leave) .btn .ic,:where(.app-leave) .badge .ic,:where(.app-leave) .alert .ic{color:inherit}
+:where(.app-leave) .badge .ic{width:1em;height:1em}
+/* 圖示底色：四類各一個顏色 */
+:where(.app-leave) .ico{display:inline-flex;align-items:center;justify-content:center;flex:none;width:42px;height:42px;border-radius:12px;
+  background:var(--navy-t);color:var(--navy)}
+:where(.app-leave) .ico .ic{width:24px;height:24px}
+.ico.g-hr:where(.app-leave),:where(.app-leave) .ico.g-hr{background:var(--hr-t);color:var(--hr)}
+.ico.g-teach:where(.app-leave),:where(.app-leave) .ico.g-teach{background:var(--teach-t);color:var(--teach)}
+.ico.g-admin:where(.app-leave),:where(.app-leave) .ico.g-admin{background:var(--admin-t);color:var(--admin)}
+.ico.g-other:where(.app-leave),:where(.app-leave) .ico.g-other{background:var(--other-t);color:var(--other)}
+
+/* ── 頂列 ─────────────────────────────────────────────── */
+:where(.app-leave) .topbar{display:flex;align-items:center;gap:12px;background:var(--card);border-bottom:1px solid var(--line);
+  padding:0 16px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));
+  height:58px;position:sticky;top:0;z-index:20}
+/* 各系統的頁面：頂列下一條那一類顏色的細線，知道自己在哪個系統 */
+.page.g-hr:where(.app-leave) .topbar,:where(.app-leave) .page.g-hr .topbar,.page.g-teach:where(.app-leave) .topbar,:where(.app-leave) .page.g-teach .topbar,.page.g-admin:where(.app-leave) .topbar,:where(.app-leave) .page.g-admin .topbar,.page.g-other:where(.app-leave) .topbar,:where(.app-leave) .page.g-other .topbar{border-bottom:2px solid var(--brand)}
+:where(.app-leave) .brand{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:17px;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;color:var(--ink);min-width:0}
+:where(.app-leave) .brand:hover{text-decoration:none}
+:where(.app-leave) .brand .mark{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;
+  background:var(--navy-fill);color:#fff;flex:none}
+:where(.app-leave) .brand .mark .ic{width:20px;height:20px}
+:where(.app-leave) .brand .ver{display:inline-block;font-weight:500;font-size:12.5px;color:var(--muted);
+  vertical-align:2px;border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-left:2px}
+:where(.app-leave) .topnav{display:none}
+:where(.app-leave) .me{margin-left:auto;display:inline-flex;align-items:center;gap:8px;color:var(--ink);font-size:15.5px;min-height:40px;flex:none}
+:where(.app-leave) .me:hover{text-decoration:none}
+:where(.app-leave) .me-name{display:none}
+:where(.app-leave) .avatar{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;
+  background:var(--navy-fill);color:#fff;font-size:15.5px;font-weight:600;flex:none}
+:where(.app-leave) .avatar.lg{width:48px;height:48px;font-size:21px}
+/* 舊版頂列（請假系統等還沒改的頁面） */
+:where(.app-leave) .who{font-size:14.5px;color:var(--muted);white-space:nowrap;margin-left:auto}
+:where(.app-leave) .who a{margin-left:10px}
+
+:where(.app-leave) .container{max-width:920px;margin:16px auto;padding:0 16px}
+
+/* ── 底部分頁（手機）；桌機放到頂列裡（.topnav） ─────────────── */
+:where(.app-leave) .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:var(--bar);
+  border-top:1px solid var(--line);height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom)}
+:where(.app-leave) .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  font-size:14px;color:var(--faint);text-decoration:none;position:relative}
+:where(.app-leave) .tabbar a .ic{width:28px;height:28px}
+:where(.app-leave) .tabbar a .ico{font-size:21px;line-height:1;background:none;width:auto;height:auto}
+:where(.app-leave) .tabbar a.on{color:var(--nav-on);font-weight:600}
+:where(.app-leave) .tabbar a:active{background:var(--soft)}
+:where(.app-leave) .tabbar a .dot{position:absolute;top:5px;left:calc(50% + 6px)}
+:where(.app-leave) .dot{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border-radius:999px;background:var(--risk-fill);color:#fff;
+  font-family:var(--num);font-size:13px;line-height:1;padding:0 6px;font-weight:600;font-variant-numeric:tabular-nums;flex:none}
+
+/* ── 字 ─────────────────────────────────────────────── */
+:where(.app-leave) h1{font-size:24px;line-height:1.35;font-weight:700;margin:0 0 6px}
+:where(.app-leave) h2{font-size:18.5px;line-height:1.45;font-weight:600;margin:24px 0 10px}
+:where(.app-leave) h3{font-size:17px;font-weight:600}
+:where(.app-leave) .sub{color:var(--muted);margin:0 0 16px;font-size:16px}
+/* 首頁的分段標題：小、灰，只是分類 */
+:where(.app-leave) h2.sec{font-size:15px;font-weight:600;color:var(--muted);margin:22px 2px 8px;letter-spacing:.04em}
+
+/* ── 卡片 ─────────────────────────────────────────────── */
+:where(.app-leave) .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;margin-bottom:12px}
+:where(.app-leave) .card.tight{padding:12px 14px}
+:where(.app-leave) .card > h2:first-child,:where(.app-leave) .card > h3:first-child{margin-top:0}
+
+/* ── 標籤 ─────────────────────────────────────────────── */
+:where(.app-leave) .badge{display:inline-flex;align-items:center;gap:3px;padding:1px 9px;border-radius:999px;font-size:14px;font-weight:500;
+  white-space:nowrap;line-height:1.75;background:var(--soft);color:var(--muted)}
+:where(.app-leave) .badge.on{background:var(--ok-t);color:var(--ok-ink)}
+:where(.app-leave) .badge.off{background:var(--track);color:var(--muted)}
+:where(.app-leave) .badge.risk{background:var(--risk-t);color:var(--risk-ink)}
+:where(.app-leave) .badge.notice{background:var(--notice-t);color:var(--notice-ink)}
+:where(.app-leave) .badge.brand{background:var(--brand-t);color:var(--brand-d)}
+
+/* ── 提示訊息 ─────────────────────────────────────────── */
+:where(.app-leave) .alert{display:block;border-radius:var(--r-md);padding:11px 14px;margin-bottom:12px;font-size:16px;border:1px solid}
+:where(.app-leave) .alert.risk{background:var(--risk-t);border-color:var(--risk-line)}
+:where(.app-leave) .alert.notice{background:var(--notice-t);border-color:var(--notice-line)}
+:where(.app-leave) .alert.ok{background:var(--ok-t);border-color:var(--ok-line)}
+:where(.app-leave) .alert ul{margin:6px 0 0;padding-left:20px}
+
+/* ── 表單 ─────────────────────────────────────────────── */
+:where(.app-leave) label{display:block;font-size:15px;color:var(--ink-2);margin:16px 0 6px;font-weight:600}
+:where(.app-leave) input,:where(.app-leave) select,:where(.app-leave) textarea{width:100%;padding:11px 12px;border:1px solid var(--line-2);border-radius:10px;font-size:17px;
+  font-family:inherit;background:var(--card);color:var(--ink);min-height:46px;transition:border-color .15s,box-shadow .15s}
+/* 16px 是為了避免 iOS Safari 聚焦時自動放大頁面 */
+:where(.app-leave) input::placeholder,:where(.app-leave) textarea::placeholder{color:var(--faint)}
+:where(.app-leave) input[type=checkbox],:where(.app-leave) input[type=radio]{width:18px;height:18px;min-height:0;padding:0;margin:0 7px 0 0;vertical-align:-3px;accent-color:var(--brand)}
+:where(.app-leave) input[type=file]{padding:9px 10px;background:var(--soft)}
+:where(.app-leave) input[type=range]{accent-color:var(--brand);border:0;padding:0;min-height:0}
+:where(.app-leave) select{-webkit-appearance:none;appearance:none;padding-right:36px;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235f6874' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 13px center}
+:where(.app-leave) select[multiple]{background-image:none;padding-right:12px}
+:where(.app-leave) textarea{min-height:96px;resize:vertical;line-height:1.65}
+:where(.app-leave) input:focus,:where(.app-leave) select:focus,:where(.app-leave) textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-t)}
+:where(.app-leave) input:disabled,:where(.app-leave) select:disabled,:where(.app-leave) textarea:disabled{background:var(--soft);color:var(--muted)}
+:where(.app-leave) .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+:where(.app-leave) .two>*{min-width:0}
+:where(.app-leave) .hint{font-size:14px;color:var(--muted);margin-top:5px;line-height:1.55}
+
+/* ── 按鈕 ─────────────────────────────────────────────── */
+:where(.app-leave) .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--brand-fill);color:#fff;
+  border:1px solid transparent;border-radius:var(--r-md);padding:10px 18px;min-height:46px;font-size:17px;font-weight:600;
+  cursor:pointer;text-align:center;font-family:inherit;line-height:1.3;transition:background-color .15s,transform .08s;
+  -webkit-user-select:none;user-select:none}
+:where(.app-leave) .btn:hover{background:var(--brand-fill-d);text-decoration:none;color:#fff}
+:where(.app-leave) .btn:active{transform:scale(.98)}
+:where(.app-leave) .btn:disabled,:where(.app-leave) .btn[disabled]{background:var(--disabled);cursor:not-allowed;transform:none}
+:where(.app-leave) .btn.ghost{background:var(--card);color:var(--ink);border-color:var(--line-2)}
+:where(.app-leave) .btn.ghost:hover{background:var(--soft);color:var(--ink)}
+:where(.app-leave) .btn.risk{background:var(--risk-fill);color:#fff} :where(.app-leave) .btn.risk:hover{background:var(--risk-fill-d)}
+:where(.app-leave) .btn.ok{background:var(--ok-fill);color:#fff} :where(.app-leave) .btn.ok:hover{background:var(--ok-fill-d)}
+:where(.app-leave) .btn.sm{padding:6px 12px;min-height:36px;font-size:15px;border-radius:10px}
+:where(.app-leave) .btn.wide{width:100%}
+:where(.app-leave) .actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+:where(.app-leave) .actions .btn{flex:1;min-width:120px}
+:where(.app-leave) .inline{display:inline}
+
+/* ── 表格 ─────────────────────────────────────────────── */
+:where(.app-leave) .kv{width:100%;font-size:16px;border-collapse:collapse}
+:where(.app-leave) .kv th{text-align:left;color:var(--muted);font-weight:500;padding:8px 14px 8px 0;white-space:nowrap;vertical-align:top;width:1%;border:0}
+:where(.app-leave) .kv td{padding:8px 0;border:0}
+:where(.app-leave) .kv tr+tr th,:where(.app-leave) .kv tr+tr td{border-top:1px solid var(--line)}
+:where(.app-leave) table.grid{width:100%;border-collapse:collapse;font-size:15px}
+:where(.app-leave) table.grid th,:where(.app-leave) table.grid td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+:where(.app-leave) table.grid th{color:var(--muted);font-weight:600;background:var(--soft);white-space:nowrap;font-size:14px}
+:where(.app-leave) table.grid tbody tr:hover td{background:var(--soft)}
+:where(.app-leave) table.grid .num{text-align:right;font-variant-numeric:tabular-nums}
+:where(.app-leave) .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:0 16px}
+
+/* 各系統裡的分頁：灰色軌道上的切換鈕。太多、手機放不下時橫向滑動，兩端的陰影提示「還有」 */
+:where(.app-leave) .subtabs{display:flex;gap:2px;margin:0 0 16px;padding:3px;border-radius:12px;overflow-x:auto;scrollbar-width:none;
+  background:linear-gradient(to right,var(--track) 40%,transparent) left/28px 100% no-repeat local,
+    linear-gradient(to left,var(--track) 40%,transparent) right/28px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%,rgba(20,30,45,.2),transparent) left/10px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%,rgba(20,30,45,.2),transparent) right/10px 100% no-repeat scroll,var(--track)}
+:where(.app-leave) .subtabs::-webkit-scrollbar{display:none}
+:where(.app-leave) .subtabs a{flex:1 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:38px;padding:0 14px;
+  font-size:16px;color:var(--muted);white-space:nowrap;border-radius:9px}
+:where(.app-leave) .subtabs a:hover{text-decoration:none;color:var(--ink)}
+:where(.app-leave) .subtabs a.on{background:var(--card);color:var(--brand-d);font-weight:600;box-shadow:0 1px 2px rgba(20,30,45,.12)}
+
+:where(.app-leave) .foot{text-align:center;color:var(--faint);font-size:13.5px;padding:20px 16px 26px}
+:where(.app-leave) .empty{text-align:center;color:var(--muted);padding:30px 12px;font-size:16px}
+:where(.app-leave) .pw{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:16.5px;font-weight:700;
+  letter-spacing:2px;background:var(--sun-t);border:1px solid var(--sun-line);border-radius:6px;padding:1px 8px}
+:where(.app-leave) .muted{color:var(--muted)}
+:where(.app-leave) .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+:where(.app-leave) details>summary{cursor:pointer}
+
+/* ── 登入 ─────────────────────────────────────────────── */
+:where(.app-leave) .login-wrap{max-width:380px;margin:9vh auto;padding:0 18px}
+:where(.app-leave) .login-wrap .logo{text-align:center;font-size:30px;margin-bottom:6px}
+:where(.app-leave) .login-wrap h1{text-align:center;font-size:22px;margin-bottom:22px}
+:where(.app-leave) .login-wrap .card > label:first-of-type{margin-top:0}
+:where(.app-leave) .or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14.5px;margin:16px 0}
+:where(.app-leave) .or::before,:where(.app-leave) .or::after{content:"";flex:1;border-top:1px solid var(--line)}
+
+/* 安全模式、測試環境：一條細的，不佔版面但一定看得到 */
+:where(.app-leave) .safebar{display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap;background:var(--sun-t);border:1px solid var(--sun-line);
+  border-radius:10px;padding:7px 12px;margin-bottom:14px;font-size:14.5px;color:var(--sun-fg);line-height:1.6}
+:where(.app-leave) .safebar > b:first-child{display:inline-flex;align-items:center;gap:4px}
+:where(.app-leave) .stagingbar{background:repeating-linear-gradient(-45deg,var(--vio-t),var(--vio-t) 10px,var(--vio-t2) 10px,var(--vio-t2) 20px);
+  color:var(--vio-ink);padding:3px 14px;font-size:13.5px;text-align:center;line-height:1.6}
+
+/* 我的帳號：頭像、名字、登出 */
+:where(.app-leave) .profile{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:12px 14px;margin-bottom:12px}
+:where(.app-leave) .profile > div{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35}
+:where(.app-leave) .profile > div b{font-size:17px}
+:where(.app-leave) .profile .hint{margin-top:2px}
+
+/* ── 請假系統自己的元件 ─────────────────────────────────── */
+body:has(.app-leave){padding-bottom:0}
+.page.has-tabbar:where(.app-leave),:where(.app-leave) .page.has-tabbar{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom))}
+:where(.app-leave) .tabbar .dot{top:5px;left:calc(50% + 6px);margin:0}
+:where(.app-leave) .subtabs{border-bottom:0}
+:where(.app-leave) .subtabs a{border-bottom:0}
+:where(.app-leave) .systabs{margin-bottom:12px}
+:where(.app-leave) .systabs .ic{width:17px;height:17px}
+:where(.app-leave) .systabs .dot{min-width:18px;height:18px;font-size:12.5px}
+:where(.app-leave) .modnav{gap:2px;padding:3px;background:var(--track);border-radius:12px}
+:where(.app-leave) .modnav a{min-height:40px;border-radius:9px;font-size:16.5px}
+:where(.app-leave) .modnav a:hover{text-decoration:none;color:var(--ink)}
+:where(.app-leave) .modnav a.on{background:var(--card);color:var(--brand-d);font-weight:600;box-shadow:0 1px 2px rgba(20,30,45,.12)}
+:where(.app-leave) .bal .b{border-radius:var(--r-lg);padding:12px 8px}
+:where(.app-leave) .bal .b .n{font-size:26px;color:var(--brand)}
+:where(.app-leave) .bal .b.low .n{color:var(--risk)}
+:where(.app-leave) .req{border-radius:var(--r-lg);padding:12px 14px}
+:where(.app-leave) .req:hover{border-color:var(--line-2);background:var(--soft)}
+:where(.app-leave) .calbar .ttl .now{color:var(--brand-d);background:var(--brand-t)}
+:where(.app-leave) .calbar .nav .btn{min-height:38px}
+:where(.app-leave) .cal .cell{border-radius:10px}
+:where(.app-leave) .cal .cell.off,:where(.app-leave) .cal .cell.quiet{background:var(--soft)}
+:where(.app-leave) .cal .cell .bo{background:var(--risk-t);color:#8f1d31}
+:where(.app-leave) .cal .cell .bo.warn{background:var(--notice-t);color:#704000}
+:where(.app-leave) .rules{border-radius:var(--r-lg)}
+:where(.app-leave) .rules>summary{min-height:48px}
+:where(.app-leave) .rules>summary::before{content:"";flex:none;width:18px;height:18px;background:var(--brand);-webkit-mask:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0'/><path d='M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0'/><path d='M3 6l0 13'/><path d='M12 6l0 13'/><path d='M21 6l0 13'/></svg>") center/contain no-repeat;mask:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0'/><path d='M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0'/><path d='M3 6l0 13'/><path d='M12 6l0 13'/><path d='M21 6l0 13'/></svg>") center/contain no-repeat}
+/* ── 字放大之後，手機上放不下的改成左右滑（2026-11-10 園方：字跟圖示放大，排擠版面就用左右滑動） ──
+   表格：每一欄至少約 4.5 個字寬，超出螢幕就左右滑；兩端的陰影提示「還有」（跟分頁列同一個做法） */
+@media (max-width:719px){
+  :where(.app-leave) table.grid{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+    background:linear-gradient(to right,var(--card) 30%,transparent) left/24px 100% no-repeat local,
+      linear-gradient(to left,var(--card) 30%,transparent) right/24px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%,rgba(20,30,45,.18),transparent) left/10px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%,rgba(20,30,45,.18),transparent) right/10px 100% no-repeat scroll}
+  :where(.app-leave) table.grid > tbody{display:table;width:100%}
+  :where(.app-leave) table.grid td{min-width:4.5em}
+  :where(.app-leave) table.grid td.num,:where(.app-leave) table.grid th{min-width:0}
+}
+/* 請假的切換鈕（我的假單／我要請假／簽核／代班）放不下就左右滑 */
+:where(.app-leave) .modnav{overflow-x:auto;scrollbar-width:none}
+:where(.app-leave) .modnav::-webkit-scrollbar{display:none}
+:where(.app-leave) .modnav a{flex:1 0 auto;padding:0 14px}
+/* 行事曆：字放大後一格至少 4 個字寬，週一到週五放不下就左右滑（週六日照舊窄） */
+@media (max-width:719px){
+  :where(.app-leave) .cal{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;padding-bottom:4px;
+    grid-template-columns:repeat(5,minmax(76px,1fr)) minmax(38px,.5fr) minmax(38px,.5fr)}
+}
+@media (min-width:720px){
+  .page.has-tabbar:where(.app-leave),:where(.app-leave) .page.has-tabbar{padding-bottom:0}
+  :where(.app-leave) .appnav{display:none}
+  :where(.app-leave) .topbar{height:60px;gap:20px}
+  :where(.app-leave) .topnav{display:flex;gap:4px;height:100%}
+  :where(.app-leave) .topnav a{display:inline-flex;align-items:center;gap:6px;padding:0 14px;color:var(--muted);font-size:16px;
+    border-bottom:2px solid transparent;margin-bottom:-2px}
+  :where(.app-leave) .topnav a:hover{color:var(--ink);text-decoration:none}
+  :where(.app-leave) .me-name{display:inline}
+  :where(.app-leave) .scroll{margin:0;padding:0}
+  :where(.app-leave) .container{margin-top:22px}
+  :where(.app-leave) h1{font-size:26px}
+}
+@media (prefers-reduced-motion:reduce){
+  :where(.app-leave) *,:where(.app-leave) *::before,:where(.app-leave) *::after{transition:none!important;animation:none!important}
+  :where(.app-leave) .btn:active{transform:none}
+}
+
+/* ── 毛玻璃（視覺辨識規範 §5）：只用在浮在內容上面的頂列與手機底部分頁列，內容捲過去隱約透出來。
+   卡片、按鈕、方格不用。瀏覽器不支援、或使用者開了「降低透明度」，就維持原本的實色底 ── */
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  @media (prefers-reduced-transparency:no-preference){
+    .topbar,:where(.app-leave) .topbar{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px)}
+    @media (max-width:719px){
+      .tabbar,:where(.app-leave) .tabbar{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px)}
+    }
+  }
+}
+
+/* ── 深色模式（視覺辨識規範 §10，方案 A 深藍灰；2026-11-12）─────────────────────
+   預設跟著手機／電腦的系統設定；「我的」可以手動選淺色或深色（<html data-theme="light|dark">）。
+   下面兩段的數值要一樣：前一段是「跟著系統」，後一段是「手動選深色」。
+   主色在深色底上改用亮的同色系當字與圖示；放白字的實色底（按鈕、焦點卡）用 -fill 那一組，維持深的。
+   照片、列印、Email 不跟著變深。 ── */
+@media (prefers-color-scheme:dark){
+  html:root:not([data-theme=light]){color-scheme:dark;
+  --bg:#111822; --card:#1a2331; --soft:#202b3b; --track:#263244; --line:#2a3546; --line-2:#3d4a5e;
+  --ink:#e6ebf2; --ink-2:#c9d1dc; --muted:#9aa7b8; --faint:#7a889d; --disabled:#3a4658; --glass:rgba(26,35,49,.78); --bar:rgba(26,35,49,.96);
+  --navy:#b9c8dc; --navy-d:#d3deec; --navy-t:#243349; --navy-fill:#2f4668; --navy-fill-d:#3a5479;
+  --hr:#5dcaa5; --hr-d:#7fd8ba; --hr-t:#12332b; --hr-fill:#128064; --hr-fill-d:#169473;
+  --teach:#85b7eb; --teach-d:#a6cbf2; --teach-t:#16304d; --teach-fill:#2f74b8; --teach-fill-d:#3a84cc;
+  --admin:#ef9f27; --admin-d:#f5b758; --admin-t:#3a2a10; --admin-fill:#a8650d; --admin-fill-d:#bd7515;
+  --other:#b4b2a9; --other-d:#cfcdc5; --other-t:#2c2c2a;
+  --nav-on:#e6ebf2;
+  --risk:#f08a9a; --risk-t:#451722; --risk-ink:#f6b0bb; --risk-line:#6b2634; --risk-fill:#c2334a; --risk-fill-d:#d4465c;
+  --notice:#f2b450; --notice-t:#3d2c0a; --notice-ink:#f6cc80; --notice-line:#6a4c14;
+  --ok:#62c990; --ok-t:#123524; --ok-ink:#8fdcb0; --ok-line:#1f5a3b; --ok-fill:#1d7a4a; --ok-fill-d:#24915a;
+  --info:#85b7eb; --info-t:#16304d; --info-ink:#b5d4f4; --info-line:#2a4f7a; --info-fill:#2f74b8;
+  --vio:#b3a2f2; --vio-t:#2b2350; --vio-t2:#342a61; --vio-ink:#cdc2f7;
+  --sun-t:#3d2f0c; --sun-line:#6a5215; --sun-fg:#f3c95f;}
+  html:not([data-theme=light]) .page.theme-parent{--bg:#101a15; --card:#18251f; --soft:#1d2c25; --track:#24352d; --line:#2a3a32; --line-2:#3c4f45;
+  --ink:#e4ece7; --muted:#9bada3; --glass:rgba(24,37,31,.78); --bar:rgba(24,37,31,.96);
+  --brand:#6fcfa9; --brand-d:#8fdcbd; --brand-t:#173528; --brand-fill:#24805f; --brand-fill-d:#2c966f; --nav-on:#6fcfa9;
+  --notice:#f2c060; --notice-t:#3d2f0c;}
+}
+html:root[data-theme=dark]{color-scheme:dark;
+  --bg:#111822; --card:#1a2331; --soft:#202b3b; --track:#263244; --line:#2a3546; --line-2:#3d4a5e;
+  --ink:#e6ebf2; --ink-2:#c9d1dc; --muted:#9aa7b8; --faint:#7a889d; --disabled:#3a4658; --glass:rgba(26,35,49,.78); --bar:rgba(26,35,49,.96);
+  --navy:#b9c8dc; --navy-d:#d3deec; --navy-t:#243349; --navy-fill:#2f4668; --navy-fill-d:#3a5479;
+  --hr:#5dcaa5; --hr-d:#7fd8ba; --hr-t:#12332b; --hr-fill:#128064; --hr-fill-d:#169473;
+  --teach:#85b7eb; --teach-d:#a6cbf2; --teach-t:#16304d; --teach-fill:#2f74b8; --teach-fill-d:#3a84cc;
+  --admin:#ef9f27; --admin-d:#f5b758; --admin-t:#3a2a10; --admin-fill:#a8650d; --admin-fill-d:#bd7515;
+  --other:#b4b2a9; --other-d:#cfcdc5; --other-t:#2c2c2a;
+  --nav-on:#e6ebf2;
+  --risk:#f08a9a; --risk-t:#451722; --risk-ink:#f6b0bb; --risk-line:#6b2634; --risk-fill:#c2334a; --risk-fill-d:#d4465c;
+  --notice:#f2b450; --notice-t:#3d2c0a; --notice-ink:#f6cc80; --notice-line:#6a4c14;
+  --ok:#62c990; --ok-t:#123524; --ok-ink:#8fdcb0; --ok-line:#1f5a3b; --ok-fill:#1d7a4a; --ok-fill-d:#24915a;
+  --info:#85b7eb; --info-t:#16304d; --info-ink:#b5d4f4; --info-line:#2a4f7a; --info-fill:#2f74b8;
+  --vio:#b3a2f2; --vio-t:#2b2350; --vio-t2:#342a61; --vio-ink:#cdc2f7;
+  --sun-t:#3d2f0c; --sun-line:#6a5215; --sun-fg:#f3c95f;}
+html[data-theme=dark] .page.theme-parent{--bg:#101a15; --card:#18251f; --soft:#1d2c25; --track:#24352d; --line:#2a3a32; --line-2:#3c4f45;
+  --ink:#e4ece7; --muted:#9bada3; --glass:rgba(24,37,31,.78); --bar:rgba(24,37,31,.96);
+  --brand:#6fcfa9; --brand-d:#8fdcbd; --brand-t:#173528; --brand-fill:#24805f; --brand-fill-d:#2c966f; --nav-on:#6fcfa9;
+  --notice:#f2c060; --notice-t:#3d2f0c;}
 
 </style>
 <style>
@@ -615,7 +1498,7 @@ function showFatal(t) {
 }
 </script>
 </head>
-<body data-pubkey="BIDalvOq+EgrsdL8UPLgARUqtbyjCn6ZdfWbgvAIm8ZGMNUdRxhv/ZtEkQztYKiTq5CHRxOB/4fImg+Huej+5f4=" data-exec="https://bk-gw-relay-test.bklkidsgarden.workers.dev/" data-home="/auth/teacher" data-login="/auth/login?next=%2Fauth%2Fteacher" data-session="campus_session" data-entry="teacher">
+<body data-pubkey="BIDalvOq+EgrsdL8UPLgARUqtbyjCn6ZdfWbgvAIm8ZGMNUdRxhv/ZtEkQztYKiTq5CHRxOB/4fImg+Huej+5f4=" data-exec="https://bk-gw-relay-test.bklkidsgarden.workers.dev/" data-home="/auth/teacher" data-login="/auth/login?next=%2Fauth%2Fteacher" data-session="campus_session" data-entry="teacher" data-offline="1" data-other-handle="campus-acct-">
 <pre id="fatal" hidden></pre>
 <div id="busy" hidden>連線中…</div>
 <div id="sheet" hidden></div>
@@ -740,8 +1623,8 @@ const Gw = (() => {
     return e;
   }
 
-  /** 送一筆請求到主機。req = {method, path, headers}；body 為 Uint8Array（可省略）。 */
-  async function call(req, body) {
+  /** 把一筆請求加密成信封（只有主機解得開）。斷線代收的打卡也用這個：信封交給轉送服務保管，主機恢復後才解。 */
+  async function seal(req, body) {
     const s = await session();
     const id = hex(crypto.getRandomValues(new Uint8Array(16)));
     const meta = { id, ts: Date.now(), method: req.method || 'GET', path: req.path,
@@ -750,7 +1633,12 @@ const Gw = (() => {
     const ct = new Uint8Array(await crypto.subtle.encrypt(
       { name: 'AES-GCM', iv, additionalData: te.encode('bk-gw-req-v1') },
       s.key, frame(meta, body || new Uint8Array(0))));
-    const env = JSON.stringify({ v: 1, epk: s.epk, iv: b64.enc(iv), ct: b64.enc(ct) });
+    return { id, s, meta, env: JSON.stringify({ v: 1, epk: s.epk, iv: b64.enc(iv), ct: b64.enc(ct) }) };
+  }
+
+  /** 送一筆請求到主機。req = {method, path, headers}；body 為 Uint8Array（可省略）。 */
+  async function call(req, body) {
+    const { id, s, meta, env } = await seal(req, body);
 
     // 安全重送：Google 把結果交回來那一段偶爾會掉（空白、404、逾時），但請求可能已經到過主機了。
     // 拿「同一份」加密請求再送：主機認得同一個請求編號，會直接交出上次的結果、不會再執行一次，
@@ -780,7 +1668,11 @@ const Gw = (() => {
       throw friendly(e.kind || 'apps-script', e.message + (e.kind === 'slow' ? '，請再試一次' : ''));
     }
     if (relayed.status === 429) throw friendly('busy', '系統忙碌中，請過一分鐘再試');
-    if (relayed.status === 0) throw friendly('offline', '主機目前連不上（可能正在重新啟動），請稍後再試');
+    // 0＝轉送服務連不到主機；5xx 是 Cloudflare 代回的（例如 530：主機的通道斷了，2026-11-20 早上斷網就是這樣）。
+    // 閘道自己只會回 4xx，所以這兩種都是「主機連不上」，外殼頁才會給「離線打卡」
+    if (relayed.status === 0 || relayed.status >= 500) {
+      throw friendly('offline', '主機目前連不上（可能正在重新啟動或斷網），請稍後再試');
+    }
     if (relayed.status === 413) throw friendly('too-large', '檔案太大，送不出去');
     if (relayed.status !== 200) throw friendly('gateway', '主機拒絕了這次請求（' + relayed.status + '），請重新整理頁面再試');
     const res = JSON.parse(relayed.body);
@@ -792,7 +1684,7 @@ const Gw = (() => {
     return { status: rm.status, headers: rm.headers || {}, body: rb };
   }
 
-  return { call, run };
+  return { call, run, seal };
 })();
 
 </script>
@@ -1137,6 +2029,275 @@ const PageCache = (() => {
   };
 })();
 
+/** 離線打卡（2026-11-21；11/20 早上主機斷網三個多小時，26 位同仁沒有上班卡）。
+ *
+ * 主機連不上、手機還有網路時：向轉送服務拿一張蓋了時間章的號碼牌，用 SHA-256(號碼牌) 當 Face ID 的題目，
+ * 定位與 Face ID 的結果用主機的公鑰加密（Gw.seal，跟一般請求同一套）交給轉送服務保管；主機恢復後自己去領、驗、入帳
+ *（gateway/offline.py → 請假系統 punch.record_relay）。打卡時間＝轉送服務收到的時間，不用手機的時鐘。
+ *
+ * 手機上不存打卡資料：號碼牌、定位、Face ID 的結果只在這一頁的記憶體裡，交出去就沒了（PWA施作規劃書 §3）。
+ * 只記園區的位置（打卡頁開過就記住；學校的地址不是個資），斷線時才算得出在不在範圍內；沒記到就讓他自己決定要不要填原因。
+ * 只有同仁的 App（主管及行政、老師）有：build.py 在 body 上標 data-offline="1"。 */
+const OfflinePunch = (() => {
+  const app = document.getElementById('app');
+  const ON = document.body.dataset.offline === '1';
+  // 另一個環境的 Face ID 帳號代號開頭（測試與正式同一個網址，手機會把兩把都列出來）：選到那一把就當場說，不必等主機退回
+  const OTHER = document.body.dataset.otherHandle || '';
+  const ENTRY = document.body.dataset.entry || '';
+  const SITE_KEY = 'gw.punchsite:' + location.pathname.replace(/[^/]*$/, '');
+  const TICKET_REFRESH_MS = 8 * 60 * 1000;   // 號碼牌 10 分鐘內要交回：開著超過 8 分鐘就先換一張
+  const DEFAULT_MAX_AGE = 180;               // 定位幾秒內要按下打卡（同打卡頁）
+  const te = new TextEncoder();
+
+  function available() { return ON && !!(window.PublicKeyCredential && navigator.credentials && crypto.subtle); }
+
+  /** 打卡頁（#pk-form）開過就記住園區位置。Shell.render 每次換頁後呼叫。 */
+  function remember(root) {
+    const f = root.querySelector('#pk-form[data-lat]');
+    if (!f) return;
+    const d = f.dataset;
+    const s = { lat: +d.lat, lng: +d.lng, radius: +d.radius, credit: +d.credit || 0, maxAge: +d.maxAge || DEFAULT_MAX_AGE };
+    if (![s.lat, s.lng, s.radius].every((x) => Number.isFinite(x) && x)) return;
+    try { localStorage.setItem(SITE_KEY, JSON.stringify(s)); } catch (e) { /* 存不了：斷線時就不先算範圍 */ }
+  }
+  function savedSite() {
+    try { return JSON.parse(localStorage.getItem(SITE_KEY) || 'null'); } catch (e) { return null; }
+  }
+
+  const b64u = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const hhmm = (ms) => { const t = new Date(ms); return String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0'); };
+
+  function meters(lat1, lng1, lat2, lng2) {
+    const r = 6371000, rad = Math.PI / 180;
+    const a = Math.sin((lat2 - lat1) * rad / 2) ** 2 +
+              Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin((lng2 - lng1) * rad / 2) ** 2;
+    return 2 * r * Math.asin(Math.sqrt(a));
+  }
+
+  function h(tag, props, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(props || {})) {
+      if (k === 'style') n.style.cssText = v; else if (k in n) n[k] = v; else n.setAttribute(k, v);
+    }
+    n.append(...kids.filter((x) => x !== null && x !== undefined));
+    return n;
+  }
+
+  /** 換到離線打卡的畫面。back＝「回到系統」（重新連線）。 */
+  function open(back) {
+    const site = savedSite();
+    const MAX_AGE = (site && site.maxAge) || DEFAULT_MAX_AGE;
+    const clock = h('div', { style: 'text-align:center;font-size:44px;font-weight:700;font-variant-numeric:tabular-nums' }, '--:--');
+    const loc = h('p', { className: 'hint', style: 'text-align:center' }, '正在取得手機位置…');
+    const left = h('p', { className: 'hint', style: 'text-align:center' });
+    const reloc = h('button', { className: 'btn ghost wide', type: 'button' }, '重新取得位置');
+    const relocBox = h('div', { className: 'actions', hidden: true, style: 'margin-top:6px' }, reloc);
+    const reason = h('input', { id: 'offline-reason', maxLength: 200, placeholder: '例如：公出、校外教學、定位一直抓不到' });
+    const reasonBox = h('div', { hidden: !!site },
+      h('label', { htmlFor: 'offline-reason' }, site ? '原因（不在園區範圍內或拿不到定位時要填，人事確認後才算）'
+        : '原因（人不在園區時才填，例如公出、校外教學；人事確認後才算）'), reason);
+    const go = h('button', { className: 'btn wide', type: 'button', disabled: true }, '用 Face ID 離線打卡');
+    const resend = h('button', { className: 'btn ghost wide', type: 'button', hidden: true }, '再送一次');
+    const msg = h('p', { className: 'hint' });
+    const done = h('div', { className: 'alert ok', hidden: true });
+    const backBtn = h('button', { className: 'btn ghost wide', type: 'button' }, '回到系統（重新連線）');
+    // 外面包一層跟打卡頁一樣的（請假系統 base.html 的 .page.app-leave.g-hr）：按鈕、提示的顏色才跟平常打卡一樣
+    app.replaceChildren(h('div', { className: 'page app-leave g-hr' }, h('main', { className: 'container' },
+      h('h1', null, '離線打卡'),
+      h('div', { className: 'alert notice' }, '主機目前連不上。這裡打的卡先由轉送服務代收，主機恢復後自動入帳，',
+        h('b', null, '時間以代收的那一刻為準'), '，不用再打一次。'),
+      done,
+      h('div', { className: 'card' }, clock, loc, left, relocBox, reasonBox,
+        h('div', { className: 'actions' }, go), h('div', { className: 'actions' }, resend), msg),
+      h('p', { className: 'hint' }, '手機也要有網路才能代收。連著園內 Wi-Fi 卻上不了網的話，請先關掉 Wi-Fi 改用行動網路。',
+        '還是不行，請到辦公室紙本簽到。'),
+      h('div', { className: 'actions' }, backBtn))));
+    document.title = '離線打卡';
+    window.scrollTo(0, 0);
+
+    let status = 'locating', fix = null, fixAt = null, inRange = null;
+    let ticket = null, ticketP = null, pending = null, busyNow = false, finished = false;
+    const alive = () => document.body.contains(clock);
+    const ageSeconds = () => (fixAt === null ? null : Math.max(0, (Date.now() - fixAt) / 1000));
+    const ready = () => { go.disabled = finished || busyNow || status === 'locating' || status === 'expired' || !ticket; };
+
+    function tick() {
+      if (!alive()) { clearInterval(timer); return; }
+      clock.textContent = hhmm(Date.now());
+      if (finished) return;                        // 已代收：不再倒數、不再換號碼牌
+      if (ticket && !busyNow && !pending && Date.now() - ticket.got > TICKET_REFRESH_MS) getTicket();
+      if (status !== 'fresh') return;
+      const remain = Math.ceil(MAX_AGE - ageSeconds());
+      if (remain <= 0) {
+        status = 'expired'; fix = null; fixAt = null;
+        loc.textContent = '⏱ 位置已超過 ' + Math.round(MAX_AGE / 60) + ' 分鐘，請重新取得位置再打卡';
+        left.textContent = '';
+        relocBox.hidden = false;
+        ready();
+        return;
+      }
+      left.textContent = '請在 ' + Math.floor(remain / 60) + ':' + String(remain % 60).padStart(2, '0') + ' 內按下打卡';
+    }
+    const timer = setInterval(tick, 1000);
+    tick();
+
+    function locate() {
+      status = 'locating'; fix = null; fixAt = null; inRange = null; relocBox.hidden = true; left.textContent = '';
+      loc.textContent = '正在取得手機位置…';
+      ready();
+      if (!navigator.geolocation) { noLocation('這個瀏覽器拿不到定位。可以填原因後打卡，由人事確認。'); return; }
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const c = pos.coords;
+        fix = { lat: c.latitude, lng: c.longitude, accuracy: Math.round(c.accuracy) };
+        fixAt = pos.timestamp && Math.abs(Date.now() - pos.timestamp) < 60000 ? pos.timestamp : Date.now();
+        status = 'fresh'; relocBox.hidden = false;
+        if (site) {
+          const m = Math.round(meters(c.latitude, c.longitude, site.lat, site.lng));
+          inRange = m - Math.min(c.accuracy, site.credit) <= site.radius;
+          loc.textContent = inRange ? '在園區範圍內（約 ' + m + ' 公尺，精度 ±' + Math.round(c.accuracy) + ' 公尺）'
+            : '離園區約 ' + m + ' 公尺，不在範圍內。公出、校外教學等請填原因，人事確認後才算。';
+          reasonBox.hidden = inRange && !reason.value;
+        } else {
+          loc.textContent = '已取得位置（精度 ±' + Math.round(c.accuracy) + ' 公尺）。主機恢復後才算在不在園區範圍內。';
+        }
+        ready();
+        tick();
+      }, (e) => noLocation((e.code === 1 ? '你沒有允許這個網頁使用定位。' : '拿不到定位（' + (e.message || '逾時') + '）。')
+        + '可以按「重新取得位置」，或填原因後打卡（人事確認後才算）。'),
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
+    }
+    function noLocation(text) {
+      status = 'none'; fix = null; fixAt = null; inRange = false;
+      loc.textContent = text; reasonBox.hidden = false; relocBox.hidden = false;
+      ready();
+    }
+
+    /** 跟轉送服務拿號碼牌（Face ID 一定要在按鈕的當下叫出來，所以先拿好、題目先算好）。 */
+    function getTicket() {
+      if (ticketP) return ticketP;
+      ticketP = (async () => {
+        let r;
+        try { r = await Gw.run('punchTicket'); } catch (e) {
+          if (alive() && !finished) msg.textContent = e.kind === 'network'
+            ? '手機目前沒有網路，代收不了。請關掉 Wi-Fi 改用行動網路後按「回到系統」再進來，或到辦公室紙本簽到。'
+            : '轉送服務沒有回應（' + e.message + '），請稍後按「回到系統」再試，或到辦公室紙本簽到。';
+          return;
+        }
+        if (!r || !r.ok) {
+          const why = r && r.error;
+          if (alive() && !finished) msg.textContent = why === 'host-up' ? '主機已經恢復連線了：請按「回到系統」，用一般的打卡。'
+            : why === 'busy' ? '轉送服務忙碌中，請過一分鐘按「回到系統」再進來。'
+            : '轉送服務現在不能代收（' + (why || '不明原因') + '），請到辦公室紙本簽到。';
+          return;
+        }
+        const challenge = await crypto.subtle.digest('SHA-256', te.encode(r.token));
+        ticket = { token: r.token, challenge, got: Date.now() };
+        if (msg.textContent.startsWith('號碼牌')) msg.textContent = '';
+      })().finally(() => { ticketP = null; if (alive()) ready(); });
+      return ticketP;
+    }
+
+    async function punch() {
+      msg.textContent = '';
+      if (status === 'locating') { msg.textContent = '還在取得位置，請稍等'; return; }
+      if (status === 'fresh' && ageSeconds() > MAX_AGE) { msg.textContent = '位置已過期，請按「重新取得位置」'; return; }
+      if (!reasonBox.hidden && inRange !== null && !inRange && !reason.value.trim()) {
+        msg.textContent = status === 'fresh' ? '不在園區範圍內，請先填原因' : '沒有定位：請填原因後再打卡';
+        reason.focus();
+        return;
+      }
+      if (!ticket || Date.now() - ticket.got > TICKET_REFRESH_MS) {
+        ticket = null;
+        msg.textContent = '號碼牌過期了，正在換新的，好了請再按一次';
+        getTicket();
+        return;
+      }
+      let cred;
+      busyNow = true; ready();
+      try {
+        cred = await navigator.credentials.get({ publicKey: {
+          challenge: ticket.challenge, userVerification: 'required', timeout: 120000, allowCredentials: [] } });
+      } catch (e) {
+        busyNow = false; ready();
+        msg.textContent = e && e.name === 'NotAllowedError' ? '已取消或逾時。請再按一次，並在手機跳出的視窗完成 Face ID／指紋'
+          : '這個瀏覽器沒辦法使用 Face ID／指紋（' + ((e && e.name) || e) + '）';
+        return;
+      }
+      const handle = cred.response.userHandle ? new TextDecoder().decode(cred.response.userHandle) : '';
+      if (OTHER && handle.startsWith(OTHER)) {
+        busyNow = false; ready();
+        msg.textContent = OTHER.includes('test') ? '你選到的是「（測試）」那一把 Face ID。請再按一次，選沒有「（測試）」的那一把。'
+          : '這是測試環境：請再按一次，選名字後面有「（測試）」的那一把 Face ID。';
+        return;
+      }
+      const resp = JSON.stringify({
+        id: cred.id, rawId: b64u(cred.rawId), type: cred.type, authenticatorAttachment: cred.authenticatorAttachment || null,
+        clientExtensionResults: cred.getClientExtensionResults ? cred.getClientExtensionResults() : {},
+        response: { clientDataJSON: b64u(cred.response.clientDataJSON), authenticatorData: b64u(cred.response.authenticatorData),
+                    signature: b64u(cred.response.signature),
+                    userHandle: cred.response.userHandle ? b64u(cred.response.userHandle) : null } });
+      const body = { passkey_response: resp, reason: reason.value.trim() };
+      if (fix && fixAt !== null) Object.assign(body, fix, { loc_age: Math.round(ageSeconds()) });
+      try {
+        const sealed = await Gw.seal({ method: 'POST', path: '/punch/offline',
+          headers: { 'content-type': 'application/json', 'x-campus-entry': ENTRY } }, te.encode(JSON.stringify(body)));
+        pending = { token: ticket.token, env: sealed.env, inRange };
+      } catch (e) {
+        busyNow = false; ready();
+        msg.textContent = '這支手機沒辦法加密（' + e.message + '），請到辦公室紙本簽到。';
+        return;
+      }
+      await send();
+    }
+
+    async function send() {
+      busyNow = true; ready(); resend.hidden = true;
+      msg.textContent = '送出中…';
+      let r;
+      try { r = await Gw.run('deposit', pending.token, pending.env); } catch (e) {
+        busyNow = false; ready(); resend.hidden = false;
+        msg.textContent = '還沒有送出（' + e.message + '）。手機有網路之後按「再送一次」（10 分鐘內）。';
+        return;
+      }
+      busyNow = false;
+      if (!r || !r.ok) {
+        const why = r && r.error;
+        if (why === 'busy' || why === 'full') {
+          resend.hidden = false;
+          msg.textContent = '轉送服務忙碌中，請過一分鐘按「再送一次」（10 分鐘內）。';
+        } else {
+          pending = null; ticket = null; getTicket();
+          msg.textContent = why === 'expired' ? '號碼牌過期了（超過 10 分鐘），請重新打一次。' : '代收沒有成功（' + (why || '不明原因') + '），請重新打一次。';
+        }
+        ready();
+        return;
+      }
+      finished = true; ready();
+      const out = pending.inRange === false;
+      pending = null;
+      go.textContent = '已代收';
+      msg.textContent = '';
+      relocBox.hidden = true; left.textContent = '';
+      done.replaceChildren('✅ 已代收 ', h('b', null, hhmm(r.at)), out
+        ? '。不在園區範圍內（或沒有定位），主機恢復後由人事確認才算。'
+        : '。主機恢復後自動入帳，不用再打一次。可以關掉這個畫面了。');
+      done.hidden = false;
+      window.scrollTo(0, 0);
+    }
+
+    go.addEventListener('click', punch);
+    resend.addEventListener('click', () => { if (pending) send(); });
+    reloc.addEventListener('click', locate);
+    reason.addEventListener('input', () => { if (reason.value) reasonBox.hidden = false; });
+    backBtn.addEventListener('click', () => { clearInterval(timer); back(); });
+    getTicket();
+    locate();
+  }
+
+  return { available, remember, open };
+})();
+
 const Shell = (() => {
   const app = document.getElementById('app');
   const busy = document.getElementById('busy');
@@ -1345,6 +2506,7 @@ const Shell = (() => {
     window.scrollTo(0, 0);
 
     loadImages(Array.from(app.querySelectorAll('img[data-src]')));
+    OfflinePunch.remember(app);
   }
 
   // 頁面上的圖片：一次最多抓 IMG_PARALLEL 張（每支手機、整個系統都有流量上限，一口氣全要容易被擋），
@@ -1511,8 +2673,18 @@ const Shell = (() => {
     if (e && e.kind === 'network') {
       // 斷網時外殼頁還打得開（sw.js），但系統連不上：照智慧校園規劃書 §3.5 改用紙本
       const hint = document.createElement('p');
-      hint.textContent = '連不上的這段時間，點名、接送請先記在紙本，恢復後補登。';
+      hint.textContent = '手機目前沒有網路。連著園內 Wi-Fi 卻上不了網的話，請關掉 Wi-Fi 改用行動網路再試。'
+        + '連不上的這段時間，點名、接送請先記在紙本，恢復後補登；打卡請到辦公室紙本簽到。';
       box.append(hint);
+    }
+    if (e && e.kind === 'offline' && OfflinePunch.available()) {
+      // 主機連不上、手機有網路（2026-11-20 早上那種）：打卡交給轉送服務代收，其他照舊記紙本
+      const hint = document.createElement('p');
+      hint.textContent = '主機連不上的這段時間：打卡可以用「離線打卡」，主機恢復後自動入帳；點名、接送請先記在紙本，恢復後補登。';
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = '離線打卡'; b.style.marginRight = '8px';
+      b.addEventListener('click', () => OfflinePunch.open(() => go('GET', readHash(), null, null, { replace: true })));
+      box.append(hint, b);
     }
     if (retry) {
       const b = document.createElement('button');
