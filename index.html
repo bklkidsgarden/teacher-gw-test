@@ -2032,7 +2032,7 @@ const PageCache = (() => {
 /** 離線打卡（2026-11-21；11/20 早上主機斷網三個多小時，26 位同仁沒有上班卡）。
  *
  * 主機連不上、手機還有網路時：向轉送服務拿一張蓋了時間章的號碼牌，用 SHA-256(號碼牌) 當 Face ID 的題目，
- * 定位與 Face ID 的結果用主機的公鑰加密（Gw.seal，跟一般請求同一套）交給轉送服務保管；主機恢復後自己去領、驗、入帳
+ * 定位與 Face ID 的結果用主機的公鑰加密（Gw.seal，跟一般請求同一套）交給轉送服務保管；主機恢復後自己去領、驗、匯入
  *（gateway/offline.py → 請假系統 punch.record_relay）。打卡時間＝轉送服務收到的時間，不用手機的時鐘。
  *
  * 手機上不存打卡資料：號碼牌、定位、Face ID 的結果只在這一頁的記憶體裡，交出去就沒了（PWA施作規劃書 §3）。
@@ -2105,7 +2105,7 @@ const OfflinePunch = (() => {
     // 外面包一層跟打卡頁一樣的（請假系統 base.html 的 .page.app-leave.g-hr）：按鈕、提示的顏色才跟平常打卡一樣
     app.replaceChildren(h('div', { className: 'page app-leave g-hr' }, h('main', { className: 'container' },
       h('h1', null, '離線打卡'),
-      h('div', { className: 'alert notice' }, '主機目前連不上。這裡打的卡先由轉送服務代收，主機恢復後自動入帳，',
+      h('div', { className: 'alert notice' }, '主機目前連不上。這裡打的卡先由轉送服務代收，主機恢復後自動匯入，',
         h('b', null, '時間以代收的那一刻為準'), '，不用再打一次。'),
       done,
       h('div', { className: 'card' }, clock, loc, left, relocBox, reasonBox,
@@ -2281,7 +2281,7 @@ const OfflinePunch = (() => {
       relocBox.hidden = true; left.textContent = '';
       done.replaceChildren('✅ 已代收 ', h('b', null, hhmm(r.at)), out
         ? '。不在園區範圍內（或沒有定位），主機恢復後由人事確認才算。'
-        : '。主機恢復後自動入帳，不用再打一次。可以關掉這個畫面了。');
+        : '。主機恢復後自動匯入，不用再打一次。可以關掉這個畫面了。');
       done.hidden = false;
       window.scrollTo(0, 0);
     }
@@ -2680,7 +2680,7 @@ const Shell = (() => {
     if (e && e.kind === 'offline' && OfflinePunch.available()) {
       // 主機連不上、手機有網路（2026-11-20 早上那種）：打卡交給轉送服務代收，其他照舊記紙本
       const hint = document.createElement('p');
-      hint.textContent = '主機連不上的這段時間：打卡可以用「離線打卡」，主機恢復後自動入帳；點名、接送請先記在紙本，恢復後補登。';
+      hint.textContent = '主機連不上的這段時間：打卡可以用「離線打卡」，主機恢復後自動匯入；點名、接送請先記在紙本，恢復後補登。';
       const b = document.createElement('button');
       b.type = 'button'; b.textContent = '離線打卡'; b.style.marginRight = '8px';
       b.addEventListener('click', () => OfflinePunch.open(() => go('GET', readHash(), null, null, { replace: true })));
