@@ -2310,6 +2310,8 @@ const Shell = (() => {
   const SESSION = document.body.dataset.session || 'leave_session';
   // 這是哪個 App（build.py）：每一筆請求都帶給閘道，老師的 App 只給老師的權限
   const ENTRY = document.body.dataset.entry || '';
+  // 家長用的 App（聯絡簿、新生報名）：斷網提示不講點名、接送、打卡那些同仁的事
+  const FAMILY = ENTRY === 'parent' || ENTRY === 'enroll';
   let current = HOME;
   // 系統的樣式表：外殼頁內建一份（build.py），其他抓過的記在這台手機（網址帶內容雜湊，改版就是新網址）。
   // 校園版每一艙的樣式表不同（入口首頁、請假系統…），記住抓過的，來回切換才不必每次多跑一趟 Google。
@@ -2673,8 +2675,10 @@ const Shell = (() => {
     if (e && e.kind === 'network') {
       // 斷網時外殼頁還打得開（sw.js），但系統連不上：照智慧校園規劃書 §3.5 改用紙本
       const hint = document.createElement('p');
-      hint.textContent = '手機目前沒有網路。連著園內 Wi-Fi 卻上不了網的話，請關掉 Wi-Fi 改用行動網路再試。'
-        + '連不上的這段時間，點名、接送請先記在紙本，恢復後補登；打卡請到辦公室紙本簽到。';
+      hint.textContent = FAMILY
+        ? '手機目前沒有網路，請確認 Wi-Fi 或行動網路有連上再試。有急事請直接打電話給園方。'
+        : '手機目前沒有網路。連著園內 Wi-Fi 卻上不了網的話，請關掉 Wi-Fi 改用行動網路再試。'
+          + '連不上的這段時間，點名、接送請先記在紙本，恢復後補登；打卡請到辦公室紙本簽到。';
       box.append(hint);
     }
     if (e && e.kind === 'offline' && OfflinePunch.available()) {
@@ -2791,7 +2795,17 @@ const Shell = (() => {
     Downloads.offer(new Uint8Array(await blob.arrayBuffer()), blob.type, name);
   }
 
-  return { start, toast, fetchBlob, downloadAll, offerBlob };
+  /** 給頁面用：背景送一包 JSON、收一包 JSON（跟車機的點名與定位）。不換頁、不重試，送不出去由頁面自己存著再送。
+   *  登入失效時閘道會轉到登入頁，拿到的是 HTML：丟 kind='auth'。 */
+  async function postJson(path, data) {
+    const r = await request('POST', path, new TextEncoder().encode(JSON.stringify(data)), 'application/json');
+    const isJson = (r.headers['content-type'] || '').startsWith('application/json');
+    if (r.status === 403 || (r.status < 400 && !isJson)) throw Object.assign(new Error('登入已失效'), { kind: 'auth' });
+    if (r.status !== 200) throw new Error('HTTP ' + r.status);
+    return JSON.parse(td.decode(r.body));
+  }
+
+  return { start, toast, fetchBlob, downloadAll, offerBlob, postJson };
 })();
 
 Shell.start();
