@@ -15,7 +15,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<style id="appcss" data-href="/auth/static/campus.css?v=d57dc7bd93">
+<style id="appcss" data-href="/auth/static/campus.css?v=43f82a67ee">
 /* 智慧校園系統共用樣式：手機優先（老師用手機），桌機只是加寬（行政用電腦）。各艙看起來是同一套系統。
    外殼頁只抓頁面的第一個樣式表，所以各艙自己的樣式也寫在這裡。
 
@@ -72,7 +72,8 @@
 html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
 body{margin:0;font-family:var(--sans);font-size:17px;background:var(--bg);color:var(--ink);line-height:1.6;letter-spacing:.01em;
   -webkit-font-smoothing:antialiased}
-.page.has-tabbar{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom))}
+/* --bar-h：底部分頁佔掉的高度（桌機沒有，是 0）。黏在畫面下面的東西（.stickybar）要停在它上面，不然會被蓋住 */
+.page.has-tabbar{--bar-h:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:var(--bar-h)}
 a{color:var(--brand);text-decoration:none;text-underline-offset:3px}
 a:hover{text-decoration:underline}
 img{max-width:100%}
@@ -178,7 +179,7 @@ input[type=checkbox],input[type=radio]{width:18px;height:18px;min-height:0;paddi
 input[type=file]{padding:9px 10px;background:var(--soft)}
 input[type=range]{accent-color:var(--brand);border:0;padding:0;min-height:0}
 select{-webkit-appearance:none;appearance:none;padding-right:36px;
-  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235f6874' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 13px center}
+  background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%237a889d' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 13px center}
 select[multiple]{background-image:none;padding-right:12px}
 textarea{min-height:96px;resize:vertical;line-height:1.65}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-t)}
@@ -476,7 +477,7 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
 }
 /* ── 桌機（行政的電腦）：分頁放進頂列、功能一排多放幾個 ───────── */
 @media (min-width:720px){
-  .page.has-tabbar{padding-bottom:0}
+  .page.has-tabbar{--bar-h:0px;padding-bottom:0}
   .appnav{display:none}
   .topbar{height:60px;gap:20px}
   .topnav{display:flex;gap:4px;height:100%}
@@ -515,7 +516,7 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
 .lssec:first-child{margin-top:0}
 .lssec > b{display:block;font-size:14.5px;color:var(--muted);font-weight:600;margin-bottom:2px}
 .lsphotos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
-.lsphotos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--track);display:block}
+.lsphotos img{width:100%;aspect-ratio:4/3;object-fit:contain;border-radius:10px;border:1px solid var(--line);background:var(--track);display:block}
 .lsphotos label{margin:0;display:block;font-weight:400;font-size:14px;color:var(--risk-ink);text-align:center}
 .lshead{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .lshead h2{margin:0}
@@ -567,7 +568,8 @@ textarea.doctext{font-size:15.5px;line-height:1.6}
 .ptimeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:999px;background:var(--faint)}
 .ptimeline li.found::before{background:var(--risk-ink)}.ptimeline li.reported::before{background:var(--info-fill)}
 .ptimeline li.closed::before{background:var(--ok-ink)}.ptimeline li.returned::before{background:var(--notice)}
-.stickybar{position:sticky;bottom:0;z-index:10;background:var(--bg);padding:10px 0}
+/* 黏在畫面下面的儲存列：手機上停在底部分頁上面 */
+.stickybar{position:sticky;bottom:var(--bar-h,0px);z-index:10;background:var(--bg);padding:10px 0}
 
 /* 公文 */
 .doccard{display:block;color:var(--ink)}
@@ -1245,7 +1247,7 @@ body:has(.app-leave){margin:0;font-family:var(--sans);font-size:17px;background:
 :where(.app-leave) input[type=file]{padding:9px 10px;background:var(--soft)}
 :where(.app-leave) input[type=range]{accent-color:var(--brand);border:0;padding:0;min-height:0}
 :where(.app-leave) select{-webkit-appearance:none;appearance:none;padding-right:36px;
-  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235f6874' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 13px center}
+  background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%237a889d' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 13px center}
 :where(.app-leave) select[multiple]{background-image:none;padding-right:12px}
 :where(.app-leave) textarea{min-height:96px;resize:vertical;line-height:1.65}
 :where(.app-leave) input:focus,:where(.app-leave) select:focus,:where(.app-leave) textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-t)}
@@ -1407,8 +1409,8 @@ body:has(.app-leave){padding-bottom:0}
    預設跟著手機／電腦的系統設定；「我的」可以手動選淺色或深色（<html data-theme="light|dark">）。
    下面兩段的數值要一樣：前一段是「跟著系統」，後一段是「手動選深色」。
    主色在深色底上改用亮的同色系當字與圖示；放白字的實色底（按鈕、焦點卡）用 -fill 那一組，維持深的。
-   照片、列印、Email 不跟著變深。 ── */
-@media (prefers-color-scheme:dark){
+   照片、列印、Email 不跟著變深：兩段都只在螢幕上（screen）生效，印出來一律淺色、黑字。 ── */
+@media screen and (prefers-color-scheme:dark){
   html:root:not([data-theme=light]){color-scheme:dark;
   --bg:#111822; --card:#1a2331; --soft:#202b3b; --track:#263244; --line:#2a3546; --line-2:#3d4a5e;
   --ink:#e6ebf2; --ink-2:#c9d1dc; --muted:#9aa7b8; --faint:#7a889d; --disabled:#3a4658; --glass:rgba(26,35,49,.78); --bar:rgba(26,35,49,.96);
@@ -1429,6 +1431,7 @@ body:has(.app-leave){padding-bottom:0}
   --brand:#6fcfa9; --brand-d:#8fdcbd; --brand-t:#173528; --brand-fill:#24805f; --brand-fill-d:#2c966f; --nav-on:#6fcfa9;
   --notice:#f2c060; --notice-t:#3d2f0c;}
 }
+@media screen{
 html:root[data-theme=dark]{color-scheme:dark;
   --bg:#111822; --card:#1a2331; --soft:#202b3b; --track:#263244; --line:#2a3546; --line-2:#3d4a5e;
   --ink:#e6ebf2; --ink-2:#c9d1dc; --muted:#9aa7b8; --faint:#7a889d; --disabled:#3a4658; --glass:rgba(26,35,49,.78); --bar:rgba(26,35,49,.96);
@@ -1448,13 +1451,14 @@ html[data-theme=dark] .page.theme-parent{--bg:#101a15; --card:#18251f; --soft:#1
   --ink:#e4ece7; --muted:#9bada3; --glass:rgba(24,37,31,.78); --bar:rgba(24,37,31,.96);
   --brand:#6fcfa9; --brand-d:#8fdcbd; --brand-t:#173528; --brand-fill:#24805f; --brand-fill-d:#2c966f; --nav-on:#6fcfa9;
   --notice:#f2c060; --notice-t:#3d2f0c;}
+}
 
 </style>
 <style>
 /* 外殼頁自己的元件。系統頁面的樣式另外抓（#appcss），這裡不碰系統的版面。 */
-#busy { position: fixed; top: 8px; right: 8px; z-index: 50; background: #111827; color: #fff;
+#busy { position: fixed; top: calc(8px + var(--vv-shift, 0px)); right: 8px; z-index: 50; background: #111827; color: #fff;
   padding: 4px 10px; border-radius: 999px; font-size: 13px; }
-#sheet, .shell-sheet { position: fixed; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); z-index: 60;
+#sheet, .shell-sheet { position: fixed; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom) - var(--vv-shift, 0px)); z-index: 60;
   background: #fff; border: 1px solid #d1d5db; border-radius: 12px; padding: 10px 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, .18); font-size: 15px; color: #111827; }
 #install { z-index: 55; }
@@ -1464,7 +1468,7 @@ html[data-theme=dark] .page.theme-parent{--bg:#101a15; --card:#18251f; --soft:#1
 #sheet button, .shell-sheet button { font-size: 15px; padding: 8px 14px; border-radius: 8px; border: 1px solid #d1d5db; background: #fff; color: #111827; }
 #sheet button.primary, .shell-sheet button.primary { background: #2563eb; border-color: #2563eb; color: #fff; }
 #sheet button.ghost, .shell-sheet button.ghost { border-color: transparent; color: #6b7280; }
-#toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); z-index: 70; background: #111827;
+#toast { position: fixed; left: 50%; bottom: calc(90px - var(--vv-shift, 0px)); transform: translateX(-50%); z-index: 70; background: #111827;
   color: #fff; padding: 8px 14px; border-radius: 999px; font-size: 14px; }
 .shell-note { padding: 24px 16px; color: #6b7280; text-align: center; }
 .shell-error { margin: 10px; padding: 10px 14px; border: 1px solid #fca5a5; background: #fef2f2; color: #991b1b;
@@ -1479,6 +1483,15 @@ html[data-theme=dark] .page.theme-parent{--bg:#101a15; --card:#18251f; --soft:#1
 .shell-nav { flex: 0 0 auto; width: 36px; height: 40px; padding: 0 0 4px; border: 0; background: transparent;
   color: #2563eb; font-size: 30px; line-height: 1; cursor: pointer; }
 .shell-nav:active { opacity: .5; }
+/* 釘在畫面上的列（shell.js 的 Viewport）：打字時底部列先收起來；iPhone 鍵盤收起後沒歸位時，移回該在的地方。
+   --vv-shift＝差了多少，只有跑位的時候才有 */
+.vv-probe { position: fixed; left: 0; bottom: 0; width: 0; height: 0; visibility: hidden; pointer-events: none; }
+html.vv-hide .tabbar { display: none; }
+html.vv-drift .tabbar, html.vv-drift .docpop { transform: translateY(var(--vv-shift)); }
+html.vv-drift .topbar { top: var(--vv-shift); }
+html.vv-drift .stickybar { bottom: calc(var(--bar-h, 0px) - var(--vv-shift)); }
+html.vv-drift .app-leave .stickybar { bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) - var(--vv-shift)); }
+html.vv-hide .stickybar { bottom: 0; }   /* 底部列收起來時，儲存列貼到底 */
 [hidden] { display: none !important; }
 
 </style>
@@ -2298,6 +2311,132 @@ const OfflinePunch = (() => {
   return { available, remember, open };
 })();
 
+/** 釘在畫面上的列（最下面的「首頁／待辦／我的」、上面的標題列）不要跑位（2026-11-24）。
+ *
+ *  iPhone 打字時會把整個畫面往上推，讓輸入框露在鍵盤上面；鍵盤收起後有時沒有推回來（iOS 26、27 的問題，主畫面 App 常遇到）：
+ *  底部列停在離底一個鍵盤高的地方、擋住頁面上的按鈕，標題列跑到畫面外。手機不會自己好，所以這裡：
+ *    1. 換頁前先把鍵盤收好（closeKeyboard）：打字中的輸入框跟著頁面一起被換掉，最容易沒歸位
+ *    2. 打字時底部列先收起來，鍵盤收好再出現：不會浮在鍵盤上面擋住按鈕
+ *    3. 鍵盤收起後輕推一下（捲 1 點再捲回來），讓手機重算位置
+ *    4. 還是沒歸位，就量出差多少，把這幾列移回該在的地方（--vv-shift，樣式在 shell.css），歸位了就拿掉
+ *  量法：visualViewport 是「實際看得見的範圍」，釘住的列跟的是版面的範圍；兩個的底邊差多少就是跑掉多少。
+ *  鍵盤收起後 visualViewport.height 也可能停在鍵盤還在的高度，所以看得見的高度用整個畫面的高度，不用它。 */
+const Viewport = (() => {
+  const vv = window.visualViewport;
+  if (!vv) return { closeKeyboard: () => Promise.resolve(), sync() {} };
+  const root = document.documentElement;
+  const IOS = 'standalone' in navigator;
+  const STANDALONE = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const KEYBOARD = 120;        // 看得見的高度少這麼多才算鍵盤開著（網址列收合、外接鍵盤的工具列只差幾十）
+  const DRIFT = 8;             // 差不到這麼多不算跑位
+  const CLOSING = 500;         // 鍵盤收起的動畫：這段時間先不判斷
+  const QUIET = 120;           // 還在捲、手指還在畫面上就先不推
+  const NOT_TEXT = /^(button|submit|reset|image|checkbox|radio|file|range|color|hidden)$/;
+
+  const probe = document.createElement('i');      // 釘在版面最底的一個點，看不見，只拿來量
+  probe.className = 'vv-probe';
+  probe.setAttribute('aria-hidden', 'true');
+  document.body.append(probe);
+
+  let fullW = 0, fullH = 0;
+  let typedAt = 0, scrolledAt = 0, touching = false;
+  let wasUp = false, nudged = false, nudging = false, tries = 0, timer = null;
+
+  function editable(el) {
+    return !!el && (el.isContentEditable || el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && !NOT_TEXT.test(el.type)));
+  }
+
+  /** 沒有鍵盤時整個畫面多高。主畫面 App 沒有網址列，記住看過最高的（有些版本連 innerHeight 都會停在鍵盤還在的高度）。 */
+  function fullHeight() {
+    const h = Math.max(window.innerHeight, vv.height);
+    if (!STANDALONE || vv.scale > 1.01) return h;
+    if (window.innerWidth !== fullW) { fullW = window.innerWidth; fullH = 0; }      // 轉向
+    fullH = Math.max(fullH, h);
+    return fullH;
+  }
+
+  function keyboardUp() {
+    if (fullHeight() - vv.height * vv.scale < KEYBOARD) return false;
+    if (editable(document.activeElement)) { typedAt = Date.now(); return true; }
+    return Date.now() - typedAt < CLOSING;
+  }
+
+  /** 釘住的列比該在的地方高了多少；正常是 0。雙指放大時、還在打字時不算。 */
+  function drift() {
+    if (vv.scale > 1.01 || vv.offsetTop <= DRIFT || editable(document.activeElement)) return 0;
+    const d = Math.min(vv.offsetTop, vv.offsetTop + fullHeight() - probe.getBoundingClientRect().bottom);
+    return d > DRIFT ? Math.round(d) : 0;
+  }
+
+  function apply(d) {
+    root.classList.toggle('vv-drift', d > 0);
+    if (d > 0) root.style.setProperty('--vv-shift', d + 'px'); else root.style.removeProperty('--vv-shift');
+  }
+
+  function update() {
+    if (nudging) return;
+    const up = keyboardUp();
+    if (up) { wasUp = true; nudged = false; }
+    const d = up ? 0 : drift();
+    // 鍵盤剛收好（iPhone 一律推一下：畫面上跑位、數字卻正常的也有），或發現跑位還沒推過
+    if (!up && !timer && ((wasUp && IOS) || (d && !nudged))) { tries = 0; timer = setTimeout(settle, 60); }
+    if (!up) wasUp = false;
+    apply(d);
+    root.classList.toggle('vv-hide', up || !!timer);
+  }
+
+  async function settle() {
+    const moving = touching || Date.now() - scrolledAt < QUIET;
+    if (moving && tries++ < 10) { timer = setTimeout(settle, QUIET); return; }
+    timer = null;
+    nudged = true;
+    if (!moving && !keyboardUp()) {
+      nudging = true;
+      try { await nudge(); } finally { nudging = false; }
+    }
+    update();
+  }
+
+  const wait = (ms) => new Promise((done) => setTimeout(done, ms));
+  async function nudge() {
+    const y = window.scrollY;
+    window.scrollTo(window.scrollX, y > 0 ? y - 1 : y + 1);
+    await wait(34);
+    // 這一下之間換了頁、或使用者自己捲了，就不要把他拉回來
+    if (!touching && Math.abs(window.scrollY - y) <= 2) window.scrollTo(window.scrollX, y);
+    await wait(50);
+  }
+
+  function sync() { [0, 150, 350, 600, 1000].forEach((ms) => setTimeout(update, ms)); }
+
+  /** 換頁前：打字中就先收鍵盤，等它收好（最多半秒）再換。
+   *  收的時候瀏覽器會補送 change／input，那一頁馬上要換掉、資料也已經送出，擋下來：
+   *  報名表的暫存靠 change 判斷「送出之後又改過」，補送的那一下會讓它以為還沒送。 */
+  async function closeKeyboard() {
+    const el = document.activeElement;
+    if (!editable(el)) return;
+    const up = keyboardUp();
+    const swallow = (e) => e.stopImmediatePropagation();
+    ['change', 'input'].forEach((t) => window.addEventListener(t, swallow, true));
+    try { el.blur(); } finally { ['change', 'input'].forEach((t) => window.removeEventListener(t, swallow, true)); }
+    for (let i = 0; up && i < 10 && fullHeight() - vv.height * vv.scale >= KEYBOARD; i++) await wait(50);
+  }
+
+  const onScroll = () => { scrolledAt = Date.now(); update(); };
+  vv.addEventListener('resize', update);
+  vv.addEventListener('scroll', onScroll);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  document.addEventListener('focusin', sync);
+  document.addEventListener('focusout', (e) => { if (editable(e.target)) typedAt = Date.now(); sync(); });
+  document.addEventListener('visibilitychange', sync);
+  window.addEventListener('pageshow', sync);
+  ['touchstart', 'touchend', 'touchcancel'].forEach((t) =>
+    window.addEventListener(t, (e) => { touching = e.touches.length > 0; }, { passive: true, capture: true }));
+  fullHeight();
+
+  return { closeKeyboard, sync };
+})();
+
 const Shell = (() => {
   const app = document.getElementById('app');
   const busy = document.getElementById('busy');
@@ -2441,6 +2580,8 @@ const Shell = (() => {
       const disp = r.headers['content-disposition'] || '';
       if (/^attachment/i.test(disp)) return Downloads.offer(r.body, ctype, filename(disp));
       if (ctype.startsWith('text/html')) {
+        await Viewport.closeKeyboard();
+        if (seq !== navSeq) return;
         await render(td.decode(r.body), path);
         setHash(path, !opts.replace && path !== readHash());
         Nav.decorate(app);
@@ -2506,6 +2647,7 @@ const Shell = (() => {
     current = path;
     if (doc.title) document.title = doc.title;
     window.scrollTo(0, 0);
+    Viewport.sync();
 
     loadImages(Array.from(app.querySelectorAll('img[data-src]')));
     OfflinePunch.remember(app);
